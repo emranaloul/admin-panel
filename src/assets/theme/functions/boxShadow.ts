@@ -21,7 +21,7 @@ Coded by www.creative-tim.com
 import rgba from "assets/theme/functions/rgba";
 import pxToRem from "assets/theme/functions/pxToRem";
 
-function boxShadow(offset = [], radius = [], color: string, opacity: number, inset = "") {
+function boxShadow(offset = [], radius = [], color: string, opacity: number, inset: string = "") : string {
   const [x, y] = offset;
   const [blur, spread] = radius;
 

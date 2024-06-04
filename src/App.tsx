@@ -24,27 +24,27 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-// import MDBox from "components/MDBox";
+import MDBox from "components/MDBox";
 
-// // Material Dashboard 2 React example components
-// import Sidenav from "examples/Sidenav";
-// import Configurator from "examples/Configurator";
+// Material Dashboard 2 React example components
+import Sidenav from "examples/Sidenav";
+import Configurator from "examples/Configurator";
 
-// // Material Dashboard 2 React themes
-// import theme from "assets/theme";
-// import themeRTL from "assets/theme/theme-rtl";
+// Material Dashboard 2 React themes
+import theme from "assets/theme";
+import themeRTL from "assets/theme/theme-rtl";
 
-// // Material Dashboard 2 React Dark Mode themes
-// import themeDark from "assets/theme-dark";
-// import themeDarkRTL from "assets/theme-dark/theme-rtl";
+// Material Dashboard 2 React Dark Mode themes
+import themeDark from "assets/theme-dark";
+import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
-// // RTL plugins
+// RTL plugins
 // import rtlPlugin from "stylis-plugin-rtl";
 // import { CacheProvider } from "@emotion/react";
 // import createCache from "@emotion/cache";
 
 // // Material Dashboard 2 React routes
-// import routes from "routes";
+import routes from "routes";
 
 // Material Dashboard 2 React contexts
 import {
@@ -55,13 +55,15 @@ import {
   DispatchFunction,
 } from "context";
 import React from "react";
+import rtlPlugin from "stylis-plugin-rtl";
 
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
-import MDBox from "./components/MDBox";
+import { Box } from "@mui/material";
+// import MDBox from "./components/MDBox";
 // import MDBox from "components/MDBox";
 
 export default function App() {
@@ -109,7 +111,7 @@ export default function App() {
   };
 
   // Change the openConfigurator state
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch as DispatchFunction, !openConfigurator);
 
   // Setting the dir attribute for the body element
   useEffect(() => {
@@ -158,6 +160,7 @@ export default function App() {
       <Icon fontSize="small" color="inherit">
         settings
       </Icon>
+      <Box position={'fixed'}/>
     </MDBox>
   );
 

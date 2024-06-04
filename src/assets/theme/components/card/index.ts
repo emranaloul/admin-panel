@@ -20,12 +20,14 @@ import boxShadows from "assets/theme/base/boxShadows";
 
 // Material Dashboard 2 React Helper Function
 import rgba from "assets/theme/functions/rgba";
+import React from "react";
+import { CSSInterpolation } from "@mui/material";
 
 const { black, white } = colors;
 const { borderWidth, borderRadius } = borders;
 const { md } = boxShadows;
 
-const card = {
+const card: { styleOverrides: { root: CSSInterpolation } } = {
   styleOverrides: {
     root: {
       display: "flex",

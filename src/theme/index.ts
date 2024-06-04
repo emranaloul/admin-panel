@@ -1,42 +1,55 @@
-// src/theme/index.ts
+import { createTheme } from "@mui/material/styles";
+import borders from "assets/theme/base/borders";
+import boxShadows from "assets/theme/base/boxShadows";
+import colors from "assets/theme/base/colors";
+import typography from "assets/theme/base/typography";
+import boxShadow from "assets/theme/functions/boxShadow";
+import hexToRgb from "assets/theme/functions/hexToRgb";
+import linearGradient from "assets/theme/functions/linearGradient";
+import pxToRem from "assets/theme/functions/pxToRem";
+import rgba from "assets/theme/functions/rgba";
+type ColorsType = typeof colors;
+declare module "@mui/material/styles" {
+  interface Palette extends ColorsType {}
 
-import { createTheme } from '@mui/material/styles';
+  interface PaletteOptions extends ColorsType {}
 
-declare module '@mui/material/styles' {
   interface Theme {
     functions: {
       linearGradient: (color1: string, color2: string) => string;
     };
-    borders: {
-      borderRadius: string;
-    };
+    borders: typeof borders;
+    typography: typeof typography;
     boxShadows: {
       colored: string;
     };
   }
   interface ThemeOptions {
     functions?: {
-      linearGradient?: (color1: string, color2: string) => string;
+      linearGradient?: typeof linearGradient;
+      boxShadow: typeof boxShadow,
+      hexToRgb: typeof hexToRgb,
+      pxToRem: typeof pxToRem,
+      rgba: typeof rgba,
     };
-    borders?: {
-      borderRadius?: string;
-    };
-    boxShadows?: {
-      colored?: string;
-    };
+    typography?: typeof typography;
+    borders?: typeof borders;
+    boxShadows?: typeof boxShadows;
   }
 }
-
 const theme = createTheme({
+  palette: {
+    ...colors,
+  },
   functions: {
-    linearGradient: (color1, color2) => `linear-gradient(${color1}, ${color2})`,
+    linearGradient,
+    boxShadow,
+    hexToRgb,
+    pxToRem,
+    rgba,
   },
-  borders: {
-    borderRadius: '8px',
-  },
-  boxShadows: {
-    colored: '0px 4px 6px rgba(0,0,0,0.1)',
-  },
+  borders,
+  boxShadows,
 });
 
 export default theme;

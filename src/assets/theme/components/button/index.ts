@@ -18,13 +18,23 @@ import root from "assets/theme/components/button/root";
 import contained from "assets/theme/components/button/contained";
 import outlined from "assets/theme/components/button/outlined";
 import buttonText from "assets/theme/components/button/text";
+import { CSSInterpolation } from "@mui/material";
 
-const button = {
+type ButtonVariantStyles = {
+  [variant: string]: CSSInterpolation; // Assuming each variant has its own CSSInterpolation style
+};
+type ButtonStyleOverrides = {
+  root: CSSInterpolation;
+} & ButtonVariantStyles;
+const button: {
+  styleOverrides: { root: CSSInterpolation } & ButtonStyleOverrides & {};
+  defaultProps: { disableRipple: boolean };
+} = {
   defaultProps: {
     disableRipple: false,
   },
   styleOverrides: {
-    root: { ...root },
+    root,
     contained: { ...contained.base },
     containedSizeSmall: { ...contained.small },
     containedSizeLarge: { ...contained.large },

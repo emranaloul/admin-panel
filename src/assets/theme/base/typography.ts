@@ -20,6 +20,8 @@ Coded by www.creative-tim.com
  */
 
 // Material Dashboard 2 React Base Styles
+import { Palette } from "@mui/material";
+import { Typography, TypographyOptions } from "@mui/material/styles/createTypography";
 import colors from "assets/theme/base/colors";
 
 // Material Dashboard 2 React Helper Functions
@@ -57,9 +59,9 @@ const baseDisplayProperties = {
   lineHeight: 1.2,
 };
 
-const typography = {
+const typography : TypographyOptions | ((palette: Palette)=> TypographyOptions) = {
   fontFamily: baseProperties.fontFamily,
-  fontWeightLighter: baseProperties.fontWeightLighter,
+  // fontWeightLighter: baseProperties.fontWeightLighter,
   fontWeightLight: baseProperties.fontWeightLight,
   fontWeightRegular: baseProperties.fontWeightRegular,
   fontWeightMedium: baseProperties.fontWeightMedium,
@@ -147,53 +149,8 @@ const typography = {
   overline: {
     fontFamily: baseProperties.fontFamily,
   },
-
-  d1: {
-    fontSize: pxToRem(80),
-    ...baseDisplayProperties,
-  },
-
-  d2: {
-    fontSize: pxToRem(72),
-    ...baseDisplayProperties,
-  },
-
-  d3: {
-    fontSize: pxToRem(64),
-    ...baseDisplayProperties,
-  },
-
-  d4: {
-    fontSize: pxToRem(56),
-    ...baseDisplayProperties,
-  },
-
-  d5: {
-    fontSize: pxToRem(48),
-    ...baseDisplayProperties,
-  },
-
-  d6: {
-    fontSize: pxToRem(40),
-    ...baseDisplayProperties,
-  },
-
-  size: {
-    xxs: baseProperties.fontSizeXXS,
-    xs: baseProperties.fontSizeXS,
-    sm: baseProperties.fontSizeSM,
-    md: baseProperties.fontSizeMD,
-    lg: baseProperties.fontSizeLG,
-    xl: baseProperties.fontSizeXL,
-    "2xl": baseProperties.fontSize2XL,
-    "3xl": baseProperties.fontSize3XL,
-  },
-
-  lineHeight: {
-    sm: 1.25,
-    md: 1.5,
-    lg: 2,
-  },
+  fontSize: 0,
+  htmlFontSize: 0,
 };
 
 export default typography;

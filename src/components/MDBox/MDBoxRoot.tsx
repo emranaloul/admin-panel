@@ -28,7 +28,7 @@ export interface OwnerState {
 import Box from "@mui/material/Box";
 import { Palette, PaletteColor, Theme, styled } from "@mui/material/styles";
 
-export default styled(Box)(({ theme, ownerState }: { theme: Theme; ownerState: OwnerState }) => {
+export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) => {
   const { palette, functions, borders, boxShadows } = theme;
   const { variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow } = ownerState;
 
@@ -89,17 +89,22 @@ export default styled(Box)(({ theme, ownerState }: { theme: Theme; ownerState: O
 
   // background value
   let backgroundValue = bgColor;
+  if (bgColor) {
 
-  if (variant === "gradient") {
-    backgroundValue = validGradients.find((el) => el === bgColor)
-      ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
-      : white.main;
-  } else if (validColors.find((el) => el === bgColor)) {
-    backgroundValue = palette[color as keyof Palette]
-      ? (palette[color as keyof Palette] as PaletteColor).main
-      : greyColors[color as keyof typeof greyColors];
-  } else {
-    backgroundValue = bgColor;
+    if (variant === "gradient") {
+      backgroundValue = validGradients.find((el) => el === bgColor)
+        ? linearGradient(
+            gradients[bgColor as keyof typeof gradients].main,
+            gradients[bgColor as keyof typeof gradients].state
+          )
+        : white.main;
+    } else if (validColors.find((el) => el === bgColor)) {
+      backgroundValue = palette[color as keyof Palette]
+        ? (palette[color as keyof Palette] as PaletteColor).main
+        : greyColors[color as keyof typeof greyColors];
+    } else {
+      backgroundValue = bgColor;
+    }
   }
 
   // color value
@@ -113,19 +118,23 @@ export default styled(Box)(({ theme, ownerState }: { theme: Theme; ownerState: O
 
   // borderRadius value
   let borderRadiusValue = borderRadius;
-
-  if (validBorderRadius.find((el) => el === borderRadius)) {
-    borderRadiusValue = radius[borderRadius];
+  if (borderRadius &&  typeof borderRadius === 'number') {
+    
+    if (validBorderRadius.find((el) => el === borderRadius)) {
+      borderRadiusValue = radius[borderRadius];
+    }
   }
 
   // boxShadow value
   let boxShadowValue = "none";
-
+if (shadow && coloredShadow && typeof coloredShadow === 'number' ) {
   if (validBoxShadows.find((el) => el === shadow)) {
-    boxShadowValue = boxShadows[shadow];
+    boxShadowValue = boxShadows[shadow as keyof typeof boxShadows ];
   } else if (coloredShadow) {
     boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : "none";
   }
+  
+}
 
   return {
     opacity,

@@ -13,20 +13,23 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { TypeText } from "@mui/material";
+
 /**
  * The base colors for the Material Dashboard 2 React.
  * You can add new color using this file.
  * You can customized the colors for the entire Material Dashboard 2 React using thie file.
  */
 
+const text :Partial<TypeText> ={ }
 const colors = {
   background: {
     default: "#f0f2f5",
   },
 
   text: {
-    main: "#7b809a",
-    focus: "#7b809a",
+    primary: "#7b809a",
+    secondary: "#7b809a",
   },
 
   transparent: {
