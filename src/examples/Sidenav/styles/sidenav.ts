@@ -1,3 +1,6 @@
+import { Theme } from "@emotion/react";
+import { OwnerState } from "components/MDBox";
+
 /**
 =========================================================
 * Material Dashboard 2 React - v2.2.0
@@ -12,7 +15,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-export default function sidenavLogoLabel(theme, ownerState) {
+export default function sidenavLogoLabel(theme, ownerState )  {
   const { functions, transitions, typography, breakpoints } = theme;
   const { miniSidenav } = ownerState;
 

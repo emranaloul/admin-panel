@@ -14,28 +14,33 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
-import borders from "assets/theme/base/borders";
-import boxShadows from "assets/theme/base/boxShadows";
+import colors from 'assets/theme/base/colors';
+import borders from 'assets/theme/base/borders';
+import boxShadows from 'assets/theme/base/boxShadows';
 
 // Material Dashboard 2 React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
-import boxShadow from "assets/theme/functions/boxShadow";
+import pxToRem from 'assets/theme/functions/pxToRem';
+import boxShadow from 'assets/theme/functions/boxShadow';
+import { ComponentsOverrides, ComponentsProps } from '@mui/material';
+import { Theme } from '@emotion/react';
 
 const { grey, white, black, info } = colors;
 const { borderRadius, borderWidth } = borders;
 const { sliderBoxShadow } = boxShadows;
 
-const slider = {
+const slider: {
+  defaultProps?: ComponentsProps['MuiSlider'];
+  styleOverrides?: ComponentsOverrides<Theme>['MuiSlider'];
+} = {
   styleOverrides: {
     root: {
-      width: "100%",
+      width: '100%',
 
-      "& .MuiSlider-active, & .Mui-focusVisible": {
-        boxShadow: "none !important",
+      '& .MuiSlider-active, & .Mui-focusVisible': {
+        boxShadow: 'none !important',
       },
 
-      "& .MuiSlider-valueLabel": {
+      '& .MuiSlider-valueLabel': {
         color: black.main,
       },
     },
@@ -50,8 +55,8 @@ const slider = {
     track: {
       background: info.main,
       height: pxToRem(2),
-      position: "relative",
-      border: "none",
+      position: 'relative',
+      border: 'none',
       borderRadius: borderRadius.lg,
       zIndex: 1,
     },
@@ -63,17 +68,17 @@ const slider = {
       zIndex: 10,
       boxShadow: sliderBoxShadow.thumb,
       border: `${borderWidth[1]} solid ${info.main}`,
-      transition: "all 200ms linear",
+      transition: 'all 200ms linear',
 
-      "&:hover": {
-        boxShadow: "none",
+      '&:hover': {
+        boxShadow: 'none',
       },
 
-      "&:active": {
-        transform: "translate(-50%, -50%) scale(1.4)",
+      '&:active': {
+        transform: 'translate(-50%, -50%) scale(1.4)',
       },
 
-      "&.Mui-active": { boxShadow: boxShadow([0, 0], [0, 14], info.main, 0.16) },
+      '&.Mui-active': { boxShadow: boxShadow([0, 0], [0, 14], info.main, 0.16) },
     },
   },
 };

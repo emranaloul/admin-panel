@@ -14,14 +14,13 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React Base Styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
+import colors from 'assets/theme/base/colors';
+import { baseProperties } from 'assets/theme/base/typography';
 
 // Material Dashboard 2 React Helper Functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from 'assets/theme/functions/pxToRem';
 
 const { white, text, info, secondary } = colors;
-const { size } = typography;
 
 const contained = {
   base: {
@@ -30,15 +29,15 @@ const contained = {
     color: text.primary,
     padding: `${pxToRem(10)} ${pxToRem(24)}`,
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor: white.main,
     },
 
-    "&:active, &:active:focus, &:active:hover": {
+    '&:active, &:active:focus, &:active:hover': {
       opacity: 0.85,
     },
 
-    "& .material-icon, .material-icons-round, svg": {
+    '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(16)} !important`,
     },
   },
@@ -46,9 +45,9 @@ const contained = {
   small: {
     minHeight: pxToRem(32),
     padding: `${pxToRem(6)} ${pxToRem(16)}`,
-    fontSize: size.xs,
+    fontSize: baseProperties.fontSizeXS,
 
-    "& .material-icon, .material-icons-round, svg": {
+    '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(12)} !important`,
     },
   },
@@ -56,9 +55,9 @@ const contained = {
   large: {
     minHeight: pxToRem(47),
     padding: `${pxToRem(12)} ${pxToRem(28)}`,
-    fontSize: size.sm,
+    fontSize: baseProperties.fontSizeSM,
 
-    "& .material-icon, .material-icons-round, svg": {
+    '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(22)} !important`,
     },
   },
@@ -66,11 +65,11 @@ const contained = {
   primary: {
     backgroundColor: info.main,
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor: info.main,
     },
 
-    "&:focus:not(:hover)": {
+    '&:focus:not(:hover)': {
       backgroundColor: info.focus,
     },
   },
@@ -78,11 +77,11 @@ const contained = {
   secondary: {
     backgroundColor: secondary.main,
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor: secondary.main,
     },
 
-    "&:focus:not(:hover)": {
+    '&:focus:not(:hover)': {
       backgroundColor: secondary.focus,
     },
   },

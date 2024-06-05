@@ -14,16 +14,24 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
+import { CssBaselineProps, Palette } from '@mui/material';
+import Typography, { TypographyProps } from '@mui/material/Typography';
+import { CSSInterpolation, styled } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import { CSSProperties } from 'react';
 
-export default styled(Typography)(({ theme, ownerState }) => {
+type OwnerState = Partial<CSSProperties> & { [key: string]: any };
+
+export default styled(Typography)<{
+  ownerState: OwnerState;
+}>(({ theme, ownerState }) => {
   const { palette, typography, functions } = theme;
   const { color, textTransform, verticalAlign, fontWeight, opacity, textGradient, darkMode } =
     ownerState;
 
   const { gradients, transparent, white } = palette;
-  const { fontWeightLight, fontWeightRegular, fontWeightMedium, fontWeightBold } = typography;
+  const { fontWeightLight, fontWeightRegular, fontWeightMedium, fontWeightBold } =
+    typography as TypographyOptions;
   const { linearGradient } = functions;
 
   // fontWeight styles
@@ -37,30 +45,32 @@ export default styled(Typography)(({ theme, ownerState }) => {
   // styles for the typography with textGradient={true}
   const gradientStyles = () => ({
     backgroundImage:
-      color !== "inherit" && color !== "text" && color !== "white" && gradients[color]
-        ? linearGradient(gradients[color].main, gradients[color].state)
+      color !== 'inherit' && color !== 'text' && color !== 'white' && gradients[color as keyof typeof gradients]
+        ? linearGradient(gradients[color as keyof typeof gradients].main, gradients[color as keyof typeof gradients].state)
         : linearGradient(gradients.dark.main, gradients.dark.state),
-    display: "inline-block",
-    WebkitBackgroundClip: "text",
+    display: 'inline-block',
+    WebkitBackgroundClip: 'text',
     WebkitTextFillColor: transparent.main,
-    position: "relative",
+    position: 'relative',
     zIndex: 1,
   });
 
   // color value
-  let colorValue = color === "inherit" || !palette[color] ? "inherit" : palette[color].main;
+  let colorValue = color === 'inherit' || !palette[color as keyof Palette] ? 'inherit' : (palette[color as keyof Palette] as Palette).main;
 
-  if (darkMode && (color === "inherit" || !palette[color])) {
-    colorValue = "inherit";
-  } else if (darkMode && color === "dark") colorValue = white.main;
+  if (darkMode && (color === 'inherit' || !palette[color])) {
+    colorValue = 'inherit';
+  } else if (darkMode && color === 'dark') colorValue = white.main;
 
   return {
     opacity,
     textTransform,
     verticalAlign,
-    textDecoration: "none",
+    textDecoration: 'none',
     color: colorValue,
-    fontWeight: fontWeights[fontWeight] && fontWeights[fontWeight],
+    fontWeight:
+      fontWeights[fontWeight as keyof typeof fontWeights] &&
+      fontWeights[fontWeight as keyof typeof fontWeights],
     ...(textGradient && gradientStyles()),
   };
 });

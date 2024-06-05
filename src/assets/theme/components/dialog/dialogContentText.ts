@@ -14,23 +14,21 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React base styles
-import borders from "assets/theme-dark/base/borders";
-import boxShadows from "assets/theme-dark/base/boxShadows";
+import { baseProperties } from 'assets/theme/base/typography';
+import colors from 'assets/theme/base/colors';
 
-const { borderRadius } = borders;
-const { xxl } = boxShadows;
+// Material Dashboard 2 React helper functions
+// import pxToRem from "assets/theme/functions/pxToRem";
 
-const dialog = {
+const { text } = colors;
+
+const dialogContentText = {
   styleOverrides: {
-    paper: {
-      borderRadius: borderRadius.lg,
-      boxShadow: xxl,
-    },
-
-    paperFullScreen: {
-      borderRadius: 0,
+    root: {
+      fontSize: baseProperties.fontSizeMD,
+      color: text.primary,
     },
   },
 };
 
-export default dialog;
+export default dialogContentText;

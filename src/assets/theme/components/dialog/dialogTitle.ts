@@ -13,15 +13,19 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// Material Dashboard 2 React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
+// Material Dashboard 2 React base styles
+import { baseProperties } from 'assets/theme/base/typography';
 
-const dialogActions = {
+// Material Dashboard 2 React helper functions
+import pxToRem from 'assets/theme/functions/pxToRem';
+
+const dialogTitle = {
   styleOverrides: {
     root: {
       padding: pxToRem(16),
+      fontSize: baseProperties.fontSizeXL,
     },
   },
 };
 
-export default dialogActions;
+export default dialogTitle;

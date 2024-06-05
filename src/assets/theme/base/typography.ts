@@ -20,16 +20,16 @@ Coded by www.creative-tim.com
  */
 
 // Material Dashboard 2 React Base Styles
-import { Palette } from "@mui/material";
-import { Typography, TypographyOptions } from "@mui/material/styles/createTypography";
-import colors from "assets/theme/base/colors";
+import { Palette } from '@mui/material';
+import { Typography, TypographyOptions } from '@mui/material/styles/createTypography';
+import colors from 'assets/theme/base/colors';
 
 // Material Dashboard 2 React Helper Functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from 'assets/theme/functions/pxToRem';
 
 const { dark } = colors;
 
-const baseProperties = {
+export const baseProperties = {
   fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   fontWeightLighter: 100,
   fontWeightLight: 300,
@@ -52,21 +52,20 @@ const baseHeadingProperties = {
   fontWeight: baseProperties.fontWeightBold,
 };
 
-const baseDisplayProperties = {
+export const baseDisplayProperties = {
   fontFamily: baseProperties.fontFamily,
   color: dark.main,
   fontWeight: baseProperties.fontWeightLight,
   lineHeight: 1.2,
 };
 
-const typography : TypographyOptions | ((palette: Palette)=> TypographyOptions) = {
+const typography: TypographyOptions | ((palette: Palette) => TypographyOptions) = {
   fontFamily: baseProperties.fontFamily,
   // fontWeightLighter: baseProperties.fontWeightLighter,
   fontWeightLight: baseProperties.fontWeightLight,
   fontWeightRegular: baseProperties.fontWeightRegular,
   fontWeightMedium: baseProperties.fontWeightMedium,
   fontWeightBold: baseProperties.fontWeightBold,
-
   h1: {
     fontSize: pxToRem(48),
     lineHeight: 1.25,
@@ -136,7 +135,7 @@ const typography : TypographyOptions | ((palette: Palette)=> TypographyOptions) 
     fontSize: baseProperties.fontSizeSM,
     fontWeight: baseProperties.fontWeightLight,
     lineHeight: 1.5,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
 
   caption: {

@@ -13,10 +13,12 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-const link = {
+import { ComponentType } from 'types';
+
+const link: ComponentType<'MuiLink'> = {
   defaultProps: {
-    underline: "none",
-    color: "inherit",
+    underline: 'none',
+    color: 'inherit',
   },
 };
 

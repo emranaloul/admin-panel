@@ -13,17 +13,24 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// Material Dashboard 2 React Base Styles
-import colors from "assets/theme/base/colors";
+// Material Dashboard 2 React base styles
+import borders from 'assets/theme-dark/base/borders';
+import boxShadows from 'assets/theme-dark/base/boxShadows';
 
-const { transparent } = colors;
+const { borderRadius } = borders;
+const { xxl } = boxShadows;
 
-const textField = {
+const dialog = {
   styleOverrides: {
-    root: {
-      backgroundColor: transparent.main,
+    paper: {
+      borderRadius: borderRadius.lg,
+      boxShadow: xxl,
+    },
+
+    paperFullScreen: {
+      borderRadius: 0,
     },
   },
 };
 
-export default textField;
+export default dialog;

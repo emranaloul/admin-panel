@@ -45,11 +45,13 @@ import {
   setMiniSidenav,
   setTransparentSidenav,
   setWhiteSidenav,
+  ControllerType,
+  DispatchFunction,
 } from "context";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
-  const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
+  const [controller, dispatch]  = useMaterialUIController();
+  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller as ControllerType;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
 
@@ -61,14 +63,14 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     textColor = "inherit";
   }
 
-  const closeSidenav = () => setMiniSidenav(dispatch, true);
+  const closeSidenav = () => setMiniSidenav(dispatch as DispatchFunction, true);
 
   useEffect(() => {
     // A function that sets the mini state of the sidenav.
     function handleMiniSidenav() {
-      setMiniSidenav(dispatch, window.innerWidth < 1200);
-      setTransparentSidenav(dispatch, window.innerWidth < 1200 ? false : transparentSidenav);
-      setWhiteSidenav(dispatch, window.innerWidth < 1200 ? false : whiteSidenav);
+      setMiniSidenav(dispatch as DispatchFunction, window.innerWidth < 1200);
+      setTransparentSidenav(dispatch as DispatchFunction, window.innerWidth < 1200 ? false : transparentSidenav);
+      setWhiteSidenav(dispatch as DispatchFunction, window.innerWidth < 1200 ? false : whiteSidenav);
     }
 
     /** 

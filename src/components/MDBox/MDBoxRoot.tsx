@@ -26,7 +26,7 @@ export interface OwnerState {
 
 // @mui material components
 import Box from "@mui/material/Box";
-import { Palette, PaletteColor, Theme, styled } from "@mui/material/styles";
+import { Palette, PaletteColor, styled } from "@mui/material/styles";
 
 export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) => {
   const { palette, functions, borders, boxShadows } = theme;

@@ -13,14 +13,20 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-const appBar = {
+import { Theme } from '@emotion/react';
+import { ComponentsOverrides, ComponentsProps } from '@mui/material';
+
+const appBar: {
+  defaultProps?: ComponentsProps['MuiAppBar'];
+  styleOverrides?: ComponentsOverrides<Theme>['MuiAppBar'];
+} = {
   defaultProps: {
-    color: "transparent",
+    color: 'transparent',
   },
 
   styleOverrides: {
     root: {
-      boxShadow: "none",
+      boxShadow: 'none',
     },
   },
 };

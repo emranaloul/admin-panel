@@ -13,17 +13,15 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
+// Material Dashboard 2 React helper functions
+import pxToRem from 'assets/theme/functions/pxToRem';
 
-const { text } = colors;
-
-const formLabel = {
+const dialogActions = {
   styleOverrides: {
     root: {
-      color: text.main,
+      padding: pxToRem(16),
     },
   },
 };
 
-export default formLabel;
+export default dialogActions;

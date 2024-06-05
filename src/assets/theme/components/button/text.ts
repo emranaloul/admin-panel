@@ -14,42 +14,41 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React Base Styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
+import colors from 'assets/theme/base/colors';
+import typography, { baseProperties } from 'assets/theme/base/typography';
 
 // Material Dashboard 2 React Helper Functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from 'assets/theme/functions/pxToRem';
 
 const { text, info, secondary, transparent } = colors;
-const { size } = typography;
 
 const buttonText = {
   base: {
     backgroundColor: transparent.main,
     minHeight: pxToRem(40),
-    color: text.main,
-    boxShadow: "none",
+    color: text.primary,
+    boxShadow: 'none',
     padding: `${pxToRem(10)} ${pxToRem(24)}`,
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor: transparent.main,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
 
-    "&:focus": {
-      boxShadow: "none",
+    '&:focus': {
+      boxShadow: 'none',
     },
 
-    "&:active, &:active:focus, &:active:hover": {
+    '&:active, &:active:focus, &:active:hover': {
       opacity: 0.85,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
 
-    "&:disabled": {
-      boxShadow: "none",
+    '&:disabled': {
+      boxShadow: 'none',
     },
 
-    "& .material-icon, .material-icons-round, svg": {
+    '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(16)} !important`,
     },
   },
@@ -57,9 +56,9 @@ const buttonText = {
   small: {
     minHeight: pxToRem(32),
     padding: `${pxToRem(6)} ${pxToRem(16)}`,
-    fontSize: size.xs,
+    fontSize: baseProperties.fontSizeXS,
 
-    "& .material-icon, .material-icons-round, svg": {
+    '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(12)} !important`,
     },
   },
@@ -67,9 +66,9 @@ const buttonText = {
   large: {
     minHeight: pxToRem(47),
     padding: `${pxToRem(12)} ${pxToRem(28)}`,
-    fontSize: size.sm,
+    fontSize: baseProperties.fontSizeSM,
 
-    "& .material-icon, .material-icons-round, svg": {
+    '& .material-icon, .material-icons-round, svg': {
       fontSize: `${pxToRem(22)} !important`,
     },
   },
@@ -77,26 +76,26 @@ const buttonText = {
   primary: {
     color: info.main,
 
-    "&:hover": {
+    '&:hover': {
       color: info.main,
     },
 
-    "&:focus:not(:hover)": {
+    '&:focus:not(:hover)': {
       color: info.focus,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
   },
 
   secondary: {
     color: secondary.main,
 
-    "&:hover": {
+    '&:hover': {
       color: secondary.main,
     },
 
-    "&:focus:not(:hover)": {
+    '&:focus:not(:hover)': {
       color: secondary.focus,
-      boxShadow: "none",
+      boxShadow: 'none',
     },
   },
 };

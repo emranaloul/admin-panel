@@ -20,9 +20,7 @@ declare module "@mui/material/styles" {
     };
     borders: typeof borders;
     typography: typeof typography;
-    boxShadows: {
-      colored: string;
-    };
+    boxShadows: typeof boxShadows;
   }
   interface ThemeOptions {
     functions?: {
@@ -38,7 +36,7 @@ declare module "@mui/material/styles" {
   }
 }
 const theme = createTheme({
-  palette: {
+palette: {
     ...colors,
   },
   functions: {

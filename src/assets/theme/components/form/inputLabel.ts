@@ -14,43 +14,42 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React Base Styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
+import colors from 'assets/theme/base/colors';
+import { baseProperties } from 'assets/theme/base/typography';
 
 const { text, info } = colors;
-const { size } = typography;
 
 const inputLabel = {
   styleOverrides: {
     root: {
-      fontSize: size.sm,
-      color: text.main,
+      fontSize: baseProperties.fontSizeSM,
+      color: text.primary,
       lineHeight: 0.9,
 
-      "&.Mui-focused": {
+      '&.Mui-focused': {
         color: info.main,
       },
 
-      "&.MuiInputLabel-shrink": {
+      '&.MuiInputLabel-shrink': {
         lineHeight: 1.5,
-        fontSize: size.md,
+        fontSize: baseProperties.fontSizeMD,
 
-        "~ .MuiInputBase-root .MuiOutlinedInput-notchedOutline legend": {
-          fontSize: "0.85em",
+        '~ .MuiInputBase-root .MuiOutlinedInput-notchedOutline legend': {
+          fontSize: '0.85em',
         },
       },
     },
 
     sizeSmall: {
-      fontSize: size.xs,
+      fontSize: baseProperties.fontSizeXS,
       lineHeight: 1.625,
 
-      "&.MuiInputLabel-shrink": {
+      '&.MuiInputLabel-shrink': {
         lineHeight: 1.6,
-        fontSize: size.sm,
+        fontSize: baseProperties.fontSizeSM,
 
-        "~ .MuiInputBase-root .MuiOutlinedInput-notchedOutline legend": {
-          fontSize: "0.72em",
+        '~ .MuiInputBase-root .MuiOutlinedInput-notchedOutline legend': {
+          fontSize: '0.72em',
         },
       },
     },

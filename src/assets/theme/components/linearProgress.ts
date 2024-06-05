@@ -14,22 +14,27 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React base styles
-import borders from "assets/theme/base/borders";
-import colors from "assets/theme/base/colors";
+import { Theme } from '@emotion/react';
+import { ComponentsOverrides, ComponentsProps } from '@mui/material';
+import borders from 'assets/theme/base/borders';
+import colors from 'assets/theme/base/colors';
 
 // Material Dashboard 2 React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
+import pxToRem from 'assets/theme/functions/pxToRem';
 
 const { borderRadius } = borders;
 const { light } = colors;
 
-const linearProgress = {
+const linearProgress: {
+  defaultProps?: ComponentsProps['MuiLinearProgress'];
+  styleOverrides?: ComponentsOverrides<Theme>['MuiLinearProgress'];
+} = {
   styleOverrides: {
     root: {
       height: pxToRem(6),
       borderRadius: borderRadius.md,
-      overflow: "visible",
-      position: "relative",
+      overflow: 'visible',
+      position: 'relative',
     },
 
     colorPrimary: {
@@ -43,9 +48,9 @@ const linearProgress = {
     bar: {
       height: pxToRem(6),
       borderRadius: borderRadius.sm,
-      position: "absolute",
+      position: 'absolute',
       transform: `translate(0, 0) !important`,
-      transition: "width 0.6s ease !important",
+      transition: 'width 0.6s ease !important',
     },
   },
 };

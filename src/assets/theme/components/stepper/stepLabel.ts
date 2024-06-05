@@ -14,31 +14,36 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React base styles
-import typography from "assets/theme/base/typography";
-import colors from "assets/theme/base/colors";
+import typography, { baseProperties } from 'assets/theme/base/typography';
+import colors from 'assets/theme/base/colors';
 
 // Material Dashboard 2 React helper functions
-import pxToRem from "assets/theme/functions/pxToRem";
-import rgba from "assets/theme/functions/rgba";
+import pxToRem from 'assets/theme/functions/pxToRem';
+import rgba from 'assets/theme/functions/rgba';
 
-const { size, fontWeightRegular } = typography;
+const { fontWeightRegular } = typography as TypographyOptions;
 const { white } = colors;
-
-const stepLabel = {
+import { Theme } from '@emotion/react';
+import { ComponentsOverrides, ComponentsProps } from '@mui/material';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+const stepLabel: {
+  defaultProps?: ComponentsProps['MuiStepLabel'];
+  styleOverrides?: ComponentsOverrides<Theme>['MuiStepLabel'];
+} = {
   styleOverrides: {
     label: {
       marginTop: `${pxToRem(8)} !important`,
       fontWeight: fontWeightRegular,
-      fontSize: size.xs,
-      color: "#9fc9ff",
-      textTransform: "uppercase",
+      fontSize: baseProperties.fontSizeXS,
+      color: '#9fc9ff',
+      textTransform: 'uppercase',
 
-      "&.Mui-active": {
+      '&.Mui-active': {
         fontWeight: `${fontWeightRegular} !important`,
         color: `${rgba(white.main, 0.8)} !important`,
       },
 
-      "&.Mui-completed": {
+      '&.Mui-completed': {
         fontWeight: `${fontWeightRegular} !important`,
         color: `${rgba(white.main, 0.8)} !important`,
       },
