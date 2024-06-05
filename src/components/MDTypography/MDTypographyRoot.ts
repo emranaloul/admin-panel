@@ -45,8 +45,14 @@ export default styled(Typography)<{
   // styles for the typography with textGradient={true}
   const gradientStyles = () => ({
     backgroundImage:
-      color !== 'inherit' && color !== 'text' && color !== 'white' && gradients[color as keyof typeof gradients]
-        ? linearGradient(gradients[color as keyof typeof gradients].main, gradients[color as keyof typeof gradients].state)
+      color !== 'inherit' &&
+      color !== 'text' &&
+      color !== 'white' &&
+      gradients[color as keyof typeof gradients]
+        ? linearGradient(
+            gradients[color as keyof typeof gradients].main,
+            gradients[color as keyof typeof gradients].state
+          )
         : linearGradient(gradients.dark.main, gradients.dark.state),
     display: 'inline-block',
     WebkitBackgroundClip: 'text',
@@ -56,7 +62,10 @@ export default styled(Typography)<{
   });
 
   // color value
-  let colorValue = color === 'inherit' || !palette[color as keyof Palette] ? 'inherit' : (palette[color as keyof Palette] as Palette).main;
+  let colorValue =
+    color === 'inherit' || !palette[color as keyof Palette]
+      ? 'inherit'
+      : (palette[color as keyof Palette] as Palette).main;
 
   if (darkMode && (color === 'inherit' || !palette[color])) {
     colorValue = 'inherit';

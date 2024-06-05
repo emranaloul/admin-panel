@@ -25,8 +25,8 @@ export interface OwnerState {
 }
 
 // @mui material components
-import Box from "@mui/material/Box";
-import { Palette, PaletteColor, styled } from "@mui/material/styles";
+import Box from '@mui/material/Box';
+import { Palette, PaletteColor, styled } from '@mui/material/styles';
 
 export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) => {
   const { palette, functions, borders, boxShadows } = theme;
@@ -38,60 +38,59 @@ export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) =
   const { colored } = boxShadows;
 
   const greyColors = {
-    "grey-100": grey[100],
-    "grey-200": grey[200],
-    "grey-300": grey[300],
-    "grey-400": grey[400],
-    "grey-500": grey[500],
-    "grey-600": grey[600],
-    "grey-700": grey[700],
-    "grey-800": grey[800],
-    "grey-900": grey[900],
+    'grey-100': grey[100],
+    'grey-200': grey[200],
+    'grey-300': grey[300],
+    'grey-400': grey[400],
+    'grey-500': grey[500],
+    'grey-600': grey[600],
+    'grey-700': grey[700],
+    'grey-800': grey[800],
+    'grey-900': grey[900],
   };
 
   const validGradients = [
-    "primary",
-    "secondary",
-    "info",
-    "success",
-    "warning",
-    "error",
-    "dark",
-    "light",
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+    'dark',
+    'light',
   ];
 
   const validColors = [
-    "transparent",
-    "white",
-    "black",
-    "primary",
-    "secondary",
-    "info",
-    "success",
-    "warning",
-    "error",
-    "light",
-    "dark",
-    "text",
-    "grey-100",
-    "grey-200",
-    "grey-300",
-    "grey-400",
-    "grey-500",
-    "grey-600",
-    "grey-700",
-    "grey-800",
-    "grey-900",
+    'transparent',
+    'white',
+    'black',
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+    'light',
+    'dark',
+    'text',
+    'grey-100',
+    'grey-200',
+    'grey-300',
+    'grey-400',
+    'grey-500',
+    'grey-600',
+    'grey-700',
+    'grey-800',
+    'grey-900',
   ];
 
-  const validBorderRadius = ["xs", "sm", "md", "lg", "xl", "xxl", "section"];
-  const validBoxShadows = ["xs", "sm", "md", "lg", "xl", "xxl", "inset"];
+  const validBorderRadius = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'section'];
+  const validBoxShadows = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'inset'];
 
   // background value
   let backgroundValue = bgColor;
   if (bgColor) {
-
-    if (variant === "gradient") {
+    if (variant === 'gradient') {
       backgroundValue = validGradients.find((el) => el === bgColor)
         ? linearGradient(
             gradients[bgColor as keyof typeof gradients].main,
@@ -118,23 +117,21 @@ export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) =
 
   // borderRadius value
   let borderRadiusValue = borderRadius;
-  if (borderRadius &&  typeof borderRadius === 'number') {
-    
+  if (borderRadius && typeof borderRadius === 'number') {
     if (validBorderRadius.find((el) => el === borderRadius)) {
       borderRadiusValue = radius[borderRadius];
     }
   }
 
   // boxShadow value
-  let boxShadowValue = "none";
-if (shadow && coloredShadow && typeof coloredShadow === 'number' ) {
-  if (validBoxShadows.find((el) => el === shadow)) {
-    boxShadowValue = boxShadows[shadow as keyof typeof boxShadows ];
-  } else if (coloredShadow) {
-    boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : "none";
+  let boxShadowValue = 'none';
+  if (shadow && coloredShadow && typeof coloredShadow === 'number') {
+    if (validBoxShadows.find((el) => el === shadow)) {
+      boxShadowValue = boxShadows[shadow as keyof typeof boxShadows];
+    } else if (coloredShadow) {
+      boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : 'none';
+    }
   }
-  
-}
 
   return {
     opacity,

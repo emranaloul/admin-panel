@@ -36,7 +36,7 @@ type PropTypes = {
   display: string;
   variant: string;
   pl: number;
-  mt: number,
+  mt: number;
 };
 const MDTypography = forwardRef(
   (

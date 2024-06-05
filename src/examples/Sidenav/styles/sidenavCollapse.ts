@@ -67,7 +67,7 @@ function collapseItem(theme: typeof _theme, ownerState) {
   };
 }
 
-function collapseIconBox(theme : ThemeType, ownerState) {
+function collapseIconBox(theme: ThemeType, ownerState) {
   const { palette, transitions, borders, functions } = theme;
   const { transparentSidenav, whiteSidenav, darkMode, active } = ownerState;
 
