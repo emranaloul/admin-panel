@@ -14,21 +14,30 @@ Coded by www.creative-tim.com
 */
 // src/types.ts
 
-export interface OwnerState {
-  variant?: string;
-  bgColor?: string;
-  color?: string;
-  opacity?: number;
-  borderRadius?: string;
-  shadow?: string;
-  coloredShadow?: string;
-}
+// export interface OwnerState {
+//   variant?: string;
+//   bgColor?: string;
+//   color?: string;
+//   opacity?: number;
+//   borderRadius?: string;
+//   shadow?: string;
+//   coloredShadow?: string;
+// }
 
 // @mui material components
-import Box from '@mui/material/Box';
-import { Palette, PaletteColor, styled } from '@mui/material/styles';
+import React from 'react';
+import Box, { BoxProps } from '@mui/material/Box';
+import { CSSObject, Palette, PaletteColor, styled } from '@mui/material/styles';
+import { OwnerState } from '.';
+// interface StyleProps {
+//   theme: Theme;
+//   ownerState: OwnerState;
+// }
+interface CustomBoxProps extends BoxProps {
+  ownerState: OwnerState;
+}
 
-export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) => {
+export default styled(Box)<CustomBoxProps>(({ theme, ownerState }): CSSObject => {
   const { palette, functions, borders, boxShadows } = theme;
   const { variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow } = ownerState;
 
@@ -124,7 +133,7 @@ export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) =
   }
 
   // boxShadow value
-  let boxShadowValue = 'none';
+  let boxShadowValue: any = 'none';
   if (shadow && coloredShadow && typeof coloredShadow === 'number') {
     if (validBoxShadows.find((el) => el === shadow)) {
       boxShadowValue = boxShadows[shadow as keyof typeof boxShadows];
@@ -132,7 +141,6 @@ export default styled(Box)<{ ownerState: OwnerState }>(({ theme, ownerState }) =
       boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : 'none';
     }
   }
-
   return {
     opacity,
     background: backgroundValue,

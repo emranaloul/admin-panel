@@ -14,17 +14,51 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import { CssBaselineProps, Palette } from '@mui/material';
+import { CSSObject, Color, CssBaselineProps, Palette, PaletteColor } from '@mui/material';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import { CSSInterpolation, styled } from '@mui/material/styles';
-import { TypographyOptions } from '@mui/material/styles/createTypography';
-import { CSSProperties } from 'react';
+import { TypographyOptions, Variant } from '@mui/material/styles/createTypography';
+import { CSSProperties, ReactNode } from 'react';
 
-type OwnerState = Partial<CSSProperties> & { [key: string]: any };
-
-export default styled(Typography)<{
+type OwnerState = Partial<CssBaselineProps> & {
+  color?:
+    | 'inherit'
+    | 'primary'
+    | 'secondary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'light'
+    | 'dark'
+    | 'text'
+    | 'white';
+  fontWeight?: 'light' | 'regular' | 'medium' | 'bold';
+  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
+  verticalAlign?:
+    | 'unset'
+    | 'baseline'
+    | 'sub'
+    | 'super'
+    | 'text-top'
+    | 'text-bottom'
+    | 'middle'
+    | 'top'
+    | 'bottom';
+  textGradient?: boolean;
+  opacity?: number;
+  children?: ReactNode;
+  display?: string;
+  variant?: Variant;
+  pl?: number;
+  mt?: number;
+  darkMode?: boolean;
+};
+interface CustomTypographyProps extends TypographyProps {
   ownerState: OwnerState;
-}>(({ theme, ownerState }) => {
+}
+
+export default styled(Typography)<CustomTypographyProps>(({ theme, ownerState }): CSSObject => {
   const { palette, typography, functions } = theme;
   const { color, textTransform, verticalAlign, fontWeight, opacity, textGradient, darkMode } =
     ownerState;
@@ -62,14 +96,18 @@ export default styled(Typography)<{
   });
 
   // color value
-  let colorValue =
-    color === 'inherit' || !palette[color as keyof Palette]
-      ? 'inherit'
-      : (palette[color as keyof Palette] as Palette).main;
-
-  if (darkMode && (color === 'inherit' || !palette[color])) {
-    colorValue = 'inherit';
-  } else if (darkMode && color === 'dark') colorValue = white.main;
+  let colorValue: string | undefined;
+  if (darkMode) {
+    if (color === 'inherit' || !palette[color as keyof Palette]) {
+      colorValue = 'inherit';
+    } else if (color === 'dark') {
+      colorValue = white.main;
+    }
+  } else {
+    colorValue = palette[color as keyof Palette]
+      ? (palette[color as keyof Palette] as PaletteColor).main
+      : color;
+  }
 
   return {
     opacity,
@@ -81,5 +119,6 @@ export default styled(Typography)<{
       fontWeights[fontWeight as keyof typeof fontWeights] &&
       fontWeights[fontWeight as keyof typeof fontWeights],
     ...(textGradient && gradientStyles()),
+    position: 'inherit',
   };
 });

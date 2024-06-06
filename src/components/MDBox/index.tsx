@@ -13,32 +13,32 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import React, { CSSProperties, MouseEvent, MouseEventHandler, ReactNode } from "react";
-import { forwardRef } from "react";
+import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import { forwardRef } from 'react';
 export interface OwnerState {
-  variant?: "contained" | "gradient";
+  variant?: 'contained' | 'gradient';
   bgColor?: string;
   color?: string;
   opacity?: number;
   borderRadius?: string;
   shadow?: string;
   coloredShadow?:
-    | "primary"
-    | "secondary"
-    | "info"
-    | "success"
-    | "warning"
-    | "error"
-    | "light"
-    | "dark"
-    | "none";
+    | 'primary'
+    | 'secondary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'light'
+    | 'dark'
+    | 'none';
 }
 // prop-types is a library for typechecking of props
 
 // Custom styles for MDBox
-import MDBoxRoot from "./MDBoxRoot";
-import { SxProps } from "@mui/material";
-import { PositionsProps, Theme } from "@mui/system";
+import MDBoxRoot from './MDBoxRoot';
+import { SxProps } from '@mui/material';
+import { Theme } from '@mui/system';
 import { ResponsiveStyleValue } from '@mui/system';
 
 const MDBox = forwardRef(
@@ -62,12 +62,14 @@ const MDBox = forwardRef(
       bgColor?: string;
       shadow?: string;
       borderRadius?: string;
-      position?: ResponsiveStyleValue<CSSProperties['position']> | ((theme: Theme) => ResponsiveStyleValue<CSSProperties['position']>);
+      position?:
+        | ResponsiveStyleValue<CSSProperties['position']>
+        | ((theme: Theme) => ResponsiveStyleValue<CSSProperties['position']>);
       right?: string;
       bottom?: string;
       zIndex?: number;
       color?: string;
-      sx?:  SxProps<Theme>
+      sx?: SxProps<Theme>;
       onClick?: MouseEventHandler<HTMLDivElement>;
     },
     ref
@@ -82,13 +84,13 @@ const MDBox = forwardRef(
 
 // Setting default values for the props of MDBox
 MDBox.defaultProps = {
-  variant: "contained",
-  bgColor: "transparent",
-  color: "dark",
+  variant: 'contained',
+  bgColor: 'transparent',
+  color: 'dark',
   opacity: 1,
-  borderRadius: "none",
-  shadow: "none",
-  coloredShadow: "none",
+  borderRadius: 'none',
+  shadow: 'none',
+  coloredShadow: 'none',
 };
 
 export default MDBox;

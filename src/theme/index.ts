@@ -16,11 +16,18 @@ declare module "@mui/material/styles" {
 
   interface Theme {
     functions: {
-      linearGradient: (color1: string, color2: string) => string;
+      linearGradient: typeof linearGradient;
+      boxShadow: typeof boxShadow,
+      hexToRgb: typeof hexToRgb,
+      pxToRem: typeof pxToRem,
+      rgba: typeof rgba,
     };
     borders: typeof borders;
     typography: typeof typography;
     boxShadows: typeof boxShadows;
+    hexToRgb: typeof hexToRgb,
+    pxToRem: typeof pxToRem,
+    rgba: typeof rgba,
   }
   interface ThemeOptions {
     functions?: {

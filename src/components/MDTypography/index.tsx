@@ -23,22 +23,8 @@ import MDTypographyRoot from 'components/MDTypography/MDTypographyRoot';
 
 // Material Dashboard 2 React contexts
 import { ControllerType, useMaterialUIController } from 'context';
-import { Typography } from '@mui/material';
 
-type PropTypes = {
-  color: string;
-  fontWeight: string;
-  textTransform: string;
-  verticalAlign: string;
-  textGradient: string;
-  opacity: number;
-  children: ReactNode;
-  display: string;
-  variant: string;
-  pl: number;
-  mt: number;
-};
-const MDTypography = forwardRef(
+const MDTypography = forwardRef<HTMLSpanElement, any>(
   (
     {
       color,
@@ -50,7 +36,7 @@ const MDTypography = forwardRef(
       children,
       display,
       ...rest
-    }: PropTypes,
+    },
     ref
   ) => {
     const [controller] = useMaterialUIController();
@@ -79,44 +65,13 @@ const MDTypography = forwardRef(
 // Setting default values for the props of MDTypography
 MDTypography.defaultProps = {
   color: 'dark',
-  fontWeight: false,
+  fontWeight: '',
   textTransform: 'none',
   verticalAlign: 'unset',
-  textGradient: false,
+  textGradient: '',
   opacity: 1,
 };
 
 // Typechecking props for the MDTypography
-MDTypography.propTypes = {
-  color: PropTypes.oneOf([
-    'inherit',
-    'primary',
-    'secondary',
-    'info',
-    'success',
-    'warning',
-    'error',
-    'light',
-    'dark',
-    'text',
-    'white',
-  ]),
-  fontWeight: PropTypes.oneOf([false, 'light', 'regular', 'medium', 'bold']),
-  textTransform: PropTypes.oneOf(['none', 'capitalize', 'uppercase', 'lowercase']),
-  verticalAlign: PropTypes.oneOf([
-    'unset',
-    'baseline',
-    'sub',
-    'super',
-    'text-top',
-    'text-bottom',
-    'middle',
-    'top',
-    'bottom',
-  ]),
-  textGradient: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  opacity: PropTypes.number,
-};
 
 export default MDTypography;

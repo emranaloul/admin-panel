@@ -261,6 +261,6 @@ const colors = {
   tabs: {
     indicator: { boxShadow: "#ddd" },
   },
-};
+} as const;
 
 export default colors;
