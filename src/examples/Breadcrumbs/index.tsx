@@ -17,8 +17,6 @@ Coded by www.creative-tim.com
 import { Link } from 'react-router-dom';
 
 // prop-types is a library for typechecking of props.
-import PropTypes from 'prop-types';
-
 // @mui material components
 import { Breadcrumbs as MuiBreadcrumbs } from '@mui/material';
 import Icon from '@mui/material/Icon';
@@ -27,7 +25,13 @@ import Icon from '@mui/material/Icon';
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 
-function Breadcrumbs({ icon, title, route, light }) {
+interface BreadcrumbsProps {
+  icon: React.ReactNode;
+  title: string;
+  route: string[];
+  light?: boolean;
+}
+function Breadcrumbs({ icon, title, route, light }: BreadcrumbsProps) {
   const routes = route.slice(0, -1);
 
   return (
@@ -94,11 +98,4 @@ Breadcrumbs.defaultProps = {
 };
 
 // Typechecking props for the Breadcrumbs
-Breadcrumbs.propTypes = {
-  icon: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
-  route: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
-  light: PropTypes.bool,
-};
-
 export default Breadcrumbs;

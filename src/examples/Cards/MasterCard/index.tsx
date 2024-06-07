@@ -13,9 +13,6 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// prop-types is a library for typechecking of props
-import PropTypes from 'prop-types';
-
 // @mui material components
 import Card from '@mui/material/Card';
 import Icon from '@mui/material/Icon';
@@ -28,8 +25,15 @@ import MDTypography from 'components/MDTypography';
 import pattern from 'assets/images/illustrations/pattern-tree.svg';
 import masterCardLogo from 'assets/images/logos/mastercard.png';
 
-function MasterCard({ color, number, holder, expires }) {
-  const numbers = [...`${number}`];
+interface MasterCardProps {
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark';
+  number: number;
+  holder: string;
+  expires: string;
+}
+function MasterCard({ color, number, holder, expires }: MasterCardProps) {
+  const stringNumber = number.toString();
+  const numbers = stringNumber.split('');
 
   if (numbers.length < 16 || numbers.length > 16) {
     throw new Error(
@@ -45,8 +49,11 @@ function MasterCard({ color, number, holder, expires }) {
   return (
     <Card
       sx={({ palette: { gradients }, functions: { linearGradient }, boxShadows: { xl } }) => ({
-        background: gradients[color]
-          ? linearGradient(gradients[color].main, gradients[color].state)
+        background: gradients[color as keyof typeof gradients]
+          ? linearGradient(
+              gradients[color as keyof typeof gradients].main,
+              gradients[color as keyof typeof gradients].state
+            )
           : linearGradient(gradients.dark.main, gradients.dark.state),
         boxShadow: xl,
         position: 'relative',
@@ -66,7 +73,7 @@ function MasterCard({ color, number, holder, expires }) {
       />
       <MDBox position='relative' zIndex={2} p={2}>
         <MDBox color='white' p={1} lineHeight={0} display='inline-block'>
-          <Icon fontSize='default'>wifi</Icon>
+          <Icon fontSize='inherit'>wifi</Icon>
         </MDBox>
         <MDTypography variant='h5' color='white' fontWeight='medium' sx={{ mt: 3, mb: 5, pb: 1 }}>
           {num1}&nbsp;&nbsp;&nbsp;{num2}&nbsp;&nbsp;&nbsp;{num3}&nbsp;&nbsp;&nbsp;{num4}
@@ -107,14 +114,6 @@ function MasterCard({ color, number, holder, expires }) {
 // Setting default values for the props of MasterCard
 MasterCard.defaultProps = {
   color: 'dark',
-};
-
-// Typechecking props for the MasterCard
-MasterCard.propTypes = {
-  color: PropTypes.oneOf(['primary', 'secondary', 'info', 'success', 'warning', 'error', 'dark']),
-  number: PropTypes.number.isRequired,
-  holder: PropTypes.string.isRequired,
-  expires: PropTypes.string.isRequired,
 };
 
 export default MasterCard;

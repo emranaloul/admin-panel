@@ -35,7 +35,6 @@ interface DefaultInfoCardProps {
   value?: string | number;
 }
 
-
 function DefaultInfoCard({ color, icon, title, description, value }: DefaultInfoCardProps) {
   return (
     <Card>
@@ -52,7 +51,7 @@ function DefaultInfoCard({ color, icon, title, description, value }: DefaultInfo
           borderRadius='lg'
           variant='gradient'
         >
-          <Icon fontSize='default'>{icon}</Icon>
+          <Icon fontSize='inherit'>{icon}</Icon>
         </MDBox>
       </MDBox>
       <MDBox pb={2} px={2} textAlign='center' lineHeight={1.25}>

@@ -14,67 +14,76 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Avatar from "@mui/material/Avatar";
-import { styled } from "@mui/material/styles";
+import Avatar, { AvatarProps } from '@mui/material/Avatar';
+import { CSSObject, styled } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import { baseProperties } from 'assets/theme/base/typography';
+import { AvatarOwnerState } from 'types';
 
-export default styled(Avatar)(({ theme, ownerState }) => {
+interface CustomAvatarProps extends AvatarProps {
+  ownerState: AvatarOwnerState;
+}
+export default styled(Avatar)<CustomAvatarProps>(({ theme, ownerState }): CSSObject => {
   const { palette, functions, typography, boxShadows } = theme;
   const { shadow, bgColor, size } = ownerState;
 
   const { gradients, transparent, white } = palette;
   const { pxToRem, linearGradient } = functions;
-  const { size: fontSize, fontWeightRegular } = typography;
+  const { fontWeightRegular } = typography as TypographyOptions;
 
   // backgroundImage value
   const backgroundValue =
-    bgColor === "transparent"
+    bgColor === 'transparent'
       ? transparent.main
-      : linearGradient(gradients[bgColor].main, gradients[bgColor].state);
+      : linearGradient(
+          gradients[bgColor as keyof typeof gradients].main,
+          gradients[bgColor as keyof typeof gradients].state
+        );
 
   // size value
   let sizeValue;
 
   switch (size) {
-    case "xs":
+    case 'xs':
       sizeValue = {
         width: pxToRem(24),
         height: pxToRem(24),
-        fontSize: fontSize.xs,
+        fontSize: baseProperties.fontSizeXS,
       };
       break;
-    case "sm":
+    case 'sm':
       sizeValue = {
         width: pxToRem(36),
         height: pxToRem(36),
-        fontSize: fontSize.sm,
+        fontSize: baseProperties.fontSizeSM,
       };
       break;
-    case "lg":
+    case 'lg':
       sizeValue = {
         width: pxToRem(58),
         height: pxToRem(58),
-        fontSize: fontSize.sm,
+        fontSize: baseProperties.fontSizeSM,
       };
       break;
-    case "xl":
+    case 'xl':
       sizeValue = {
         width: pxToRem(74),
         height: pxToRem(74),
-        fontSize: fontSize.md,
+        fontSize: baseProperties.fontSizeMD,
       };
       break;
-    case "xxl":
+    case 'xxl':
       sizeValue = {
         width: pxToRem(110),
         height: pxToRem(110),
-        fontSize: fontSize.md,
+        fontSize: baseProperties.fontSizeMD,
       };
       break;
     default: {
       sizeValue = {
         width: pxToRem(48),
         height: pxToRem(48),
-        fontSize: fontSize.md,
+        fontSize: baseProperties.fontSizeMD,
       };
     }
   }
@@ -83,7 +92,7 @@ export default styled(Avatar)(({ theme, ownerState }) => {
     background: backgroundValue,
     color: white.main,
     fontWeight: fontWeightRegular,
-    boxShadow: boxShadows[shadow],
+    boxShadows: boxShadows[shadow as keyof typeof boxShadows],
     ...sizeValue,
   };
 });

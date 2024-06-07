@@ -16,9 +16,6 @@ Coded by www.creative-tim.com
 // react-router-dom components
 import { Link } from 'react-router-dom';
 
-// prop-types is a library for typechecking of props
-import PropTypes from 'prop-types';
-
 // @mui material components
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -30,8 +27,34 @@ import MDTypography from 'components/MDTypography';
 import MDButton from 'components/MDButton';
 import MDAvatar from 'components/MDAvatar';
 
-function DefaultProjectCard({ image, label, title, description, action, authors }) {
-  const renderAuthors = authors.map(({ image: media, name }) => (
+interface Action {
+  type?: 'external' | 'internal';
+  route: string;
+  color: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
+  // | 'light'
+  // | 'dark'
+  // | 'white';
+  label: string;
+}
+
+// Define the props interface for DefaultProjectCard
+interface DefaultProjectCardProps {
+  image: string;
+  label: string;
+  title: string;
+  description: string;
+  action: Action;
+  authors?: Array<Record<string, string>>; // Equivalent to PropTypes.arrayOf(PropTypes.object)
+}
+function DefaultProjectCard({
+  image,
+  label,
+  title,
+  description,
+  action,
+  authors,
+}: DefaultProjectCardProps) {
+  const renderAuthors = authors?.map(({ image: media, name }) => (
     <Tooltip key={name} title={name} placement='bottom'>
       <MDAvatar
         src={media}
@@ -137,35 +160,5 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
     </Card>
   );
 }
-
-// Setting default values for the props of DefaultProjectCard
-DefaultProjectCard.defaultProps = {
-  authors: [],
-};
-
-// Typechecking props for the DefaultProjectCard
-DefaultProjectCard.propTypes = {
-  image: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  action: PropTypes.shape({
-    type: PropTypes.oneOf(['external', 'internal']),
-    route: PropTypes.string.isRequired,
-    color: PropTypes.oneOf([
-      'primary',
-      'secondary',
-      'info',
-      'success',
-      'warning',
-      'error',
-      'light',
-      'dark',
-      'white',
-    ]).isRequired,
-    label: PropTypes.string.isRequired,
-  }).isRequired,
-  authors: PropTypes.arrayOf(PropTypes.object),
-};
 
 export default DefaultProjectCard;

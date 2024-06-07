@@ -13,65 +13,47 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { CSSProperties, MouseEventHandler, ReactNode } from 'react';
+import {
+  AnchorHTMLAttributes,
+  CSSProperties,
+  ImgHTMLAttributes,
+  MouseEventHandler,
+  ReactNode,
+} from 'react';
 import { forwardRef } from 'react';
-export interface OwnerState {
-  variant?: 'contained' | 'gradient';
-  bgColor?: string;
-  color?: string;
-  opacity?: number;
-  borderRadius?: string;
-  shadow?: string;
-  coloredShadow?:
-    | 'primary'
-    | 'secondary'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'light'
-    | 'dark'
-    | 'none';
-}
+
 // prop-types is a library for typechecking of props
 
 // Custom styles for MDBox
 import MDBoxRoot from './MDBoxRoot';
-import { SxProps } from '@mui/material';
+import { BoxProps, SxProps } from '@mui/material';
 import { Theme } from '@mui/system';
 import { ResponsiveStyleValue } from '@mui/system';
+import { BoxOwnerState } from 'types';
+
+type MDBoxBaseProps = BoxProps &
+  BoxOwnerState & {
+    component?: string;
+  };
+
+type MDBoxImgProps = MDBoxBaseProps &
+  ImgHTMLAttributes<HTMLImageElement> & {
+    component: 'img';
+  };
+type MDBoxAmchorProps = MDBoxBaseProps &
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    component: 'a';
+  };
+
+type MDBoxOtherProps = MDBoxBaseProps & {
+  component?: string;
+};
+
+type MDBoxProps = MDBoxImgProps | MDBoxOtherProps | MDBoxAmchorProps;
 
 const MDBox = forwardRef(
   (
-    {
-      variant,
-      bgColor,
-      color,
-      opacity,
-      borderRadius,
-      shadow,
-      coloredShadow,
-      ...rest
-    }: OwnerState & {
-      children?: ReactNode;
-      display?: string;
-      justifyContent?: string;
-      alignItems?: string;
-      width?: string;
-      height?: string;
-      bgColor?: string;
-      shadow?: string;
-      borderRadius?: string;
-      position?:
-        | ResponsiveStyleValue<CSSProperties['position']>
-        | ((theme: Theme) => ResponsiveStyleValue<CSSProperties['position']>);
-      right?: string;
-      bottom?: string;
-      zIndex?: number;
-      color?: string;
-      sx?: SxProps<Theme>;
-      onClick?: MouseEventHandler<HTMLDivElement>;
-    },
+    { variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow, ...rest }: MDBoxProps,
     ref
   ) => (
     <MDBoxRoot

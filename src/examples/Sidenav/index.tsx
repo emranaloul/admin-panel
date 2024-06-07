@@ -49,7 +49,21 @@ import {
   DispatchFunction,
 } from 'context';
 
-function Sidenav({ color, brand, brandName, routes, ...rest }) {
+interface Route {
+  // Specify the properties for the route object based on your actual data structure
+  path: string;
+  name: string;
+  // Add more properties as needed
+}
+
+// Define the interface for the Sidenav component props
+interface SidenavProps {
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark';
+  brand?: string;
+  brandName: string;
+  routes: Route[];
+}
+function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } =
     controller as ControllerType;
@@ -109,7 +123,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             name={name}
             icon={icon}
             active={key === collapseName}
-            noCollapse={noCollapse}
+            // noCollapse={noCollapse}
           />
         </Link>
       ) : (
@@ -172,7 +186,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         <MDBox component={NavLink} to='/' display='flex' alignItems='center'>
           {brand && <MDBox component='img' src={brand} alt='Brand' width='2rem' />}
           <MDBox
-            width={!brandName && '100%'}
+            width={!brandName ? '100%' : ''}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
             <MDTypography component='h6' variant='button' fontWeight='medium' color={textColor}>
@@ -194,7 +208,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           href='https://www.creative-tim.com/product/material-dashboard-pro-react'
           target='_blank'
           rel='noreferrer'
-          variant='gradient'
+          variant='contained'
           color={sidenavColor}
           fullWidth
         >

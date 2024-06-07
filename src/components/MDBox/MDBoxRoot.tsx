@@ -28,13 +28,15 @@ Coded by www.creative-tim.com
 import React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import { CSSObject, Palette, PaletteColor, styled } from '@mui/material/styles';
-import { OwnerState } from '.';
+import { BoxOwnerState } from 'types';
+
 // interface StyleProps {
 //   theme: Theme;
 //   ownerState: OwnerState;
 // }
+
 interface CustomBoxProps extends BoxProps {
-  ownerState: OwnerState;
+  ownerState: BoxOwnerState;
 }
 
 export default styled(Box)<CustomBoxProps>(({ theme, ownerState }): CSSObject => {

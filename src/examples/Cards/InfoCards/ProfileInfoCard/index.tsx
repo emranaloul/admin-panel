@@ -31,19 +31,36 @@ import MDTypography from 'components/MDTypography';
 
 // Material Dashboard 2 React base styles
 import colors from 'assets/theme/base/colors';
-import typography from 'assets/theme/base/typography';
+import { baseProperties } from 'assets/theme/base/typography';
 
-function ProfileInfoCard({ title, description, info, social, action, shadow }) {
-  const labels = [];
-  const values = [];
+interface Action {
+  route: string;
+  tooltip: string;
+}
+
+// Define the props interface for ProfileInfoCard
+interface ProfileInfoCardProps {
+  title: string;
+  description: string;
+  info: Record<string, string>; // Equivalent to PropTypes.objectOf(PropTypes.string)
+  social: Array<Record<string, string>>; // Equivalent to PropTypes.arrayOf(PropTypes.object)
+  action: Action;
+  shadow?: boolean; // Optional prop
+}
+
+function ProfileInfoCard({ title, description, info, social, action }: ProfileInfoCardProps) {
+  const labels: string[] = [];
+  const values: string[] = [];
   const { socialMediaColors } = colors;
-  const { size } = typography;
 
   // Convert this form `objectKey` of the object key in to this `object key`
   Object.keys(info).forEach((el) => {
     if (el.match(/[A-Z\s]+/)) {
       const uppercaseLetter = Array.from(el).find((i) => i.match(/[A-Z]+/));
-      const newElement = el.replace(uppercaseLetter, ` ${uppercaseLetter.toLowerCase()}`);
+      let newElement = '';
+      if (uppercaseLetter) {
+        newElement = el.replace(uppercaseLetter, ` ${uppercaseLetter.toLowerCase()}`);
+      }
 
       labels.push(newElement);
     } else {
@@ -74,8 +91,8 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
       href={link}
       target='_blank'
       rel='noreferrer'
-      fontSize={size.lg}
-      color={socialMediaColors[color].main}
+      fontSize={baseProperties.fontSizeLG}
+      color={socialMediaColors[color as keyof typeof socialMediaColors].main}
       pr={1}
       pl={0.5}
       lineHeight={1}
@@ -85,7 +102,7 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
   ));
 
   return (
-    <Card sx={{ height: '100%', boxShadow: !shadow && 'none' }}>
+    <Card sx={{ height: '100%' }}>
       <MDBox display='flex' justifyContent='space-between' alignItems='center' pt={2} px={2}>
         <MDTypography variant='h6' fontWeight='medium' textTransform='capitalize'>
           {title}

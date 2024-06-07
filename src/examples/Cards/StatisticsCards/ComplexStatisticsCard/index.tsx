@@ -25,7 +25,27 @@ import Icon from '@mui/material/Icon';
 import MDBox from 'components/MDBox';
 import MDTypography from 'components/MDTypography';
 
-function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
+interface Percentage {
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark' | 'white';
+  amount?: string | number;
+  label?: string;
+}
+
+interface ComplexStatisticsCardProps {
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'light' | 'dark';
+  title: string;
+  count: string | number;
+  percentage?: Percentage;
+  icon: React.ReactNode;
+}
+
+function ComplexStatisticsCard({
+  color = 'info',
+  title,
+  count,
+  percentage,
+  icon,
+}: ComplexStatisticsCardProps) {
   return (
     <Card>
       <MDBox display='flex' justifyContent='space-between' pt={1} px={2}>
@@ -60,11 +80,11 @@ function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
             component='span'
             variant='button'
             fontWeight='bold'
-            color={percentage.color}
+            color={percentage?.color}
           >
-            {percentage.amount}
+            {percentage?.amount}
           </MDTypography>
-          &nbsp;{percentage.label}
+          &nbsp;{percentage?.label}
         </MDTypography>
       </MDBox>
     </Card>
