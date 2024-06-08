@@ -31,7 +31,7 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
   const { boxShadow, linearGradient, pxToRem, rgba } = functions;
   const { borderRadius } = borders;
   const { colored } = boxShadows;
-  const shadowColor = (palette[color as keyof Palette] as PaletteColor).main;
+  const shadowColor = (palette[color as keyof Palette] as PaletteColor)?.main;
 
   // styles for the button with variant="contained"
   const containedStyles = () => {

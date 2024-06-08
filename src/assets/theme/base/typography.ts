@@ -21,7 +21,7 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React Base Styles
 import { Palette } from '@mui/material';
-import { Typography, TypographyOptions } from '@mui/material/styles/createTypography';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
 import colors from 'assets/theme/base/colors';
 
 // Material Dashboard 2 React Helper Functions

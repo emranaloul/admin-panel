@@ -37,6 +37,7 @@ import {
 import { ControllerType, useMaterialUIController } from 'context';
 import { ThemeType } from 'types';
 import { ReactNode } from 'react';
+import { Theme } from '@mui/material';
 
 type PropTypes = {
   name: string;
@@ -69,7 +70,7 @@ function SidenavCollapse({ icon, name, active, ...rest }: PropTypes) {
           }
         >
           {typeof icon === 'string' ? (
-            <Icon sx={(theme) => collapseIcon(theme, { active })}>{icon}</Icon>
+            <Icon sx={(theme: Theme) => collapseIcon(theme, { active })}>{icon}</Icon>
           ) : (
             icon
           )}

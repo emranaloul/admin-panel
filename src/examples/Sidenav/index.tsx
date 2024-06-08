@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from 'react';
+import { ReactElement, useEffect } from 'react';
 
 // react-router-dom components
 import { useLocation, NavLink } from 'react-router-dom';
@@ -48,20 +48,15 @@ import {
   ControllerType,
   DispatchFunction,
 } from 'context';
-
-interface Route {
-  // Specify the properties for the route object based on your actual data structure
-  path: string;
-  name: string;
-  // Add more properties as needed
-}
+import { AppRoute } from 'types';
+import { DrawerProps } from '@mui/material';
 
 // Define the interface for the Sidenav component props
-interface SidenavProps {
+interface SidenavProps extends DrawerProps {
   color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark';
   brand?: string;
   brandName: string;
-  routes: Route[];
+  routes: AppRoute[];
 }
 function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
   const [controller, dispatch] = useMaterialUIController();
@@ -107,61 +102,63 @@ function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
   }, [dispatch, location]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
-    let returnValue;
+  const renderRoutes: (ReactElement | undefined)[] = routes.map(
+    ({ type, name, icon, title, key, href, route }) => {
+      let returnValue;
 
-    if (type === 'collapse') {
-      returnValue = href ? (
-        <Link
-          href={href}
-          key={key}
-          target='_blank'
-          rel='noreferrer'
-          sx={{ textDecoration: 'none' }}
-        >
-          <SidenavCollapse
-            name={name}
-            icon={icon}
-            active={key === collapseName}
-            // noCollapse={noCollapse}
+      if (type === 'collapse') {
+        returnValue = href ? (
+          <Link
+            href={href}
+            key={key}
+            target='_blank'
+            rel='noreferrer'
+            sx={{ textDecoration: 'none' }}
+          >
+            <SidenavCollapse
+              name={name}
+              icon={icon}
+              active={key === collapseName}
+              // noCollapse={noCollapse}
+            />
+          </Link>
+        ) : (
+          <NavLink key={key} to={route}>
+            <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+          </NavLink>
+        );
+      } else if (type === 'title') {
+        returnValue = (
+          <MDTypography
+            key={key}
+            color={textColor}
+            display='block'
+            variant='caption'
+            fontWeight='bold'
+            textTransform='uppercase'
+            pl={3}
+            mt={2}
+            mb={1}
+            ml={1}
+          >
+            {title}
+          </MDTypography>
+        );
+      } else if (type === 'divider') {
+        returnValue = (
+          <Divider
+            key={key}
+            light={
+              (!darkMode && !whiteSidenav && !transparentSidenav) ||
+              (darkMode && !transparentSidenav && whiteSidenav)
+            }
           />
-        </Link>
-      ) : (
-        <NavLink key={key} to={route}>
-          <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
-        </NavLink>
-      );
-    } else if (type === 'title') {
-      returnValue = (
-        <MDTypography
-          key={key}
-          color={textColor}
-          display='block'
-          variant='caption'
-          fontWeight='bold'
-          textTransform='uppercase'
-          pl={3}
-          mt={2}
-          mb={1}
-          ml={1}
-        >
-          {title}
-        </MDTypography>
-      );
-    } else if (type === 'divider') {
-      returnValue = (
-        <Divider
-          key={key}
-          light={
-            (!darkMode && !whiteSidenav && !transparentSidenav) ||
-            (darkMode && !transparentSidenav && whiteSidenav)
-          }
-        />
-      );
-    }
+        );
+      }
 
-    return returnValue;
-  });
+      return returnValue;
+    }
+  );
 
   return (
     <SidenavRoot

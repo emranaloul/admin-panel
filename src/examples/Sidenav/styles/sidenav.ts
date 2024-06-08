@@ -1,5 +1,6 @@
-import { Theme } from '@emotion/react';
-import { OwnerState } from 'components/MDBox';
+import { Theme } from '@mui/material';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import { ControllerType } from 'context';
 
 /**
 =========================================================
@@ -15,12 +16,12 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-export default function sidenavLogoLabel(theme, ownerState) {
+export default function sidenavLogoLabel(theme: Theme, ownerState: Partial<ControllerType>) {
   const { functions, transitions, typography, breakpoints } = theme;
   const { miniSidenav } = ownerState;
 
   const { pxToRem } = functions;
-  const { fontWeightMedium } = typography;
+  const { fontWeightMedium } = typography as TypographyOptions;
 
   return {
     ml: 0.5,

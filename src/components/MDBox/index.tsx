@@ -13,28 +13,18 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import {
-  AnchorHTMLAttributes,
-  CSSProperties,
-  ImgHTMLAttributes,
-  MouseEventHandler,
-  ReactNode,
-} from 'react';
+import { AnchorHTMLAttributes, ImgHTMLAttributes, ReactElement } from 'react';
 import { forwardRef } from 'react';
 
 // prop-types is a library for typechecking of props
 
 // Custom styles for MDBox
 import MDBoxRoot from './MDBoxRoot';
-import { BoxProps, SxProps } from '@mui/material';
-import { Theme } from '@mui/system';
-import { ResponsiveStyleValue } from '@mui/system';
+import { BoxProps } from '@mui/material';
 import { BoxOwnerState } from 'types';
+import { NavLink, NavLinkProps } from 'react-router-dom';
 
-type MDBoxBaseProps = BoxProps &
-  BoxOwnerState & {
-    component?: string;
-  };
+type MDBoxBaseProps = BoxProps & BoxOwnerState;
 
 type MDBoxImgProps = MDBoxBaseProps &
   ImgHTMLAttributes<HTMLImageElement> & {
@@ -44,12 +34,14 @@ type MDBoxAmchorProps = MDBoxBaseProps &
   AnchorHTMLAttributes<HTMLAnchorElement> & {
     component: 'a';
   };
+type MDBoxNavLinkProps = MDBoxBaseProps &
+  NavLinkProps & {
+    component: typeof NavLink;
+  };
 
-type MDBoxOtherProps = MDBoxBaseProps & {
-  component?: string;
-};
+type MDBoxOtherProps = MDBoxBaseProps;
 
-type MDBoxProps = MDBoxImgProps | MDBoxOtherProps | MDBoxAmchorProps;
+type MDBoxProps = MDBoxImgProps | MDBoxOtherProps | MDBoxAmchorProps | MDBoxNavLinkProps;
 
 const MDBox = forwardRef(
   (

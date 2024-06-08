@@ -1,6 +1,7 @@
 import { Theme } from '@emotion/react';
 import { ComponentsOverrides, ComponentsProps } from '@mui/material';
 import theme from 'assets/theme';
+import { ReactElement, ReactNode } from 'react';
 
 export type ComponentType<
   ComponentName extends keyof ComponentsProps & keyof ComponentsOverrides<Theme>
@@ -63,4 +64,15 @@ export type AvatarOwnerState = {
     | 'dark';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   shadow?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'inset';
+};
+
+export type AppRoute = {
+  type: string;
+  name: string;
+  icon: string | ReactNode;
+  title?: string;
+  key: number | string;
+  href?: string;
+  route: string;
+  component: ReactElement;
 };

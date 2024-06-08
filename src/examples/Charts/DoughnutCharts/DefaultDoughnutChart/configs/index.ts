@@ -15,17 +15,22 @@ Coded by www.creative-tim.com
 
 /* eslint-disable no-dupe-keys */
 // Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
+import colors from 'assets/theme/base/colors';
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 
 const { gradients, dark } = colors;
 
-function configs(labels, datasets, cutout = 60) {
+function configs(
+  labels: string[],
+  datasets: ChartDataset<'doughnut'> & { backgroundColors: (keyof typeof gradients)[] }
+  // cutout = 60
+): { data: ChartData<'doughnut'>; options: ChartOptions<'doughnut'> } {
   const backgroundColors = [];
 
   if (datasets.backgroundColors) {
     datasets.backgroundColors.forEach((color) => {
       if (gradients[color]) {
-        if (color === "info") {
+        if (color === 'info') {
           backgroundColors.push(gradients.info.main);
         } else {
           backgroundColors.push(gradients[color].state);
@@ -45,12 +50,12 @@ function configs(labels, datasets, cutout = 60) {
         {
           label: datasets.label,
           weight: 9,
-          cutout,
-          tension: 0.9,
-          pointRadius: 2,
+          // cutout: [cutout],
+          // tension: 0.9,
+          // pointRadius: 2,
           borderWidth: 2,
           backgroundColor: backgroundColors,
-          fill: false,
+          // fill: false,
           data: datasets.data,
         },
       ],
@@ -65,7 +70,7 @@ function configs(labels, datasets, cutout = 60) {
       },
       interaction: {
         intersect: false,
-        mode: "index",
+        mode: 'index',
       },
     },
   };

@@ -1,5 +1,8 @@
-import { Theme } from '@mui/system';
-import _theme from 'assets/theme';
+import { Theme } from '@mui/material';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import colors from 'assets/theme-dark/base/colors';
+import { baseProperties } from 'assets/theme/base/typography';
+import { ControllerType } from 'context';
 import { ThemeType } from 'types';
 
 /**
@@ -16,7 +19,7 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-function collapseItem(theme: typeof _theme, ownerState) {
+function collapseItem(theme: ThemeType, ownerState: Partial<ControllerType> & { active: boolean }) {
   const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
   const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = ownerState;
 
@@ -27,7 +30,10 @@ function collapseItem(theme: typeof _theme, ownerState) {
 
   return {
     background: active
-      ? linearGradient(gradients[sidenavColor].main, gradients[sidenavColor].state)
+      ? linearGradient(
+          gradients[sidenavColor as keyof typeof gradients].main,
+          gradients[sidenavColor as keyof typeof gradients].state
+        )
       : transparent.main,
     color:
       (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
@@ -67,7 +73,10 @@ function collapseItem(theme: typeof _theme, ownerState) {
   };
 }
 
-function collapseIconBox(theme: ThemeType, ownerState) {
+function collapseIconBox(
+  theme: ThemeType,
+  ownerState: Partial<ControllerType> & { active: boolean }
+) {
   const { palette, transitions, borders, functions } = theme;
   const { transparentSidenav, whiteSidenav, darkMode, active } = ownerState;
 
@@ -96,15 +105,18 @@ function collapseIconBox(theme: ThemeType, ownerState) {
   };
 }
 
-const collapseIcon = ({ palette: { white, gradients } }, { active }) => ({
+const collapseIcon = (
+  { palette: { white, gradients } }: Theme,
+  { active }: { active: boolean }
+) => ({
   color: active ? white.main : gradients.dark.state,
 });
 
-function collapseText(theme, ownerState) {
+function collapseText(theme: ThemeType, ownerState: Partial<ControllerType> & { active: boolean }) {
   const { typography, transitions, breakpoints, functions } = theme;
   const { miniSidenav, transparentSidenav, active } = ownerState;
 
-  const { size, fontWeightRegular, fontWeightLight } = typography;
+  const { fontWeightRegular, fontWeightLight } = typography as TypographyOptions;
   const { pxToRem } = functions;
 
   return {
@@ -122,7 +134,7 @@ function collapseText(theme, ownerState) {
 
     '& span': {
       fontWeight: active ? fontWeightRegular : fontWeightLight,
-      fontSize: size.sm,
+      fontSize: baseProperties.fontSizeSM,
       lineHeight: 0,
     },
   };
