@@ -13,13 +13,26 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState, Children } from 'react';
 
 // prop-types is a library for typechecking of props
 import PropTypes from 'prop-types';
 
 // react-table components
-import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from 'react-table';
+import {
+  useTable,
+  usePagination,
+  useGlobalFilter,
+  useAsyncDebounce,
+  useSortBy,
+  TableInstance,
+  TableState,
+  UsePaginationInstanceProps,
+  UseGlobalFiltersInstanceProps,
+  UseSortByInstanceProps,
+  UsePaginationState,
+  UseGlobalFiltersState,
+} from 'react-table';
 
 // @mui material components
 import Table from '@mui/material/Table';
@@ -69,6 +82,17 @@ interface DataTableProps {
   isSorted?: boolean;
   noEndBorder?: boolean;
 }
+
+interface TableStateWithPlugins<T extends object>
+  extends TableState<T>,
+    UsePaginationState<T>,
+    UseGlobalFiltersState<T> {}
+
+type TableInstanceWithPlugins<T extends object> = TableInstance<T> &
+  UsePaginationInstanceProps<T> &
+  UseGlobalFiltersInstanceProps<T> &
+  UseSortByInstanceProps<T>;
+
 function DataTable({
   entriesPerPage,
   canSearch,
@@ -86,11 +110,17 @@ function DataTable({
   const data = useMemo(() => table.rows, [table]);
 
   const tableInstance = useTable(
-    { columns, data, initialState: { pageIndex: 0 } },
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 0, globalFilter: '' } as Partial<
+        TableStateWithPlugins<object>
+      >,
+    },
     useGlobalFilter,
     useSortBy,
     usePagination
-  );
+  ) as TableInstanceWithPlugins<object>;
 
   const {
     getTableProps,
@@ -153,8 +183,11 @@ function DataTable({
   }, 100);
 
   // A function that sets the sorted value for the table
-  const setSortedValue = (column) => {
-    let sortedValue;
+  const setSortedValue = (column: {
+    isSorted: boolean;
+    isSortedDesc: boolean;
+  }): false | 'desc' | 'none' | 'asce' => {
+    let sortedValue: false | 'desc' | 'none' | 'asce' | undefined;
 
     if (isSorted && column.isSorted) {
       sortedValue = column.isSortedDesc ? 'desc' : 'asce';
@@ -221,21 +254,22 @@ function DataTable({
       ) : null}
       <Table {...getTableProps()}>
         <MDBox component='thead'>
-          {headerGroups.map((headerGroup, key) => (
-            <TableRow key={key} {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, idx) => (
-                <DataTableHeadCell
-                  key={idx}
-                  {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
-                  width={column.width ? column.width : 'auto'}
-                  align={column.align ? column.align : 'left'}
-                  sorted={setSortedValue(column)}
-                >
-                  {column.render('Header')}
-                </DataTableHeadCell>
-              ))}
-            </TableRow>
-          ))}
+          {headerGroups.map((headerGroup, key) =>
+            Children.toArray(
+              <TableRow {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map((column, idx) => (
+                  <DataTableHeadCell
+                    {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
+                    width={column.width ? column.width : 'auto'}
+                    align={column.align ? column.align : 'left'}
+                    sorted={setSortedValue(column)}
+                  >
+                    {column.render('Header')}
+                  </DataTableHeadCell>
+                ))}
+              </TableRow>
+            )
+          )}
         </MDBox>
         <TableBody {...getTableBodyProps()}>
           {page.map((row, key) => {
