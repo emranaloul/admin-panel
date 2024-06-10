@@ -76,3 +76,13 @@ export type AppRoute = {
   route: string;
   component: ReactElement;
 };
+
+export type ColorType =
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+
+export type SizeType = 'small' | 'medium' | 'large';

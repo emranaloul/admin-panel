@@ -39,6 +39,36 @@ import MDPagination from 'components/MDPagination';
 import DataTableHeadCell from 'examples/Tables/DataTable/DataTableHeadCell';
 import DataTableBodyCell from 'examples/Tables/DataTable/DataTableBodyCell';
 
+type PaginationVariant = 'contained' | 'gradient';
+type PaginationColor =
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'dark'
+  | 'light';
+
+interface Pagination {
+  variant: PaginationVariant;
+  color: PaginationColor;
+}
+
+interface EntriesPerPage {
+  defaultValue: number;
+  entries: number[];
+}
+
+interface DataTableProps {
+  entriesPerPage: EntriesPerPage;
+  canSearch?: boolean;
+  showTotalEntries?: boolean;
+  table: Record<string, any[]>; // Assuming table is an object with array values
+  pagination?: Pagination;
+  isSorted?: boolean;
+  noEndBorder?: boolean;
+}
 function DataTable({
   entriesPerPage,
   canSearch,
@@ -47,7 +77,7 @@ function DataTable({
   pagination,
   isSorted,
   noEndBorder,
-}) {
+}: DataTableProps) {
   const defaultValue = entriesPerPage.defaultValue ? entriesPerPage.defaultValue : 10;
   const entries = entriesPerPage.entries
     ? entriesPerPage.entries.map((el) => el.toString())
@@ -84,7 +114,7 @@ function DataTable({
   useEffect(() => setPageSize(defaultValue || 10), [defaultValue]);
 
   // Set the entries per page value based on the select value
-  const setEntriesPerPage = (value) => setPageSize(value);
+  const setEntriesPerPage = (value: number): void => setPageSize(value);
 
   // Render the paginations
   const renderPagination = pageOptions.map((option) => (
@@ -99,14 +129,20 @@ function DataTable({
   ));
 
   // Handler for the input to set the pagination index
-  const handleInputPagination = ({ target: { value } }) =>
-    value > pageOptions.length || value < 0 ? gotoPage(0) : gotoPage(Number(value));
+  const handleInputPagination = ({
+    target: { valueAsNumber },
+  }: React.ChangeEvent<HTMLInputElement>) =>
+    valueAsNumber > pageOptions.length || valueAsNumber < 0
+      ? gotoPage(0)
+      : gotoPage(Number(valueAsNumber));
 
   // Customized page options starting from 1
   const customizedPageOptions = pageOptions.map((option) => option + 1);
 
   // Setting value for the pagination input
-  const handleInputPaginationValue = ({ target: value }) => gotoPage(Number(value.value - 1));
+  const handleInputPaginationValue = ({
+    target: { valueAsNumber },
+  }: React.ChangeEvent<HTMLInputElement>) => gotoPage(Number(valueAsNumber - 1));
 
   // Search input value state
   const [search, setSearch] = useState(globalFilter);

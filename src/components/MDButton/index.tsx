@@ -22,12 +22,14 @@ import MDButtonRoot from 'components/MDButton/MDButtonRoot';
 // Material Dashboard 2 React contexts
 import { ControllerType, useMaterialUIController } from 'context';
 import { ButtonProps } from '@mui/material';
-import { MDButtonProps } from 'types';
+import { MDButtonProps, VariantType } from 'types';
 import { Link, NavLinkProps } from 'react-router-dom';
-type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
+// type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
 
 interface CustomButtonProps extends ButtonProps {
   component?: 'a' | typeof Link;
+  iconOnly?: boolean;
+  circular?: boolean;
 }
 
 type ButtonLinkProps = ButtonProps &
@@ -40,8 +42,8 @@ type ButtonAnchorProps = ButtonProps &
     component: 'a';
   };
 
-type PropTypes = CustomButtonProps | ButtonLinkProps | ButtonAnchorProps;
-const MDButton = forwardRef<HTMLButtonElement, PropTypes>(
+export type ButtonPropTypes = CustomButtonProps | ButtonLinkProps | ButtonAnchorProps;
+const MDButton = forwardRef<HTMLButtonElement, ButtonPropTypes>(
   (
     {
       color = 'inherit',
