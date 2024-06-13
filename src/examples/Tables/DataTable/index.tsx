@@ -32,6 +32,10 @@ import {
   UseSortByInstanceProps,
   UsePaginationState,
   UseGlobalFiltersState,
+  UseTableInstanceProps,
+  Column,
+  UseSortByColumnOptions,
+  HeaderGroup,
 } from 'react-table';
 
 // @mui material components
@@ -63,6 +67,20 @@ type PaginationColor =
   | 'dark'
   | 'light';
 
+
+  interface CustomColumn<D extends object = {}> extends Column<D>, UseSortByColumnOptions<D> {
+    align?: 'left' | 'right' | 'center';
+  }
+  
+  // Extend the HeaderGroup to include CustomColumn
+  interface CustomHeaderGroup<D extends object = {}> extends HeaderGroup<D> {
+    headers: CustomColumn<D>[];
+  }
+  
+  type TableProps<D extends object = {}> = {
+    columns: CustomColumn<D>[];
+    rows: D[];
+  };
 interface Pagination {
   variant: PaginationVariant;
   color: PaginationColor;
@@ -77,7 +95,7 @@ interface DataTableProps {
   entriesPerPage: EntriesPerPage;
   canSearch?: boolean;
   showTotalEntries?: boolean;
-  table: Record<string, any[]>; // Assuming table is an object with array values
+  table: TableProps; // Assuming table is an object with array values
   pagination?: Pagination;
   isSorted?: boolean;
   noEndBorder?: boolean;
@@ -89,9 +107,12 @@ interface TableStateWithPlugins<T extends object>
     UseGlobalFiltersState<T> {}
 
 type TableInstanceWithPlugins<T extends object> = TableInstance<T> &
-  UsePaginationInstanceProps<T> &
+  UsePaginationInstanceProps<object> &
   UseGlobalFiltersInstanceProps<T> &
-  UseSortByInstanceProps<T>;
+  UseSortByInstanceProps<T> &
+  TableStateWithPlugins<object> & {
+    state: { pageIndex: number; pageSize: number; globalFilter: any };
+  };
 
 function DataTable({
   entriesPerPage,
@@ -120,7 +141,7 @@ function DataTable({
     useGlobalFilter,
     useSortBy,
     usePagination
-  ) as TableInstanceWithPlugins<object>;
+  ) as TableInstanceWithPlugins<object> & UseTableInstanceProps<object>;
 
   const {
     getTableProps,
