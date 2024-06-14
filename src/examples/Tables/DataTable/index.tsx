@@ -67,20 +67,19 @@ type PaginationColor =
   | 'dark'
   | 'light';
 
+interface CustomColumn<D extends object = object> extends Column<D>, UseSortByColumnOptions<D> {
+  align?: 'left' | 'right' | 'center';
+}
 
-  interface CustomColumn<D extends object = {}> extends Column<D>, UseSortByColumnOptions<D> {
-    align?: 'left' | 'right' | 'center';
-  }
-  
-  // Extend the HeaderGroup to include CustomColumn
-  interface CustomHeaderGroup<D extends object = {}> extends HeaderGroup<D> {
-    headers: CustomColumn<D>[];
-  }
-  
-  type TableProps<D extends object = {}> = {
-    columns: CustomColumn<D>[];
-    rows: D[];
-  };
+// Extend the HeaderGroup to include CustomColumn
+interface CustomHeaderGroup<D extends object = object> extends HeaderGroup<D> {
+  headers: CustomColumn<D>[];
+}
+
+type TableProps<D extends object = object> = {
+  columns: Column<UseSortByColumnOptions<D> & D>[];
+  rows: D[];
+};
 interface Pagination {
   variant: PaginationVariant;
   color: PaginationColor;
@@ -111,7 +110,7 @@ type TableInstanceWithPlugins<T extends object> = TableInstance<T> &
   UseGlobalFiltersInstanceProps<T> &
   UseSortByInstanceProps<T> &
   TableStateWithPlugins<object> & {
-    state: { pageIndex: number; pageSize: number; globalFilter: any };
+    state: { pageIndex: number; pageSize: number; globalFilter: object };
   };
 
 function DataTable({
@@ -168,7 +167,7 @@ function DataTable({
   const setEntriesPerPage = (value: number): void => setPageSize(value);
 
   // Render the paginations
-  const renderPagination = pageOptions.map((option) => (
+  const renderPagination = (pageOptions as number[]).map((option) => (
     <MDPagination
       item
       key={option}
@@ -180,15 +179,15 @@ function DataTable({
   ));
 
   // Handler for the input to set the pagination index
-  const handleInputPagination = ({
-    target: { valueAsNumber },
-  }: React.ChangeEvent<HTMLInputElement>) =>
-    valueAsNumber > pageOptions.length || valueAsNumber < 0
-      ? gotoPage(0)
-      : gotoPage(Number(valueAsNumber));
+  // const handleInputPagination = ({
+  //   target: { valueAsNumber },
+  // }: React.ChangeEvent<HTMLInputElement>) =>
+  //   valueAsNumber > pageOptions.length || valueAsNumber < 0
+  //     ? gotoPage(0)
+  //     : gotoPage(Number(valueAsNumber));
 
   // Customized page options starting from 1
-  const customizedPageOptions = pageOptions.map((option) => option + 1);
+  const customizedPageOptions = (pageOptions as number[]).map((option) => option + 1);
 
   // Setting value for the pagination input
   const handleInputPaginationValue = ({
@@ -199,7 +198,7 @@ function DataTable({
   const [search, setSearch] = useState(globalFilter);
 
   // Search input state handle
-  const onSearchChange = useAsyncDebounce((value) => {
+  const onSearchChange = useAsyncDebounce((value: unknown | object) => {
     setGlobalFilter(value || undefined);
   }, 100);
 
@@ -275,10 +274,10 @@ function DataTable({
       ) : null}
       <Table {...getTableProps()}>
         <MDBox component='thead'>
-          {headerGroups.map((headerGroup, key) =>
+          {headerGroups.map((headerGroup) =>
             Children.toArray(
               <TableRow {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map((column, idx) => (
+                {headerGroup.headers.map((column) => (
                   <DataTableHeadCell
                     {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
                     width={column.width ? column.width : 'auto'}
@@ -293,20 +292,21 @@ function DataTable({
           )}
         </MDBox>
         <TableBody {...getTableBodyProps()}>
-          {page.map((row, key) => {
+          {page.map((row, key: number) => {
             prepareRow(row);
-            return (
-              <TableRow key={key} {...row.getRowProps()}>
-                {row.cells.map((cell, idx) => (
-                  <DataTableBodyCell
-                    key={idx}
-                    noBorder={noEndBorder && rows.length - 1 === key}
-                    align={cell.column.align ? cell.column.align : 'left'}
-                    {...cell.getCellProps()}
-                  >
-                    {cell.render('Cell')}
-                  </DataTableBodyCell>
-                ))}
+            return Children.toArray(
+              <TableRow {...row.getRowProps()}>
+                {row.cells.map((cell) =>
+                  Children.toArray(
+                    <DataTableBodyCell
+                      noBorder={noEndBorder && rows.length - 1 === key}
+                      align={cell.column.align ? cell.column.align : 'left'}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render('Cell')}
+                    </DataTableBodyCell>
+                  )
+                )}
               </TableRow>
             );
           })}
@@ -329,8 +329,8 @@ function DataTable({
         )}
         {pageOptions.length > 1 && (
           <MDPagination
-            variant={pagination.variant ? pagination.variant : 'gradient'}
-            color={pagination.color ? pagination.color : 'info'}
+            variant={pagination?.variant ? pagination?.variant : 'gradient'}
+            color={pagination?.color ? pagination?.color : 'info'}
           >
             {canPreviousPage && (
               <MDPagination item onClick={() => previousPage()}>
@@ -342,7 +342,7 @@ function DataTable({
                 <MDInput
                   inputProps={{ type: 'number', min: 1, max: customizedPageOptions.length }}
                   value={customizedPageOptions[pageIndex]}
-                  onChange={(handleInputPagination, handleInputPaginationValue)}
+                  onChange={handleInputPaginationValue}
                 />
               </MDBox>
             ) : (
