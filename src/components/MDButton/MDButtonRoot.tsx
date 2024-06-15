@@ -25,26 +25,26 @@ interface CustomButtonProps extends ButtonProps {
 
 export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
   const { palette, functions, borders, boxShadows } = theme;
-  const { color, variant, size, circular, iconOnly, darkMode } = ownerState;
+  const { ownerColor, ownerVariant, size, circular, iconOnly, darkMode } = ownerState;
 
   const { white, text, transparent, gradients, grey } = palette;
   const { boxShadow, linearGradient, pxToRem, rgba } = functions;
   const { borderRadius } = borders;
   const { colored } = boxShadows;
-  const shadowColor = (palette[color as keyof Palette] as PaletteColor)?.main;
+  const shadowColor = (palette[ownerColor as keyof Palette] as PaletteColor)?.main;
 
   // styles for the button with variant="contained"
   const containedStyles = () => {
     // background color value
-    const backgroundValue = palette[color as keyof Palette] ? shadowColor : white.main;
+    const backgroundValue = palette[ownerColor as keyof Palette] ? shadowColor : white.main;
 
     // backgroundColor value when button is focused
-    const focusedBackgroundValue = palette[color as keyof Palette]
-      ? (palette[color as keyof Palette] as TypeAction).focus
+    const focusedBackgroundValue = palette[ownerColor as keyof Palette]
+      ? (palette[ownerColor as keyof Palette] as TypeAction).focus
       : white.focus;
 
     // boxShadow value
-    const boxShadowValue = colored[color as keyof typeof colored]
+    const boxShadowValue = colored[ownerColor as keyof typeof colored]
       ? `${boxShadow([0, 3], [3, 0], shadowColor, 0.15)}, ${boxShadow(
           [0, 3],
           [1, -2],
@@ -54,7 +54,7 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
       : 'none';
 
     // boxShadow value when button is hovered
-    const hoveredBoxShadowValue = colored[color as keyof typeof colored]
+    const hoveredBoxShadowValue = colored[ownerColor as keyof typeof colored]
       ? `${boxShadow([0, 14], [26, -12], shadowColor, 0.4)}, ${boxShadow(
           [0, 4],
           [23, 0],
@@ -66,11 +66,14 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
     // color value
     let colorValue: string = white.main;
 
-    if (!darkMode && (color === 'white' || color === 'light' || !palette[color as keyof Palette])) {
+    if (
+      !darkMode &&
+      (ownerColor === 'white' || ownerColor === 'light' || !palette[ownerColor as keyof Palette])
+    ) {
       colorValue = text.primary;
     } else if (
       darkMode &&
-      (color === 'white' || color === 'light' || !palette[color as keyof Palette])
+      (ownerColor === 'white' || ownerColor === 'light' || !palette[ownerColor as keyof Palette])
     ) {
       colorValue = grey[600];
     }
@@ -78,9 +81,9 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
     // color value when button is focused
     let focusedColorValue: string = white.main;
 
-    if (color === 'white') {
+    if (ownerColor === 'white') {
       focusedColorValue = text.primary;
-    } else if (color === 'primary' || color === 'error' || color === 'dark') {
+    } else if (ownerColor === 'primary' || ownerColor === 'error' || ownerColor === 'dark') {
       focusedColorValue = white.main;
     }
 
@@ -96,7 +99,7 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
 
       '&:focus:not(:hover)': {
         backgroundColor: focusedBackgroundValue,
-        boxShadow: palette[color as keyof Palette]
+        boxShadow: palette[ownerColor as keyof Palette]
           ? boxShadow([0, 0], [0, 3.2], shadowColor, 0.5)
           : boxShadow([0, 0], [0, 3.2], white.main, 0.5),
       },
@@ -111,24 +114,29 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
   // styles for the button with variant="outlined"
   const outliedStyles = () => {
     // background color value
-    const backgroundValue = color === 'white' ? rgba(white.main, 0.1) : transparent.main;
+    const backgroundValue = ownerColor === 'white' ? rgba(white.main, 0.1) : transparent.main;
 
     // color value
-    const colorValue = palette[color as keyof Palette]
-      ? (palette[color as keyof Palette] as PaletteColor).main
+    const colorValue = palette[ownerColor as keyof Palette]
+      ? (palette[ownerColor as keyof Palette] as PaletteColor).main
       : white.main;
 
     // boxShadow value
-    const boxShadowValue = palette[color as keyof Palette]
-      ? boxShadow([0, 0], [0, 3.2], (palette[color as keyof Palette] as PaletteColor).main, 0.5)
+    const boxShadowValue = palette[ownerColor as keyof Palette]
+      ? boxShadow(
+          [0, 0],
+          [0, 3.2],
+          (palette[ownerColor as keyof Palette] as PaletteColor).main,
+          0.5
+        )
       : boxShadow([0, 0], [0, 3.2], white.main, 0.5);
 
     // border color value
-    let borderColorValue = palette[color as keyof Palette]
-      ? (palette[color as keyof Palette] as PaletteColor).main
+    let borderColorValue = palette[ownerColor as keyof Palette]
+      ? (palette[ownerColor as keyof Palette] as PaletteColor).main
       : rgba(white.main, 0.75);
 
-    if (color === 'white') {
+    if (ownerColor === 'white') {
       borderColorValue = rgba(white.main, 0.75);
     }
 
@@ -164,49 +172,49 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
   const gradientStyles = () => {
     // background value
     const backgroundValue =
-      color === 'white' || !gradients[color as keyof typeof gradients]
+      ownerColor === 'white' || !gradients[ownerColor as keyof typeof gradients]
         ? white.main
         : linearGradient(
-            gradients[color as keyof typeof gradients].main,
-            gradients[color as keyof typeof gradients].state
+            gradients[ownerColor as keyof typeof gradients].main,
+            gradients[ownerColor as keyof typeof gradients].state
           );
 
     // boxShadow value
-    const boxShadowValue = colored[color as keyof typeof colored]
+    const boxShadowValue = colored[ownerColor as keyof typeof colored]
       ? `${boxShadow(
           [0, 3],
           [3, 0],
-          (palette[color as keyof Palette] as PaletteColor).main,
+          (palette[ownerColor as keyof Palette] as PaletteColor).main,
           0.15
         )}, ${boxShadow(
           [0, 3],
           [1, -2],
-          (palette[color as keyof Palette] as PaletteColor).main,
+          (palette[ownerColor as keyof Palette] as PaletteColor).main,
           0.2
         )}, ${boxShadow(
           [0, 1],
           [5, 0],
-          (palette[color as keyof Palette] as PaletteColor).main,
+          (palette[ownerColor as keyof Palette] as PaletteColor).main,
           0.15
         )}`
       : 'none';
 
     // boxShadow value when button is hovered
-    const hoveredBoxShadowValue = colored[color as keyof typeof colored]
+    const hoveredBoxShadowValue = colored[ownerColor as keyof typeof colored]
       ? `${boxShadow(
           [0, 14],
           [26, -12],
-          (palette[color as keyof Palette] as PaletteColor).main,
+          (palette[ownerColor as keyof Palette] as PaletteColor).main,
           0.4
         )}, ${boxShadow(
           [0, 4],
           [23, 0],
-          (palette[color as keyof Palette] as PaletteColor).main,
+          (palette[ownerColor as keyof Palette] as PaletteColor).main,
           0.15
         )}, ${boxShadow(
           [0, 8],
           [10, -5],
-          (palette[color as keyof Palette] as PaletteColor).main,
+          (palette[ownerColor as keyof Palette] as PaletteColor).main,
           0.2
         )}`
       : 'none';
@@ -214,9 +222,9 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
     // color value
     let colorValue: string = white.main;
 
-    if (color === 'white') {
+    if (ownerColor === 'white') {
       colorValue = text.primary;
-    } else if (color === 'light') {
+    } else if (ownerColor === 'light') {
       colorValue = gradients.dark.state;
     }
 
@@ -243,13 +251,13 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
   // styles for the button with variant="text"
   const textStyles = () => {
     // color value
-    const colorValue = palette[color as keyof Palette]
-      ? (palette[color as keyof Palette] as PaletteColor).main
+    const colorValue = palette[ownerColor as keyof Palette]
+      ? (palette[ownerColor as keyof Palette] as PaletteColor).main
       : white.main;
 
     // color value when button is focused
-    const focusedColorValue = palette[color as keyof Palette]
-      ? (palette[color as keyof Palette] as TypeAction).focus
+    const focusedColorValue = palette[ownerColor as keyof Palette]
+      ? (palette[ownerColor as keyof Palette] as TypeAction).focus
       : white.focus;
 
     return {
@@ -308,10 +316,10 @@ export default styled(Button)<CustomButtonProps>(({ theme, ownerState }) => {
   };
 
   return {
-    ...(variant === 'contained' && containedStyles()),
-    ...(variant === 'outlined' && outliedStyles()),
-    ...(variant === 'gradient' && gradientStyles()),
-    ...(variant === 'text' && textStyles()),
+    ...(ownerVariant === 'contained' && containedStyles()),
+    ...(ownerVariant === 'outlined' && outliedStyles()),
+    ...(ownerVariant === 'gradient' && gradientStyles()),
+    ...(ownerVariant === 'text' && textStyles()),
     ...(circular && circularStyles()),
     ...(iconOnly && iconOnlyStyles()),
   };

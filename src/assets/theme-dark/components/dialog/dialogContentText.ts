@@ -14,19 +14,18 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React base styles
-import typography from 'assets/theme-dark/base/typography';
 import colors from 'assets/theme-dark/base/colors';
 
 // Material Dashboard 2 React helper functions
 import rgba from 'assets/theme-dark/functions/rgba';
+import { baseProperties } from 'assets/theme/base/typography';
 
-const { size } = typography;
 const { white } = colors;
 
 const dialogContentText = {
   styleOverrides: {
     root: {
-      fontSize: size.md,
+      fontSize: baseProperties.fontSizeMD,
       color: rgba(white.main, 0.8),
     },
   },

@@ -14,15 +14,14 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React base styles
-import typography from 'assets/theme-dark/base/typography';
 import borders from 'assets/theme-dark/base/borders';
 import colors from 'assets/theme-dark/base/colors';
 
 // Material Dashboard 2 React helper functions
 import pxToRem from 'assets/theme-dark/functions/pxToRem';
 import rgba from 'assets/theme-dark/functions/rgba';
+import { baseProperties } from 'assets/theme/base/typography';
 
-const { size } = typography;
 const { white } = colors;
 const { borderWidth, borderColor } = borders;
 
@@ -30,7 +29,7 @@ const dialogContent = {
   styleOverrides: {
     root: {
       padding: pxToRem(16),
-      fontSize: size.md,
+      fontSize: baseProperties.fontSizeMD,
       color: rgba(white.main, 0.8),
     },
 

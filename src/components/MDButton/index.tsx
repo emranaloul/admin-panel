@@ -22,7 +22,7 @@ import MDButtonRoot from 'components/MDButton/MDButtonRoot';
 // Material Dashboard 2 React contexts
 import { ControllerType, useMaterialUIController } from 'context';
 import { ButtonProps } from '@mui/material';
-import { MDButtonProps, VariantType } from 'types';
+import { MDButtonProps, OwnerColorType, VariantType } from 'types';
 import { Link, NavLinkProps } from 'react-router-dom';
 // type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
 
@@ -30,6 +30,8 @@ interface CustomButtonProps extends ButtonProps {
   component?: 'a' | typeof Link;
   iconOnly?: boolean;
   circular?: boolean;
+  ownerColor?: OwnerColorType;
+  ownerVariant?: VariantType;
 }
 
 type ButtonLinkProps = ButtonProps &
@@ -46,12 +48,14 @@ export type ButtonPropTypes = CustomButtonProps | ButtonLinkProps | ButtonAnchor
 const MDButton = forwardRef<HTMLButtonElement, ButtonPropTypes>(
   (
     {
-      color = 'inherit',
-      variant = 'contained',
+      ownerColor = 'inherit',
+      ownerVariant = 'contained',
       size = 'medium',
+      variant,
       circular = false,
       iconOnly = false,
       children,
+      color,
       ...rest
     }: ButtonHTMLAttributes<HTMLButtonElement> &
       ButtonProps &
@@ -60,7 +64,12 @@ const MDButton = forwardRef<HTMLButtonElement, ButtonPropTypes>(
   ) => {
     const [controller] = useMaterialUIController();
     const { darkMode } = controller as ControllerType;
-
+    if (color) {
+      ownerColor ??= color;
+    }
+    if (variant) {
+      ownerVariant ??= variant;
+    }
     return (
       <MDButtonRoot
         {...rest}
@@ -68,7 +77,14 @@ const MDButton = forwardRef<HTMLButtonElement, ButtonPropTypes>(
         color='primary'
         variant={(variant as VariantType) === 'gradient' ? 'contained' : variant}
         size={size}
-        ownerState={{ color, variant, size, circular, iconOnly, darkMode }}
+        ownerState={{
+          ownerColor,
+          ownerVariant,
+          size,
+          circular,
+          iconOnly,
+          darkMode,
+        }}
       >
         {children}
       </MDButtonRoot>

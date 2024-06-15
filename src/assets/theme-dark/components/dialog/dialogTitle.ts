@@ -14,18 +14,16 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React base styles
-import typography from 'assets/theme-dark/base/typography';
 
 // Material Dashboard 2 React helper functions
 import pxToRem from 'assets/theme-dark/functions/pxToRem';
-
-const { size } = typography;
+import { baseProperties } from 'assets/theme/base/typography';
 
 const dialogTitle = {
   styleOverrides: {
     root: {
       padding: pxToRem(16),
-      fontSize: size.xl,
+      fontSize: baseProperties.fontSizeXL,
     },
   },
 };

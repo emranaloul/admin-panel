@@ -43,7 +43,7 @@ interface ProfileInfoCardProps {
   title: string;
   description: string;
   info: Record<string, string>; // Equivalent to PropTypes.objectOf(PropTypes.string)
-  social: Array<Record<string, string>>; // Equivalent to PropTypes.arrayOf(PropTypes.object)
+  social: Array<{ color: string; icon: JSX.Element; link: string }>; // Equivalent to PropTypes.arrayOf(PropTypes.object)
   action: Action;
   shadow?: boolean; // Optional prop
 }

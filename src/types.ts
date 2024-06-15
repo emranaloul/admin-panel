@@ -33,20 +33,22 @@ export interface BoxOwnerState {
 }
 
 export type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
+export type OwnerColorType =
+  | 'white'
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'light'
+  | 'dark'
+  | 'inherit'
+  | undefined;
 export interface MDButtonProps {
   size?: 'small' | 'medium' | 'large';
-  variant?: VariantType;
-  color?:
-    | 'white'
-    | 'primary'
-    | 'secondary'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'light'
-    | 'dark'
-    | 'inherit';
+  ownerVariant?: VariantType;
+  ownerColor?: OwnerColorType;
   circular?: boolean;
   iconOnly?: boolean;
 }
