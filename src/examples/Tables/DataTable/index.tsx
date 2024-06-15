@@ -55,29 +55,13 @@ import MDPagination from 'components/MDPagination';
 // Material Dashboard 2 React example components
 import DataTableHeadCell from 'examples/Tables/DataTable/DataTableHeadCell';
 import DataTableBodyCell from 'examples/Tables/DataTable/DataTableBodyCell';
+import { ColorType, VariantType } from 'types';
 
-type PaginationVariant = 'contained' | 'gradient';
-type PaginationColor =
-  | 'primary'
-  | 'secondary'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'error'
-  | 'dark'
-  | 'light';
-
-interface CustomColumn<D extends object = object> extends Column<D>, UseSortByColumnOptions<D> {
-  align?: 'left' | 'right' | 'center';
-}
-
-// Extend the HeaderGroup to include CustomColumn
-interface CustomHeaderGroup<D extends object = object> extends HeaderGroup<D> {
-  headers: CustomColumn<D>[];
-}
+type PaginationVariant = Exclude<VariantType, 'text'> | 'gradient';
+type PaginationColor = ColorType;
 
 type TableProps<D extends object = object> = {
-  columns: Column<UseSortByColumnOptions<D> & D>[];
+  columns: Column[];
   rows: D[];
 };
 interface Pagination {
@@ -133,14 +117,14 @@ function DataTable({
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 0, globalFilter: '' } as Partial<
-        TableStateWithPlugins<object>
+      initialState: { pageIndex: 0, pageSize: defaultValue, globalFilter: '' } as Partial<
+        TableStateWithPlugins<(typeof data)[0]>
       >,
     },
     useGlobalFilter,
     useSortBy,
     usePagination
-  ) as TableInstanceWithPlugins<object> & UseTableInstanceProps<object>;
+  ) as TableInstanceWithPlugins<(typeof data)[0]> & UseTableInstanceProps<(typeof data)[0]>;
 
   const {
     getTableProps,
@@ -203,10 +187,7 @@ function DataTable({
   }, 100);
 
   // A function that sets the sorted value for the table
-  const setSortedValue = (column: {
-    isSorted: boolean;
-    isSortedDesc: boolean;
-  }): false | 'desc' | 'none' | 'asce' => {
+  const setSortedValue = (column: HeaderGroup): false | 'desc' | 'none' | 'asce' => {
     let sortedValue: false | 'desc' | 'none' | 'asce' | undefined;
 
     if (isSorted && column.isSorted) {
@@ -279,7 +260,7 @@ function DataTable({
               <TableRow {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
                   <DataTableHeadCell
-                    {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
+                    {...column.getHeaderProps(isSorted ? column.getSortByToggleProps() : undefined)}
                     width={column.width ? column.width : 'auto'}
                     align={column.align ? column.align : 'left'}
                     sorted={setSortedValue(column)}
@@ -329,7 +310,7 @@ function DataTable({
         )}
         {pageOptions.length > 1 && (
           <MDPagination
-            variant={pagination?.variant ? pagination?.variant : 'gradient'}
+            variant={pagination?.variant !== 'gradient' ? pagination?.variant : 'contained'}
             color={pagination?.color ? pagination?.color : 'info'}
           >
             {canPreviousPage && (

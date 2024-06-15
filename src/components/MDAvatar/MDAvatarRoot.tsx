@@ -23,6 +23,7 @@ import { AvatarOwnerState } from 'types';
 interface CustomAvatarProps extends AvatarProps {
   ownerState: AvatarOwnerState;
 }
+
 export default styled(Avatar)<CustomAvatarProps>(({ theme, ownerState }): CSSObject => {
   const { palette, functions, typography, boxShadows } = theme;
   const { shadow, bgColor, size } = ownerState;

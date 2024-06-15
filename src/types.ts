@@ -64,6 +64,7 @@ export type AvatarOwnerState = {
     | 'dark';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   shadow?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'inset';
+  name?: string;
 };
 
 export type AppRoute = {
@@ -77,12 +78,6 @@ export type AppRoute = {
   component: ReactElement;
 };
 
-export type ColorType =
-  | 'primary'
-  | 'secondary'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'error'
+export type ColorType = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 
 export type SizeType = 'small' | 'medium' | 'large';

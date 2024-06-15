@@ -13,45 +13,62 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useState } from 'react';
 
 // prop-types is a library for typechecking of props
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 // @mui material components
-import Fade from "@mui/material/Fade";
+import Fade from '@mui/material/Fade';
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
+import MDBox from 'components/MDBox';
 
 // Custom styles for the MDAlert
-import MDAlertRoot from "components/MDAlert/MDAlertRoot";
-import MDAlertCloseIcon from "components/MDAlert/MDAlertCloseIcon";
+import MDAlertRoot from 'components/MDAlert/MDAlertRoot';
+import MDAlertCloseIcon from 'components/MDAlert/MDAlertCloseIcon';
+import { AlertProps } from '@mui/material';
 
-function MDAlert({ color, dismissible, children, ...rest }) {
-  const [alertStatus, setAlertStatus] = useState("mount");
+interface MDAlertProps extends AlertProps {
+  ownerColor?:
+    | 'primary'
+    | 'secondary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'light'
+    | 'dark';
+  dismissible?: boolean;
+  children: React.ReactNode;
+}
 
-  const handleAlertStatus = () => setAlertStatus("fadeOut");
+function MDAlert({ ownerColor, dismissible, children, ...rest }: MDAlertProps) {
+  const [alertStatus, setAlertStatus] = useState('mount');
+
+  const handleAlertStatus = () => setAlertStatus('fadeOut');
 
   // The base template for the alert
   const alertTemplate = (mount = true) => (
     <Fade in={mount} timeout={300}>
-      <MDAlertRoot ownerState={{ color }} {...rest}>
-        <MDBox display="flex" alignItems="center" color="white">
+      <MDAlertRoot ownerState={{ color: ownerColor }} {...rest}>
+        <MDBox display='flex' alignItems='center' color='white'>
           {children}
         </MDBox>
         {dismissible ? (
-          <MDAlertCloseIcon onClick={mount ? handleAlertStatus : null}>&times;</MDAlertCloseIcon>
+          <MDAlertCloseIcon onClick={mount ? () => handleAlertStatus : undefined}>
+            &times;
+          </MDAlertCloseIcon>
         ) : null}
       </MDAlertRoot>
     </Fade>
   );
 
   switch (true) {
-    case alertStatus === "mount":
+    case alertStatus === 'mount':
       return alertTemplate();
-    case alertStatus === "fadeOut":
-      setTimeout(() => setAlertStatus("unmount"), 400);
+    case alertStatus === 'fadeOut':
+      setTimeout(() => setAlertStatus('unmount'), 400);
       return alertTemplate(false);
     default:
       alertTemplate();
@@ -63,21 +80,21 @@ function MDAlert({ color, dismissible, children, ...rest }) {
 
 // Setting default values for the props of MDAlert
 MDAlert.defaultProps = {
-  color: "info",
+  color: 'info',
   dismissible: false,
 };
 
 // Typechecking props of the MDAlert
 MDAlert.propTypes = {
   color: PropTypes.oneOf([
-    "primary",
-    "secondary",
-    "info",
-    "success",
-    "warning",
-    "error",
-    "light",
-    "dark",
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+    'light',
+    'dark',
   ]),
   dismissible: PropTypes.bool,
   children: PropTypes.node.isRequired,

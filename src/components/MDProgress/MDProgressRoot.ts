@@ -14,10 +14,17 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import { styled } from "@mui/material/styles";
-import LinearProgress from "@mui/material/LinearProgress";
+import { styled } from '@mui/material/styles';
+import LinearProgress from '@mui/material/LinearProgress';
 
-export default styled(LinearProgress)(({ theme, ownerState }) => {
+interface MDProgressProps {
+  variant?: 'contained' | 'gradient';
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'light' | 'dark';
+  value?: number;
+  label?: boolean;
+}
+
+export default styled(LinearProgress)<{ ownerState: MDProgressProps }>(({ theme, ownerState }) => {
   const { palette, functions } = theme;
   const { color, value, variant } = ownerState;
 
@@ -27,19 +34,20 @@ export default styled(LinearProgress)(({ theme, ownerState }) => {
   // background value
   let backgroundValue;
 
-  if (variant === "gradient") {
-    backgroundValue = gradients[color]
-      ? linearGradient(gradients[color].main, gradients[color].state)
-      : linearGradient(gradients.info.main, gradients.info.state);
+  if (variant === 'gradient') {
+    backgroundValue =
+      color && gradients[color]
+        ? linearGradient(gradients[color].main, gradients[color].state)
+        : linearGradient(gradients.info.main, gradients.info.state);
   } else {
-    backgroundValue = palette[color] ? palette[color].main : palette.info.main;
+    backgroundValue = color && palette[color] ? palette[color].main : palette.info.main;
   }
 
   return {
-    "& .MuiLinearProgress-bar": {
+    '& .MuiLinearProgress-bar': {
       background: backgroundValue,
       width: `${value}%`,
-      color: text.main,
+      color: text.primary,
     },
   };
 });

@@ -14,22 +14,24 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import { baseProperties } from 'assets/theme/base/typography';
 
-export default styled("span")(({ theme }) => {
+export default styled('span')(({ theme }) => {
   const { palette, typography, functions } = theme;
 
   const { white } = palette;
-  const { size, fontWeightMedium } = typography;
+  const { fontWeightMedium } = typography as TypographyOptions;
   const { pxToRem } = functions;
 
   return {
     color: white.main,
-    fontSize: size.xl,
+    fontSize: baseProperties.fontSizeXL,
     padding: `${pxToRem(9)} ${pxToRem(6)} ${pxToRem(8)}`,
     marginLeft: pxToRem(40),
     fontWeight: fontWeightMedium,
-    cursor: "pointer",
+    cursor: 'pointer',
     lineHeight: 0,
   };
 });

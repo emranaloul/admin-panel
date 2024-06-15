@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /**
 =========================================================
 * Material Dashboard 2 React - v2.2.0
@@ -14,44 +15,58 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import Badge from "@mui/material/Badge";
-import { styled } from "@mui/material/styles";
+import Badge, { BadgeProps } from '@mui/material/Badge';
+import { CSSObject, styled } from '@mui/material/styles';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import { baseProperties } from 'assets/theme/base/typography';
+import { ColorType, SizeType } from 'types';
 
-export default styled(Badge)(({ theme, ownerState }) => {
+interface MDBadgeProps {
+  color?: ColorType;
+  variant?: 'gradient' | 'contained';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | SizeType;
+  circular?: boolean;
+  indicator?: boolean;
+  border?: boolean;
+  container?: boolean;
+  children?: React.ReactNode;
+}
+
+export default styled(Badge)<BadgeProps & { ownerState: MDBadgeProps }>(({ theme, ownerState }) => {
   const { palette, typography, borders, functions } = theme;
   const { color, circular, border, size, indicator, variant, container, children } = ownerState;
 
   const { white, dark, gradients, badgeColors } = palette;
-  const { size: fontSize, fontWeightBold } = typography;
+  const { fontWeightBold } = typography as TypographyOptions;
   const { borderRadius, borderWidth } = borders;
   const { pxToRem, linearGradient } = functions;
 
   // padding values
   const paddings = {
-    xs: "0.45em 0.775em",
-    sm: "0.55em 0.9em",
-    md: "0.65em 1em",
-    lg: "0.85em 1.375em",
+    xs: '0.45em 0.775em',
+    sm: '0.55em 0.9em',
+    md: '0.65em 1em',
+    lg: '0.85em 1.375em',
   };
 
   // fontSize value
-  const fontSizeValue = size === "xs" ? fontSize.xxs : fontSize.xs;
+  const fontSizeValue = size === 'xs' ? baseProperties.fontSizeXXS : baseProperties.fontSizeXS;
 
   // border value
-  const borderValue = border ? `${borderWidth[3]} solid ${white.main}` : "none";
+  const borderValue = border ? `${borderWidth[3]} solid ${white.main}` : 'none';
 
   // borderRadius value
   const borderRadiusValue = circular ? borderRadius.section : borderRadius.md;
 
   // styles for the badge with indicator={true}
-  const indicatorStyles = (sizeProp) => {
+  const indicatorStyles = (sizeProp?: 'xs' | 'sm' | 'md' | 'lg' | SizeType): CSSObject => {
     let widthValue = pxToRem(20);
     let heightValue = pxToRem(20);
 
-    if (sizeProp === "medium") {
+    if (sizeProp === 'medium') {
       widthValue = pxToRem(24);
       heightValue = pxToRem(24);
-    } else if (sizeProp === "large") {
+    } else if (sizeProp === 'large') {
       widthValue = pxToRem(32);
       heightValue = pxToRem(32);
     }
@@ -59,21 +74,21 @@ export default styled(Badge)(({ theme, ownerState }) => {
     return {
       width: widthValue,
       height: heightValue,
-      display: "grid",
-      placeItems: "center",
-      textAlign: "center",
-      borderRadius: "50%",
+      display: 'grid',
+      placeItems: 'center',
+      textAlign: 'center',
+      borderRadius: '50%',
       padding: 0,
       border: borderValue,
     };
   };
 
   // styles for the badge with variant="gradient"
-  const gradientStyles = (colorProp) => {
+  const gradientStyles = (colorProp: keyof typeof gradients) => {
     const backgroundValue = gradients[colorProp]
       ? linearGradient(gradients[colorProp].main, gradients[colorProp].state)
       : linearGradient(gradients.info.main, gradients.info.state);
-    const colorValue = colorProp === "light" ? dark.main : white.main;
+    const colorValue = colorProp === 'light' ? dark.main : white.main;
 
     return {
       background: backgroundValue,
@@ -82,13 +97,15 @@ export default styled(Badge)(({ theme, ownerState }) => {
   };
 
   // styles for the badge with variant="contained"
-  const containedStyles = (colorProp) => {
+  const containedStyles = (colorProp: keyof typeof badgeColors) => {
     const backgroundValue = badgeColors[colorProp]
       ? badgeColors[colorProp].background
       : badgeColors.info.background;
-    let colorValue = badgeColors[colorProp] ? badgeColors[colorProp].text : badgeColors.info.text;
+    let colorValue: keyof typeof badgeColors | string = badgeColors[colorProp]
+      ? badgeColors[colorProp].text
+      : badgeColors.info.text;
 
-    if (colorProp === "light") {
+    if (colorProp === 'light') {
       colorValue = dark.main;
     }
     return {
@@ -99,36 +116,36 @@ export default styled(Badge)(({ theme, ownerState }) => {
 
   // styles for the badge with no children and container={false}
   const standAloneStyles = () => ({
-    position: "static",
+    position: 'static',
     marginLeft: pxToRem(8),
-    transform: "none",
+    transform: 'none',
     fontSize: pxToRem(9),
   });
 
   // styles for the badge with container={true}
   const containerStyles = () => ({
-    position: "relative",
-    transform: "none",
+    position: 'relative',
+    transform: 'none',
   });
 
   return {
-    "& .MuiBadge-badge": {
-      height: "auto",
-      padding: paddings[size] || paddings.xs,
+    '& .MuiBadge-badge': {
+      height: 'auto',
+      padding: paddings[(size as 'xs' | 'sm' | 'md' | 'lg')!] || paddings.xs,
       fontSize: fontSizeValue,
       fontWeight: fontWeightBold,
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
       lineHeight: 1,
-      textAlign: "center",
-      whiteSpace: "nowrap",
-      verticalAlign: "baseline",
+      textAlign: 'center',
+      whiteSpace: 'nowrap',
+      verticalAlign: 'baseline',
       border: borderValue,
       borderRadius: borderRadiusValue,
       ...(indicator && indicatorStyles(size)),
-      ...(variant === "gradient" && gradientStyles(color)),
-      ...(variant === "contained" && containedStyles(color)),
-      ...(!children && !container && standAloneStyles(color)),
-      ...(container && containerStyles(color)),
+      ...(variant === 'gradient' && gradientStyles(color!)),
+      ...(variant === 'contained' && containedStyles(color!)),
+      ...(!children && !container && standAloneStyles()),
+      ...(container && containerStyles()),
     },
   };
 });

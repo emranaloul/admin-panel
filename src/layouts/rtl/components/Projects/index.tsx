@@ -13,40 +13,41 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { MouseEvent, useState } from 'react';
 
 // @mui material components
-import Card from "@mui/material/Card";
-import Icon from "@mui/material/Icon";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import Card from '@mui/material/Card';
+import Icon from '@mui/material/Icon';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import DataTable from "examples/Tables/DataTable";
+import MDBox from 'components/MDBox';
+import MDTypography from 'components/MDTypography';
+import DataTable from 'examples/Tables/DataTable';
 
 // Data
-import data from "layouts/rtl/components/Projects/data";
+import data from 'layouts/rtl/components/Projects/data';
 
 function Projects() {
   const { columns, rows } = data();
-  const [menu, setMenu] = useState(null);
+  const [menu, setMenu] = useState<HTMLElement | null>(null);
 
-  const openMenu = ({ currentTarget }) => setMenu(currentTarget);
+  const openMenu = (e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>) =>
+    setMenu(e.target as HTMLElement);
   const closeMenu = () => setMenu(null);
 
   const renderMenu = (
     <Menu
-      id="simple-menu"
+      id='simple-menu'
       anchorEl={menu}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "left",
+        vertical: 'top',
+        horizontal: 'left',
       }}
       transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       open={Boolean(menu)}
       onClose={closeMenu}
@@ -59,28 +60,28 @@ function Projects() {
 
   return (
     <Card>
-      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+      <MDBox display='flex' justifyContent='space-between' alignItems='center' p={3}>
         <MDBox>
-          <MDTypography variant="h6" gutterBottom>
+          <MDTypography variant='h6' gutterBottom>
             المشاريع
           </MDTypography>
-          <MDBox display="flex" alignItems="center" lineHeight={0}>
+          <MDBox display='flex' alignItems='center' lineHeight={0}>
             <Icon
               sx={{
-                fontWeight: "bold",
+                fontWeight: 'bold',
                 color: ({ palette: { info } }) => info.main,
                 mt: -0.5,
               }}
             >
               done
             </Icon>
-            <MDTypography variant="button" fontWeight="regular" color="text">
+            <MDTypography variant='button' fontWeight='regular' color='text'>
               &nbsp;<strong>30 انتهى</strong> هذا الشهر
             </MDTypography>
           </MDBox>
         </MDBox>
-        <MDBox color="text" px={2}>
-          <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
+        <MDBox color='text' px={2}>
+          <Icon sx={{ cursor: 'pointer', fontWeight: 'bold' }} fontSize='small' onClick={openMenu}>
             more_vert
           </Icon>
         </MDBox>
@@ -92,7 +93,7 @@ function Projects() {
           showTotalEntries={false}
           isSorted={false}
           noEndBorder
-          entriesPerPage={false}
+          entriesPerPage={undefined}
         />
       </MDBox>
     </Card>

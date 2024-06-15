@@ -20,9 +20,11 @@ import MDAvatarRoot from 'components/MDAvatar/MDAvatarRoot';
 import { AvatarProps } from '@mui/material';
 import { AvatarOwnerState } from 'types';
 
-const MDAvatar = forwardRef<HTMLImageElement, AvatarProps & AvatarOwnerState>(
-  ({ bgColor = 'transparent', size = 'md', shadow = 'none', ...rest }, ref) => (
-    <MDAvatarRoot ref={ref} ownerState={{ shadow, bgColor, size }} {...rest} />
+interface AvatarCustomProps extends AvatarProps, AvatarOwnerState {}
+
+const MDAvatar = forwardRef<HTMLImageElement, AvatarProps & AvatarCustomProps>(
+  ({ bgColor = 'transparent', size = 'md', shadow = 'none', name, ...rest }, ref) => (
+    <MDAvatarRoot ref={ref} ownerState={{ shadow, bgColor, size, name }} {...rest} />
   )
 );
 
