@@ -25,7 +25,6 @@ Coded by www.creative-tim.com
 // }
 
 // @mui material components
-import React from 'react';
 import Box, { BoxProps } from '@mui/material/Box';
 import { CSSObject, Palette, PaletteColor, styled } from '@mui/material/styles';
 import { BoxOwnerState } from 'types';
@@ -109,14 +108,13 @@ export default styled(Box)<CustomBoxProps>(({ theme, ownerState }): CSSObject =>
           )
         : white.main;
     } else if (validColors.find((el) => el === bgColor)) {
-      backgroundValue = palette[color as keyof Palette]
-        ? (palette[color as keyof Palette] as PaletteColor).main
-        : greyColors[color as keyof typeof greyColors];
+      backgroundValue = palette[bgColor as keyof Palette]
+        ? (palette[bgColor as keyof Palette] as PaletteColor).main
+        : greyColors[bgColor as keyof typeof greyColors];
     } else {
       backgroundValue = bgColor;
     }
   }
-
   // color value
   let colorValue = color;
 
@@ -135,6 +133,7 @@ export default styled(Box)<CustomBoxProps>(({ theme, ownerState }): CSSObject =>
   }
 
   // boxShadow value
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let boxShadowValue: any = 'none';
   if (shadow && coloredShadow && typeof coloredShadow === 'number') {
     if (validBoxShadows.find((el) => el === shadow)) {

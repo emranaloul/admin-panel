@@ -15,17 +15,21 @@ Coded by www.creative-tim.com
 
 /* eslint-disable no-dupe-keys */
 // Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
+import colors from 'assets/theme/base/colors';
+import { ChartDataset } from 'chart.js';
 
 const { gradients, dark } = colors;
 
-function configs(labels, datasets) {
+function configs(
+  labels: string[],
+  datasets: ChartDataset<'pie'> & { backgroundColors: (keyof typeof gradients)[] }
+) {
   const backgroundColors = [];
 
   if (datasets.backgroundColors) {
-    datasets.backgroundColors.forEach((color) =>
-      gradients[color]
-        ? backgroundColors.push(gradients[color].state)
+    datasets.backgroundColors.forEach((color: string) =>
+      gradients[color as keyof typeof gradients]
+        ? backgroundColors.push(gradients[color as keyof typeof gradients].state)
         : backgroundColors.push(dark.main)
     );
   } else {
@@ -59,9 +63,9 @@ function configs(labels, datasets) {
       },
       interaction: {
         intersect: false,
-        mode: "index",
+        mode: 'index',
       },
-    },
+    } as const,
   };
 }
 

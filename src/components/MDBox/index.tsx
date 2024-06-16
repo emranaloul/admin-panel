@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { AnchorHTMLAttributes, ImgHTMLAttributes, ReactElement } from 'react';
+import { AnchorHTMLAttributes, ImgHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
 
 // prop-types is a library for typechecking of props
@@ -45,7 +45,16 @@ type MDBoxProps = MDBoxImgProps | MDBoxOtherProps | MDBoxAmchorProps | MDBoxNavL
 
 const MDBox = forwardRef(
   (
-    { variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow, ...rest }: MDBoxProps,
+    {
+      variant,
+      bgColor = 'transparent',
+      color,
+      opacity,
+      borderRadius,
+      shadow,
+      coloredShadow,
+      ...rest
+    }: MDBoxProps,
     ref
   ) => (
     <MDBoxRoot

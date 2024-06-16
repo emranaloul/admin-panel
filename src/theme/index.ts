@@ -10,6 +10,7 @@ import linearGradient from 'assets/theme/functions/linearGradient';
 import pxToRem from 'assets/theme/functions/pxToRem';
 import rgba from 'assets/theme/functions/rgba';
 type ColorsType = typeof colors;
+
 declare module '@mui/material/styles' {
   interface Palette extends ColorsType {}
   interface PaletteOptions extends ColorsType {}
