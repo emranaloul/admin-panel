@@ -14,10 +14,13 @@ Coded by www.creative-tim.com
 */
 
 // NextJS Material Dashboard 2 base styles
-import typography from "assets/theme/base/typography";
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import typography from 'assets/theme/base/typography';
+import { ChartDataset, ChartOptions } from 'chart.js';
 
-function configs(labels, datasets) {
+function configs(labels: string[], datasets: ChartDataset<'line'>[]) {
   return {
+    type: 'line' as const,
     data: {
       labels,
       datasets: [...datasets],
@@ -32,7 +35,7 @@ function configs(labels, datasets) {
       },
       interaction: {
         intersect: false,
-        mode: "index",
+        mode: 'index' as const,
       },
       scales: {
         y: {
@@ -46,11 +49,11 @@ function configs(labels, datasets) {
           ticks: {
             display: true,
             padding: 10,
-            color: "#b2b9bf",
+            color: '#b2b9bf',
             font: {
               size: 11,
-              family: typography.fontFamily,
-              style: "normal",
+              family: (typography as TypographyOptions).fontFamily,
+              style: 'normal',
               lineHeight: 2,
             },
           },
@@ -65,18 +68,18 @@ function configs(labels, datasets) {
           },
           ticks: {
             display: true,
-            color: "#b2b9bf",
+            color: '#b2b9bf',
             padding: 20,
             font: {
               size: 11,
-              family: typography.fontFamily,
-              style: "normal",
+              family: (typography as TypographyOptions).fontFamily,
+              style: 'normal',
               lineHeight: 2,
             },
           },
         },
       },
-    },
+    } as ChartOptions<'line'>,
   };
 }
 

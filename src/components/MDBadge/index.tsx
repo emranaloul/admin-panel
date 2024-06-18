@@ -21,7 +21,7 @@ import { BadgeProps } from '@mui/material';
 import { ColorType } from 'types';
 
 interface MDBadgeProps extends BadgeProps {
-  color?: ColorType;
+  ownerColor?: ColorType | 'dark';
   ownerVariant: 'gradient' | 'contained';
   size?: 'xs' | 'sm' | 'md' | 'lg';
   circular?: boolean;
@@ -41,28 +41,34 @@ const MDBadge = forwardRef<HTMLSpanElement, MDBadgeProps>(
       container,
       children,
       ownerVariant = 'gradient',
+      ownerColor,
       ...rest
     },
     ref
-  ) => (
-    <MDBadgeRoot
-      {...rest}
-      ownerState={{
-        color,
-        variant: ownerVariant,
-        size,
-        circular,
-        indicator,
-        border,
-        container,
-        children,
-      }}
-      ref={ref}
-      color='default'
-    >
-      {children}
-    </MDBadgeRoot>
-  )
+  ) => {
+    if (color && color !== 'default') {
+      ownerColor ??= color;
+    }
+    return (
+      <MDBadgeRoot
+        color={color}
+        {...rest}
+        ownerState={{
+          color: ownerColor,
+          variant: ownerVariant,
+          size,
+          circular,
+          indicator,
+          border,
+          container,
+          children,
+        }}
+        ref={ref}
+      >
+        {children}
+      </MDBadgeRoot>
+    );
+  }
 );
 
 export default MDBadge;

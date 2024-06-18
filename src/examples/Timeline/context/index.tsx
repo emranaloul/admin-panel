@@ -18,13 +18,13 @@ Coded by www.creative-tim.com
   This file is used for controlling the dark and light state of the TimelineList and TimelineItem.
 */
 
-import { createContext, useContext } from "react";
+import { ReactNode, createContext, useContext } from 'react';
 
 // The Timeline main context
-const Timeline = createContext();
+const Timeline = createContext(false);
 
 // Timeline context provider
-function TimelineProvider({ children, value }) {
+function TimelineProvider({ children, value }: { children: ReactNode; value: boolean }) {
   return <Timeline.Provider value={value}>{children}</Timeline.Provider>;
 }
 

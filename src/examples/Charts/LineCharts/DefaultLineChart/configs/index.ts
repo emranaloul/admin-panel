@@ -1,9 +1,9 @@
 /**
 =========================================================
-* Material Dashboard 2  React - v2.2.0
+* Material Dashboard 2 React - v2.1.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Product Page: https://www.creative-tim.com/product/nextjs-material-dashboard-pro
 * Copyright 2023 Creative Tim (https://www.creative-tim.com)
 
 Coded by www.creative-tim.com
@@ -12,11 +12,12 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
 // Material Dashboard 2 React base styles
-import typography from "assets/theme/base/typography";
+import { TypographyOptions } from '@mui/material/styles/createTypography';
+import typography from 'assets/theme/base/typography';
+import { ChartDataset, ChartOptions } from 'chart.js';
 
-function configs(labels, datasets) {
+function configs(labels: string[], datasets: ChartDataset<'line'>[]) {
   return {
     data: {
       labels,
@@ -30,6 +31,10 @@ function configs(labels, datasets) {
           display: false,
         },
       },
+      interaction: {
+        intersect: false,
+        mode: 'index' as const,
+      },
       scales: {
         y: {
           grid: {
@@ -38,15 +43,16 @@ function configs(labels, datasets) {
             drawOnChartArea: true,
             drawTicks: false,
             borderDash: [5, 5],
+            color: '#c1c4ce5c',
           },
           ticks: {
             display: true,
             padding: 10,
-            color: "#9ca2b7",
+            color: '#b2b9bf',
             font: {
               size: 11,
-              family: typography.fontFamily,
-              style: "normal",
+              family: (typography as TypographyOptions).fontFamily,
+              style: 'normal',
               lineHeight: 2,
             },
           },
@@ -54,24 +60,26 @@ function configs(labels, datasets) {
         x: {
           grid: {
             drawBorder: false,
-            display: false,
+            display: true,
             drawOnChartArea: true,
             drawTicks: true,
+            borderDash: [5, 5],
+            color: '#c1c4ce5c',
           },
           ticks: {
             display: true,
-            color: "#9ca2b7",
-            padding: 10,
+            color: '#b2b9bf',
+            padding: 20,
             font: {
               size: 11,
-              family: typography.fontFamily,
-              style: "normal",
+              family: (typography as TypographyOptions).fontFamily,
+              style: 'normal',
               lineHeight: 2,
             },
           },
         },
       },
-    },
+    } as ChartOptions<'line'>,
   };
 }
 

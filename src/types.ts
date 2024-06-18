@@ -83,3 +83,10 @@ export type AppRoute = {
 export type ColorType = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
 
 export type SizeType = 'small' | 'medium' | 'large';
+
+export type ActionType = {
+  route: string;
+  label: string;
+  type: 'external' | 'internal';
+  color: ColorType;
+};

@@ -13,13 +13,13 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useMemo } from "react";
+import { ReactNode, useMemo } from 'react';
 
 // porp-types is a library for typechecking of props
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 // react-chartjs-2 components
-import { Line } from "react-chartjs-2";
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -30,21 +30,23 @@ import {
   Tooltip,
   Legend,
   Filler,
-} from "chart.js";
+  ChartDataset,
+} from 'chart.js';
 
 // @mui material components
-import Card from "@mui/material/Card";
-import Icon from "@mui/material/Icon";
+import Card from '@mui/material/Card';
+import Icon from '@mui/material/Icon';
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
+import MDBox from 'components/MDBox';
+import MDTypography from 'components/MDTypography';
 
 // DefaultLineChart configurations
-import configs from "examples/Charts/LineCharts/DefaultLineChart/configs";
+import configs from 'examples/Charts/LineCharts/DefaultLineChart/configs';
 
 // Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
+import colors from 'assets/theme/base/colors';
+import { ColorType } from 'types';
 
 ChartJS.register(
   CategoryScale,
@@ -57,20 +59,36 @@ ChartJS.register(
   Filler
 );
 
-function DefaultLineChart({ icon, title, description, height, chart }) {
+interface IconProps {
+  color?: ColorType;
+  component?: ReactNode;
+}
+
+interface DefaultLineChartProps {
+  icon?: IconProps;
+  title?: string;
+  description?: string | ReactNode;
+  height?: string | number;
+  chart: {
+    labels: string[];
+    datasets: ({ color: ColorType } & ChartDataset<'line'>)[];
+  };
+}
+
+function DefaultLineChart({ icon, title, description, height, chart }: DefaultLineChartProps) {
   const chartDatasets = chart.datasets
     ? chart.datasets.map((dataset) => ({
         ...dataset,
         tension: 0,
         pointRadius: 3,
         borderWidth: 4,
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
         fill: true,
         pointBackgroundColor: colors[dataset.color]
-          ? colors[dataset.color || "dark"].main
+          ? colors[dataset.color || 'dark'].main
           : colors.dark.main,
         borderColor: colors[dataset.color]
-          ? colors[dataset.color || "dark"].main
+          ? colors[dataset.color || 'dark'].main
           : colors.dark.main,
         maxBarThickness: 6,
       }))
@@ -79,31 +97,31 @@ function DefaultLineChart({ icon, title, description, height, chart }) {
   const { data, options } = configs(chart.labels || [], chartDatasets);
 
   const renderChart = (
-    <MDBox py={2} pr={2} pl={icon.component ? 1 : 2}>
+    <MDBox py={2} pr={2} pl={icon?.component ? 1 : 2}>
       {title || description ? (
-        <MDBox display="flex" px={description ? 1 : 0} pt={description ? 1 : 0}>
-          {icon.component && (
+        <MDBox display='flex' px={description ? 1 : 0} pt={description ? 1 : 0}>
+          {icon?.component && (
             <MDBox
-              width="4rem"
-              height="4rem"
-              bgColor={icon.color || "dark"}
-              variant="gradient"
-              coloredShadow={icon.color || "dark"}
-              borderRadius="xl"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              color="white"
+              width='4rem'
+              height='4rem'
+              bgColor={icon?.color || 'dark'}
+              variant='gradient'
+              coloredShadow={icon?.color || 'dark'}
+              borderRadius='xl'
+              display='flex'
+              justifyContent='center'
+              alignItems='center'
+              color='white'
               mt={-5}
               mr={2}
             >
-              <Icon fontSize="medium">{icon.component}</Icon>
+              <Icon fontSize='medium'>{icon.component}</Icon>
             </MDBox>
           )}
-          <MDBox mt={icon.component ? -2 : 0}>
-            {title && <MDTypography variant="h6">{title}</MDTypography>}
+          <MDBox mt={icon?.component ? -2 : 0}>
+            {title && <MDTypography variant='h6'>{title}</MDTypography>}
             <MDBox mb={2}>
-              <MDTypography component="div" variant="button" color="text">
+              <MDTypography component='div' variant='button' color='text'>
                 {description}
               </MDTypography>
             </MDBox>
@@ -126,24 +144,24 @@ function DefaultLineChart({ icon, title, description, height, chart }) {
 
 // Setting default values for the props of DefaultLineChart
 DefaultLineChart.defaultProps = {
-  icon: { color: "info", component: "" },
-  title: "",
-  description: "",
-  height: "19.125rem",
+  icon: { color: 'info', component: '' },
+  title: '',
+  description: '',
+  height: '19.125rem',
 };
 
 // Typechecking props for the DefaultLineChart
 DefaultLineChart.propTypes = {
   icon: PropTypes.shape({
     color: PropTypes.oneOf([
-      "primary",
-      "secondary",
-      "info",
-      "success",
-      "warning",
-      "error",
-      "light",
-      "dark",
+      'primary',
+      'secondary',
+      'info',
+      'success',
+      'warning',
+      'error',
+      'light',
+      'dark',
     ]),
     component: PropTypes.node,
   }),

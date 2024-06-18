@@ -13,35 +13,14 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-/* eslint-disable no-dupe-keys */
-// Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
+import { ChartDataset } from 'chart.js';
+import { ColorType } from 'types';
 
-const { gradients, dark } = colors;
-
-function configs(labels, datasets) {
-  const backgroundColors = [];
-
-  if (datasets.backgroundColors) {
-    datasets.backgroundColors.forEach((color) =>
-      gradients[color]
-        ? backgroundColors.push(gradients[color].state)
-        : backgroundColors.push(dark.main)
-    );
-  } else {
-    backgroundColors.push(dark.main);
-  }
-
+function configs(labels: string[], datasets: (ChartDataset<'radar'> & { color: ColorType })[]) {
   return {
     data: {
       labels,
-      datasets: [
-        {
-          label: datasets.label,
-          backgroundColor: backgroundColors,
-          data: datasets.data,
-        },
-      ],
+      datasets: [...datasets],
     },
     options: {
       responsive: true,
@@ -53,7 +32,7 @@ function configs(labels, datasets) {
       },
       interaction: {
         intersect: false,
-        mode: "index",
+        mode: 'index' as const,
       },
     },
   };

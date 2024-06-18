@@ -13,38 +13,35 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useEffect } from "react";
+import { ReactNode, useEffect } from 'react';
 
 // react-router-dom components
-import { useLocation } from "react-router-dom";
-
-// prop-types is a library for typechecking of props.
-import PropTypes from "prop-types";
+import { useLocation } from 'react-router-dom';
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
+import MDBox from 'components/MDBox';
 
 // Material Dashboard 2 React context
-import { useMaterialUIController, setLayout } from "context";
+import { useMaterialUIController, setLayout, ControllerType, DispatchFunction } from 'context';
 
-function DashboardLayout({ children }) {
+function DashboardLayout({ children }: { children: ReactNode }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav } = controller;
+  const { miniSidenav } = controller as ControllerType;
   const { pathname } = useLocation();
 
   useEffect(() => {
-    setLayout(dispatch, "dashboard");
+    setLayout(dispatch as DispatchFunction, 'dashboard');
   }, [pathname]);
 
   return (
     <MDBox
       sx={({ breakpoints, transitions, functions: { pxToRem } }) => ({
         p: 3,
-        position: "relative",
+        position: 'relative',
 
-        [breakpoints.up("xl")]: {
+        [breakpoints.up('xl')]: {
           marginLeft: miniSidenav ? pxToRem(120) : pxToRem(274),
-          transition: transitions.create(["margin-left", "margin-right"], {
+          transition: transitions.create(['margin-left', 'margin-right'], {
             easing: transitions.easing.easeInOut,
             duration: transitions.duration.standard,
           }),
@@ -55,10 +52,5 @@ function DashboardLayout({ children }) {
     </MDBox>
   );
 }
-
-// Typechecking props for the DashboardLayout
-DashboardLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default DashboardLayout;
