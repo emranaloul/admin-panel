@@ -22,7 +22,7 @@ import { baseProperties } from 'assets/theme/base/typography';
 import { ColorType, SizeType } from 'types';
 
 interface MDBadgeProps {
-  color?: ColorType;
+  color?: ColorType | 'dark';
   variant?: 'gradient' | 'contained';
   size?: 'xs' | 'sm' | 'md' | 'lg' | SizeType;
   circular?: boolean;

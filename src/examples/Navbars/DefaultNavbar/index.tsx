@@ -141,7 +141,7 @@ function DefaultNavbar({ transparent, light, action }: DefaultNavbarProps) {
                 component={Link}
                 to={action.route}
                 ownerVariant='gradient'
-                color={action.color ? action.color : 'info'}
+                ownerColor={action.color ? action.color : 'info'}
                 size='small'
               >
                 {action.label}
@@ -155,7 +155,7 @@ function DefaultNavbar({ transparent, light, action }: DefaultNavbarProps) {
                 target='_blank'
                 rel='noreferrer'
                 ownerVariant='gradient'
-                color={action.color ? action.color : 'info'}
+                ownerColor={action.color ? action.color : 'info'}
                 size='small'
                 sx={{ mt: -0.3 }}
               >

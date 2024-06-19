@@ -19,6 +19,7 @@ import marie from 'assets/images/marie.jpg';
 import ivana from 'assets/images/ivana-square.jpg';
 import team3 from 'assets/images/team-3.jpg';
 import team4 from 'assets/images/team-4.jpg';
+import { ColorType } from 'types';
 
 export default [
   {
@@ -26,9 +27,9 @@ export default [
     name: 'Sophie B.',
     description: 'Hi! I need more information..',
     action: {
-      type: 'internal',
+      type: 'internal' as const,
       route: '/pages/profile/profile-overview',
-      color: 'info',
+      color: 'info' as ColorType,
       label: 'reply',
     },
   },
@@ -37,9 +38,9 @@ export default [
     name: 'Anne Marie',
     description: 'Awesome work, can you..',
     action: {
-      type: 'internal',
+      type: 'internal' as const,
       route: '/pages/profile/profile-overview',
-      color: 'info',
+      color: 'info' as ColorType,
       label: 'reply',
     },
   },
@@ -48,9 +49,9 @@ export default [
     name: 'Ivanna',
     description: 'About files I can..',
     action: {
-      type: 'internal',
+      type: 'internal' as const,
       route: '/pages/profile/profile-overview',
-      color: 'info',
+      color: 'info' as ColorType,
       label: 'reply',
     },
   },
@@ -59,9 +60,9 @@ export default [
     name: 'Peterson',
     description: 'Have a great afternoon..',
     action: {
-      type: 'internal',
+      type: 'internal' as const,
       route: '/pages/profile/profile-overview',
-      color: 'info',
+      color: 'info' as ColorType,
       label: 'reply',
     },
   },
@@ -70,9 +71,9 @@ export default [
     name: 'Nick Daniel',
     description: 'Hi! I need more information..',
     action: {
-      type: 'internal',
+      type: 'internal' as const,
       route: '/pages/profile/profile-overview',
-      color: 'info',
+      color: 'info' as ColorType,
       label: 'reply',
     },
   },

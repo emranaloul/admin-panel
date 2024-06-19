@@ -54,7 +54,7 @@ const MDPagination = forwardRef<HTMLButtonElement, ButtonPropTypes & MDPaginatio
             {...rest}
             ref={ref}
             variant={active ? (context.variant as Exclude<VariantType, 'gradient'>) : 'outlined'}
-            color={active ? context.color : 'secondary'}
+            color={active && context.color !== 'dark' ? context.color : 'secondary'}
             iconOnly
             circular
             ownerState={{ variant, active, paginationSize }}

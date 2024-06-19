@@ -34,7 +34,6 @@ import {
   UseGlobalFiltersState,
   UseTableInstanceProps,
   Column,
-  UseSortByColumnOptions,
   HeaderGroup,
 } from 'react-table';
 
@@ -311,7 +310,7 @@ function DataTable({
         {pageOptions.length > 1 && (
           <MDPagination
             variant={pagination?.variant !== 'gradient' ? pagination?.variant : 'contained'}
-            color={pagination?.color ? pagination?.color : 'info'}
+            ownerColor={pagination?.color ? pagination?.color : 'info'}
           >
             {canPreviousPage && (
               <MDPagination item onClick={() => previousPage()}>
