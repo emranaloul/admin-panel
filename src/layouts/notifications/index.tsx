@@ -79,8 +79,8 @@ function Notifications() {
       open={infoSB}
       onClose={closeInfoSB}
       close={closeInfoSB}
-      color={undefined}
-      bgWhite={undefined}
+      // color={undefined}
+      // bgWhite={undefined}
     />
   );
 

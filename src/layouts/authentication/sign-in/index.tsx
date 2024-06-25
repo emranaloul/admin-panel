@@ -40,14 +40,34 @@ import BasicLayout from 'layouts/authentication/components/BasicLayout';
 
 // Images
 import bgImage from 'assets/images/bg-sign-in-basic.jpeg';
+import { authService } from 'services/Auth';
+import { Snackbar } from '@mui/material';
+import MDSnackbar from 'components/MDSnackbar';
+import { login } from 'store/auth';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'store';
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [loginData, setLoginData] = useState<{ username: string; password: string }>({
+    username: '',
+    password: '',
+  });
+  const [loginError, setLoginError] = useState('');
+  const dispatch = useDispatch<AppDispatch>();
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
+  const handleLogin = async () => {
+    dispatch(login(loginData));
+  };
   return (
     <BasicLayout image={bgImage}>
+      <MDSnackbar
+        color='error'
+        title='login error'
+        content={loginError}
+        close={() => setLoginError('')}
+        open={!!loginError}
+      />
       <Card>
         <MDBox
           variant='gradient'
@@ -84,10 +104,20 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component='form' role='form'>
             <MDBox mb={2}>
-              <MDInput type='email' label='Email' fullWidth />
+              <MDInput
+                type='email'
+                label='Email'
+                fullWidth
+                onChange={(e) => setLoginData((item) => ({ ...item, username: e.target.value }))}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type='password' label='Password' fullWidth />
+              <MDInput
+                type='password'
+                label='Password'
+                fullWidth
+                onChange={(e) => setLoginData((item) => ({ ...item, password: e.target.value }))}
+              />
             </MDBox>
             <MDBox display='flex' alignItems='center' ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -102,7 +132,13 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant='contained' color='info' fullWidth>
+              <MDButton
+                variant='contained'
+                color='info'
+                fullWidth
+                disabled={!loginData.password || !loginData.username}
+                onClick={() => handleLogin()}
+              >
                 sign in
               </MDButton>
             </MDBox>

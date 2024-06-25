@@ -60,7 +60,7 @@ const MaterialUI = createContext([
 MaterialUI.displayName = 'MaterialUIContext';
 
 // Material Dashboard 2 React reducer
-function reducer(state: any, action: { type: string; value: any }) {
+function reducer(state: ControllerType, action: { type: string; value: any }) {
   switch (action.type) {
     case 'MINI_SIDENAV': {
       return { ...state, miniSidenav: action.value };

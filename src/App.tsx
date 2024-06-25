@@ -64,6 +64,7 @@ import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { Box } from '@mui/material';
 import { AppRoute } from 'types';
+import GlobalSnackbar from 'components/GlobalSnackbar';
 // import MDBox from "./components/MDBox";
 // import MDBox from "components/MDBox";
 
@@ -168,6 +169,7 @@ export default function App() {
   return direction === 'rtl' ? (
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
+        <GlobalSnackbar />
         <CssBaseline />
         {layout === 'dashboard' && (
           <>
@@ -193,6 +195,8 @@ export default function App() {
   ) : (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
+      <GlobalSnackbar />
+
       {layout === 'dashboard' && (
         <>
           <Sidenav

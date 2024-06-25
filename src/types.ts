@@ -78,6 +78,7 @@ export type AppRoute = {
   href?: string;
   route: string;
   component: ReactElement;
+  auth: boolean;
 };
 
 export type ColorType = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark';
@@ -90,3 +91,16 @@ export type ActionType = {
   type: 'external' | 'internal';
   color?: ColorType | 'dark';
 };
+
+export interface AuthPayload {
+  accessToken: string;
+  refreshToken: string;
+  userId: string;
+  userName: string;
+  phoneNumber: string;
+  fullName: string;
+  email: string;
+  roles: string[];
+  profileCompleteness: number;
+  isProfileCompleted: boolean;
+}

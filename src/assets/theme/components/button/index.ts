@@ -27,7 +27,7 @@ type ButtonStyleOverrides = {
   root: CSSInterpolation;
 } & ButtonVariantStyles;
 const button: {
-  styleOverrides: { root: CSSInterpolation } & ButtonStyleOverrides & {};
+  styleOverrides: { root: CSSInterpolation } & ButtonStyleOverrides & object;
   defaultProps: { disableRipple: boolean };
 } = {
   defaultProps: {

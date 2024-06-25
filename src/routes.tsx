@@ -36,18 +36,20 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React layouts
-import Dashboard from 'layouts/dashboard';
-import Tables from 'layouts/tables';
-import Billing from 'layouts/billing';
-import RTL from 'layouts/rtl';
-import Notifications from 'layouts/notifications';
-import Profile from 'layouts/profile';
-import SignIn from 'layouts/authentication/sign-in';
-import SignUp from 'layouts/authentication/sign-up';
 
 // @mui icons
 import Icon from '@mui/material/Icon';
+import { lazy } from 'react';
 import { AppRoute } from 'types';
+
+const Dashboard = lazy(() => import('layouts/dashboard'));
+const Tables = lazy(() => import('layouts/tables'));
+const Billing = lazy(() => import('layouts/billing'));
+const RTL = lazy(() => import('layouts/rtl'));
+const Notifications = lazy(() => import('layouts/notifications'));
+const Profile = lazy(() => import('layouts/profile'));
+const SignIn = lazy(() => import('layouts/authentication/sign-in'));
+const SignUp = lazy(() => import('layouts/authentication/sign-up'));
 
 const routes: AppRoute[] = [
   {
@@ -57,6 +59,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>dashboard</Icon>,
     route: '/dashboard',
     component: <Dashboard />,
+    auth: true,
   },
   {
     type: 'collapse',
@@ -65,6 +68,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>table_view</Icon>,
     route: '/tables',
     component: <Tables />,
+    auth: true,
   },
   {
     type: 'collapse',
@@ -73,6 +77,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>receipt_long</Icon>,
     route: '/billing',
     component: <Billing />,
+    auth: true,
   },
   {
     type: 'collapse',
@@ -81,6 +86,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>format_textdirection_r_to_l</Icon>,
     route: '/rtl',
     component: <RTL />,
+    auth: true,
   },
   {
     type: 'collapse',
@@ -89,6 +95,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>notifications</Icon>,
     route: '/notifications',
     component: <Notifications />,
+    auth: true,
   },
   {
     type: 'collapse',
@@ -97,6 +104,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>person</Icon>,
     route: '/profile',
     component: <Profile />,
+    auth: true,
   },
   {
     type: 'collapse',
@@ -105,6 +113,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>login</Icon>,
     route: '/authentication/sign-in',
     component: <SignIn />,
+    auth: false,
   },
   {
     type: 'collapse',
@@ -113,6 +122,7 @@ const routes: AppRoute[] = [
     icon: <Icon fontSize='small'>assignment</Icon>,
     route: '/authentication/sign-up',
     component: <SignUp />,
+    auth: false,
   },
 ];
 

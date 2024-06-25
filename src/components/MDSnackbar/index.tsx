@@ -36,9 +36,9 @@ import { TypographyOptions } from '@mui/material/styles/createTypography';
 
 interface MDSnackbarProps extends SnackbarProps {
   color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark' | 'light';
-  icon: ReactNode;
+  icon?: ReactNode;
   title: string;
-  dateTime: string;
+  dateTime?: string;
   close: () => void;
   bgWhite?: boolean;
 }
