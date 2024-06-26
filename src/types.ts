@@ -93,14 +93,59 @@ export type ActionType = {
 };
 
 export interface AuthPayload {
-  accessToken: string;
-  refreshToken: string;
-  userId: string;
-  userName: string;
-  phoneNumber: string;
-  fullName: string;
+  localId: string;
   email: string;
-  roles: string[];
-  profileCompleteness: number;
-  isProfileCompleted: boolean;
+  displayName: string;
+  idToken: string;
+  registered: boolean;
+  refreshToken: string;
+  expiresIn: string;
+}
+
+export type LoginDataType = { email: string; password: string };
+
+export enum AuthErrorMessages {
+  EMAIL_NOT_FOUND = 'There is no user record corresponding to this identifier. The user may have been deleted.',
+  INVALID_PASSWORD = 'The password is invalid or the user does not have a password.',
+  USER_DISABLED = 'The user account has been disabled by an administrator.',
+}
+export interface ErrorDetail {
+  message: AuthErrorMessages | string;
+  domain: string;
+  reason: string;
+}
+
+export interface ErrorResponse {
+  code: number;
+  message: AuthErrorMessages | string;
+  errors: ErrorDetail[];
+}
+
+export interface ApiResponse {
+  error: ErrorResponse;
+}
+
+export interface ProviderUserInfo {
+  providerId: string;
+  federatedId: string;
+  email: string;
+  rawId: string;
+}
+
+export interface User {
+  localId: string;
+  email: string;
+  passwordHash: string;
+  emailVerified: boolean;
+  passwordUpdatedAt: number;
+  providerUserInfo: ProviderUserInfo[];
+  validSince: string;
+  lastLoginAt: string;
+  createdAt: string;
+  lastRefreshAt: string;
+}
+
+export interface GetAccountInfoResponse {
+  kind: string;
+  users: User[];
 }

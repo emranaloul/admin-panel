@@ -124,6 +124,15 @@ const routes: AppRoute[] = [
     component: <SignUp />,
     auth: false,
   },
+  // {
+  //   type: 'collapse',
+  //   name: 'unauthorized redirect',
+  //   key: 'unauthorized-redirect',
+  //   icon: <Icon fontSize='small'>assignment</Icon>,
+  //   route: '/authentication/sign-up',
+  //   component: <SignUp />,
+  //   auth: false,
+  // },
 ];
 
 export default routes;

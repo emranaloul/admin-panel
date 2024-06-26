@@ -7,7 +7,8 @@ export interface ApiServiceConfig {
   headers?: Record<string, string>;
 }
 
-const API_URL = `${process.env.REACT_APP_API_URL}/api`;
+const API_URL = `${process.env.REACT_APP_API_URL}`;
+const API_KEY = `${process.env.REACT_APP_API_KEY}`;
 
 export class ApiService {
   protected api: AxiosInstance;
@@ -26,6 +27,10 @@ export class ApiService {
         const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage with key 'token'
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
+        }
+        if (API_KEY) {
+          config.params = {};
+          config.params.key = API_KEY;
         }
         return config;
       },
@@ -92,6 +97,6 @@ export class ApiService {
       console.error('Error message: ', error.message);
     }
 
-    throw error;
+    throw error.response.data;
   }
 }

@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
@@ -65,11 +65,16 @@ import { CacheProvider } from '@emotion/react';
 import { Box } from '@mui/material';
 import { AppRoute } from 'types';
 import GlobalSnackbar from 'components/GlobalSnackbar';
+import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from 'store';
+import { getUserData } from 'store/auth';
+import { useDispatch } from 'react-redux';
 // import MDBox from "./components/MDBox";
 // import MDBox from "components/MDBox";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
+  const dispatchApp = useDispatch<AppDispatch>();
   const {
     miniSidenav,
     direction,
@@ -82,7 +87,7 @@ export default function App() {
   } = controller as ControllerType;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
-
+  const { loggedIn } = useSelector((state: RootState) => state.auth);
   // Cache for the rtl
   const cacheRtl = useMemo(
     () =>
@@ -128,18 +133,31 @@ export default function App() {
     }
   }, [pathname]);
 
-  const getRoutes = (allRoutes: AppRoute[]) =>
-    allRoutes.map((route) => {
-      // if (route.collapse) {
-      //   return getRoutes(route.collapse);
-      // }
+  const getRoutes = useCallback(
+    (allRoutes: AppRoute[]) =>
+      allRoutes.map((route) => {
+        const redirectComponent = <Navigate to={'/'} />;
+        // if (loggedIn !== route.auth) {
+        //   redirectComponent = <Navigate to={'/authentication/sign-in'} />;
+        // }
+        if (route.route) {
+          return (
+            <Route
+              path={route.route}
+              element={loggedIn === route.auth ? route.component : redirectComponent}
+              key={route.key}
+            />
+          );
+        }
 
-      if (route.route) {
-        return <Route path={route.route} element={route.component} key={route.key} />;
-      }
+        return null;
+      }),
+    [loggedIn]
+  );
 
-      return null;
-    });
+  useEffect(() => {
+    dispatchApp(getUserData());
+  }, []);
 
   const configsButton = (
     <MDBox
@@ -187,8 +205,11 @@ export default function App() {
         )}
         {layout === 'vr' && <Configurator />}
         <Routes>
+          <Route
+            path='/'
+            element={<Navigate to={`${loggedIn ? '/dashboard' : '/authentication/sign-in'}`} />}
+          />
           {getRoutes(routes)}
-          <Route path='*' element={<Navigate to='/dashboard' />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -196,7 +217,6 @@ export default function App() {
     <ThemeProvider theme={darkMode ? themeDark : theme}>
       <CssBaseline />
       <GlobalSnackbar />
-
       {layout === 'dashboard' && (
         <>
           <Sidenav
@@ -213,8 +233,11 @@ export default function App() {
       )}
       {layout === 'vr' && <Configurator />}
       <Routes>
+        <Route
+          path='/'
+          element={<Navigate to={`${loggedIn ? '/dashboard' : '/authentication/sign-in'}`} />}
+        />
         {getRoutes(routes)}
-        <Route path='*' element={<Navigate to='/dashboard' />} />
       </Routes>
     </ThemeProvider>
   );

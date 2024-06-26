@@ -15,6 +15,7 @@ export const GlobalSnackbar = () => {
       icon={icon}
       color={color}
       close={() => dispatch(clearSnackbar())}
+      onClose={() => dispatch(clearSnackbar())}
     />
   );
 };

@@ -31,8 +31,24 @@ import CoverLayout from 'layouts/authentication/components/CoverLayout';
 
 // Images
 import bgImage from 'assets/images/bg-sign-up-cover.jpeg';
+import { FormEvent, useState } from 'react';
+import { LoginDataType } from 'types';
+import { useDispatch } from 'react-redux';
+import { signup } from 'store/auth';
+import { AppDispatch } from 'store';
 
 function Cover() {
+  const dispatch = useDispatch<AppDispatch>();
+  const [signUpData, setSignUpData] = useState<LoginDataType>({
+    email: '',
+    password: '',
+  });
+  function submitHandler(event: FormEvent<HTMLFormElement | HTMLDivElement>): void {
+    console.log('🚀 ~ submitHandler ~ event:', event);
+    event.preventDefault();
+    dispatch(signup(signUpData));
+  }
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -55,15 +71,29 @@ function Cover() {
           </MDTypography>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component='form' role='form'>
-            <MDBox mb={2}>
+          <MDBox component='form' role='form' onSubmit={submitHandler}>
+            {/* <MDBox mb={2}>
               <MDInput type='text' label='Name' variant='standard' fullWidth />
+            </MDBox> */}
+            <MDBox mb={2}>
+              <MDInput
+                type='email'
+                label='Email'
+                variant='standard'
+                fullWidth
+                required
+                onChange={(e) => setSignUpData((data) => ({ ...data, email: e.target.value }))}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type='email' label='Email' variant='standard' fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type='password' label='Password' variant='standard' fullWidth />
+              <MDInput
+                type='password'
+                label='Password'
+                variant='standard'
+                fullWidth
+                required
+                onChange={(e) => setSignUpData((data) => ({ ...data, password: e.target.value }))}
+              />
             </MDBox>
             <MDBox display='flex' alignItems='center' ml={-1}>
               <Checkbox />
@@ -87,8 +117,8 @@ function Cover() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant='contained' color='info' fullWidth>
-                sign in
+              <MDButton variant='contained' color='info' fullWidth type='submit'>
+                sign up
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign='center'>

@@ -30,9 +30,13 @@ type MDBoxImgProps = MDBoxBaseProps &
   ImgHTMLAttributes<HTMLImageElement> & {
     component: 'img';
   };
-type MDBoxAmchorProps = MDBoxBaseProps &
+type MDBoxAnchorProps = MDBoxBaseProps &
   AnchorHTMLAttributes<HTMLAnchorElement> & {
     component: 'a';
+  };
+type MDBoxFormProps = MDBoxBaseProps &
+  AnchorHTMLAttributes<HTMLFormElement> & {
+    component: 'form';
   };
 type MDBoxNavLinkProps = MDBoxBaseProps &
   NavLinkProps & {
@@ -41,7 +45,12 @@ type MDBoxNavLinkProps = MDBoxBaseProps &
 
 type MDBoxOtherProps = MDBoxBaseProps;
 
-type MDBoxProps = MDBoxImgProps | MDBoxOtherProps | MDBoxAmchorProps | MDBoxNavLinkProps;
+type MDBoxProps =
+  | MDBoxImgProps
+  | MDBoxOtherProps
+  | MDBoxAnchorProps
+  | MDBoxNavLinkProps
+  | MDBoxFormProps;
 
 const MDBox = forwardRef(
   (

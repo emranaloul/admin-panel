@@ -1,12 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import snackbar from './snackbar';
+import auth from './auth';
 
 export const store = configureStore({
   reducer: {
     snackbar,
-    // posts: postsReducer,
-    // comments: commentsReducer,
-    // users: usersReducer,
+    auth,
   },
 });
 
