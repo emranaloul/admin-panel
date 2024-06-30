@@ -92,16 +92,4 @@ function SidenavCollapse({ icon, name, active, ...rest }: PropTypes) {
   );
 }
 
-// Setting default values for the props of SidenavCollapse
-SidenavCollapse.defaultProps = {
-  active: false,
-};
-
-// Typechecking props for the SidenavCollapse
-SidenavCollapse.propTypes = {
-  icon: PropTypes.node.isRequired,
-  name: PropTypes.string.isRequired,
-  active: PropTypes.bool,
-};
-
 export default SidenavCollapse;

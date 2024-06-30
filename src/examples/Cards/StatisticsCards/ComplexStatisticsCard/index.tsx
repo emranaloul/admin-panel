@@ -29,6 +29,7 @@ interface Percentage {
   color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark' | 'white';
   amount?: string | number;
   label?: string;
+  text?: '';
 }
 
 interface ComplexStatisticsCardProps {
@@ -46,6 +47,11 @@ function ComplexStatisticsCard({
   percentage,
   icon,
 }: ComplexStatisticsCardProps) {
+  percentage ??= {
+    color: 'success',
+    text: '',
+    label: '',
+  };
   return (
     <Card>
       <MDBox display='flex' justifyContent='space-between' pt={1} px={2}>
@@ -90,46 +96,5 @@ function ComplexStatisticsCard({
     </Card>
   );
 }
-
-// Setting default values for the props of ComplexStatisticsCard
-ComplexStatisticsCard.defaultProps = {
-  color: 'info',
-  percentage: {
-    color: 'success',
-    text: '',
-    label: '',
-  },
-};
-
-// Typechecking props for the ComplexStatisticsCard
-ComplexStatisticsCard.propTypes = {
-  color: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'info',
-    'success',
-    'warning',
-    'error',
-    'light',
-    'dark',
-  ]),
-  title: PropTypes.string.isRequired,
-  count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  percentage: PropTypes.shape({
-    color: PropTypes.oneOf([
-      'primary',
-      'secondary',
-      'info',
-      'success',
-      'warning',
-      'error',
-      'dark',
-      'white',
-    ]),
-    amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    label: PropTypes.string,
-  }),
-  icon: PropTypes.node.isRequired,
-};
 
 export default ComplexStatisticsCard;

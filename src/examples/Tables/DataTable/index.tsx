@@ -256,7 +256,10 @@ function DataTable({
         <MDBox component='thead'>
           {headerGroups.map((headerGroup) =>
             Children.toArray(
-              <TableRow {...headerGroup.getHeaderGroupProps()}>
+              <TableRow
+                {...headerGroup.getHeaderGroupProps()}
+                key={headerGroup.getHeaderGroupProps().key}
+              >
                 {headerGroup.headers.map((column) => (
                   <DataTableHeadCell
                     {...column.getHeaderProps(isSorted ? column.getSortByToggleProps() : undefined)}
@@ -276,7 +279,7 @@ function DataTable({
           {page.map((row, key: number) => {
             prepareRow(row);
             return Children.toArray(
-              <TableRow {...row.getRowProps()}>
+              <TableRow {...row.getRowProps()} key={row.getRowProps().key}>
                 {row.cells.map((cell) =>
                   Children.toArray(
                     <DataTableBodyCell

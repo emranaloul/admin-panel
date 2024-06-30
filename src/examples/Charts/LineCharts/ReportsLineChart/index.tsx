@@ -64,7 +64,13 @@ interface ReportsLineChartProps {
   };
 }
 
-function ReportsLineChart({ color, title, description, date, chart }: ReportsLineChartProps) {
+function ReportsLineChart({
+  color = 'info',
+  title,
+  description,
+  date,
+  chart,
+}: ReportsLineChartProps) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
 
   return (
@@ -108,11 +114,5 @@ function ReportsLineChart({ color, title, description, date, chart }: ReportsLin
     </Card>
   );
 }
-
-// Setting default values for the props of ReportsLineChart
-ReportsLineChart.defaultProps = {
-  color: 'info',
-  description: '',
-};
 
 export default ReportsLineChart;

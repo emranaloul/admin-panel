@@ -53,7 +53,13 @@ interface ReportsBarChartProps {
   chart: { labels: string[]; datasets: ChartDataset<'bar'> };
 }
 
-function ReportsBarChart({ color, title, description, date, chart }: ReportsBarChartProps) {
+function ReportsBarChart({
+  color = 'info',
+  title,
+  description,
+  date,
+  chart,
+}: ReportsBarChartProps) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
 
   return (
@@ -97,20 +103,5 @@ function ReportsBarChart({ color, title, description, date, chart }: ReportsBarC
     </Card>
   );
 }
-
-// Setting default values for the props of ReportsBarChart
-ReportsBarChart.defaultProps = {
-  color: 'info',
-  description: '',
-};
-
-// Typechecking props for the ReportsBarChart
-ReportsBarChart.propTypes = {
-  color: PropTypes.oneOf(['primary', 'secondary', 'info', 'success', 'warning', 'error', 'dark']),
-  title: PropTypes.string.isRequired,
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  date: PropTypes.string.isRequired,
-  chart: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.array, PropTypes.object])).isRequired,
-};
 
 export default ReportsBarChart;

@@ -32,7 +32,7 @@ interface PageLayoutProps {
   children: ReactNode;
 }
 
-function PageLayout({ background, children }: PageLayoutProps) {
+function PageLayout({ background = 'default', children }: PageLayoutProps) {
   const [, dispatch] = useMaterialUIController();
   const { pathname } = useLocation();
 
@@ -52,16 +52,5 @@ function PageLayout({ background, children }: PageLayoutProps) {
     </MDBox>
   );
 }
-
-// Setting default values for the props for PageLayout
-PageLayout.defaultProps = {
-  background: 'default',
-};
-
-// Typechecking props for the PageLayout
-PageLayout.propTypes = {
-  background: PropTypes.oneOf(['white', 'light', 'default']),
-  children: PropTypes.node.isRequired,
-};
 
 export default PageLayout;

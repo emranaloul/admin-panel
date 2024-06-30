@@ -180,11 +180,4 @@ function DefaultNavbar({ transparent, light, action }: DefaultNavbarProps) {
   );
 }
 
-// Setting default values for the props of DefaultNavbar
-DefaultNavbar.defaultProps = {
-  transparent: false,
-  light: false,
-  action: false,
-};
-
 export default DefaultNavbar;

@@ -58,7 +58,7 @@ interface SidenavProps extends DrawerProps {
   brandName: string;
   routes: AppRoute[];
 }
-function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
+function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavProps) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } =
     controller as ControllerType;
@@ -163,6 +163,7 @@ function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
   return (
     <SidenavRoot
       {...rest}
+      color={color}
       variant='permanent'
       ownerState={{ transparentSidenav, whiteSidenav, miniSidenav, darkMode }}
     >
@@ -220,19 +221,5 @@ function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
     </SidenavRoot>
   );
 }
-
-// Setting default values for the props of Sidenav
-Sidenav.defaultProps = {
-  color: 'info',
-  brand: '',
-};
-
-// Typechecking props for the Sidenav
-Sidenav.propTypes = {
-  color: PropTypes.oneOf(['primary', 'secondary', 'info', 'success', 'warning', 'error', 'dark']),
-  brand: PropTypes.string,
-  brandName: PropTypes.string.isRequired,
-  routes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 export default Sidenav;

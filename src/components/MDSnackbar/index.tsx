@@ -45,7 +45,7 @@ interface MDSnackbarProps extends SnackbarProps {
 }
 
 function MDSnackbar({
-  color,
+  color = 'info',
   icon,
   title,
   dateTime,
@@ -173,11 +173,5 @@ function MDSnackbar({
     </Snackbar>
   );
 }
-
-// Setting default values for the props of MDSnackbar
-MDSnackbar.defaultProps = {
-  bgWhite: false,
-  color: 'info',
-};
 
 export default MDSnackbar;

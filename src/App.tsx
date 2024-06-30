@@ -69,6 +69,7 @@ import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from 'store';
 import { getUserData } from 'store/auth';
 import { useDispatch } from 'react-redux';
+import Loader from 'components/Loader';
 // import MDBox from "./components/MDBox";
 // import MDBox from "components/MDBox";
 
@@ -210,6 +211,7 @@ export default function App() {
             element={<Navigate to={`${loggedIn ? '/dashboard' : '/authentication/sign-in'}`} />}
           />
           {getRoutes(routes)}
+          <Route path='/load' element={<Loader />} />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -238,6 +240,7 @@ export default function App() {
           element={<Navigate to={`${loggedIn ? '/dashboard' : '/authentication/sign-in'}`} />}
         />
         {getRoutes(routes)}
+        <Route path='/load' element={<Loader />} />
       </Routes>
     </ThemeProvider>
   );

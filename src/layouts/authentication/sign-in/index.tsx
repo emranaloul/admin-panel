@@ -102,6 +102,7 @@ function Basic() {
               <MDInput
                 type='email'
                 label='Email'
+                autoComplete='email'
                 fullWidth
                 onChange={(e) => setLoginData((item) => ({ ...item, email: e.target.value }))}
                 required
@@ -111,6 +112,7 @@ function Basic() {
               <MDInput
                 type='password'
                 label='Password'
+                autoComplete='current-password'
                 fullWidth
                 onChange={(e) => setLoginData((item) => ({ ...item, password: e.target.value }))}
                 required

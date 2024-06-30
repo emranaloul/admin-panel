@@ -92,10 +92,4 @@ function Breadcrumbs({ icon, title, route, light }: BreadcrumbsProps) {
   );
 }
 
-// Setting default values for the props of Breadcrumbs
-Breadcrumbs.defaultProps = {
-  light: false,
-};
-
-// Typechecking props for the Breadcrumbs
 export default Breadcrumbs;
