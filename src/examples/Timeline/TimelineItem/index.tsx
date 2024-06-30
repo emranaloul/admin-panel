@@ -90,30 +90,4 @@ function TimelineItem({
   );
 }
 
-// Setting default values for the props of TimelineItem
-TimelineItem.defaultProps = {
-  color: 'info',
-  lastItem: false,
-  description: '',
-};
-
-// Typechecking props for the TimelineItem
-TimelineItem.propTypes = {
-  color: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'info',
-    'success',
-    'warning',
-    'error',
-    'dark',
-    'light',
-  ]),
-  icon: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
-  dateTime: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  lastItem: PropTypes.bool,
-};
-
 export default TimelineItem;

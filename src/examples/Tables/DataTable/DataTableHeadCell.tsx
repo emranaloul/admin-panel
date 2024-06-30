@@ -43,7 +43,13 @@ interface DataTableHeadCellProps {
   align: 'left' | 'right' | 'center';
 }
 
-function DataTableHeadCell({ width, children, sorted, align, ...rest }: DataTableHeadCellProps) {
+function DataTableHeadCell({
+  width = 'auto',
+  children,
+  sorted = 'none',
+  align = 'left',
+  ...rest
+}: DataTableHeadCellProps) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller as ControllerType;
 
@@ -104,20 +110,5 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }: DataTabl
     </MDBox>
   );
 }
-
-// Setting default values for the props of DataTableHeadCell
-DataTableHeadCell.defaultProps = {
-  width: 'auto',
-  sorted: 'none',
-  align: 'left',
-};
-
-// Typechecking props for the DataTableHeadCell
-DataTableHeadCell.propTypes = {
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  children: PropTypes.node.isRequired,
-  sorted: PropTypes.oneOf([false, 'none', 'asce', 'desc']),
-  align: PropTypes.oneOf(['left', 'right', 'center']),
-};
 
 export default DataTableHeadCell;

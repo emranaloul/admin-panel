@@ -13,9 +13,6 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// prop-types is a library for typechecking of props
-import PropTypes from 'prop-types';
-
 // @mui material components
 import Link from '@mui/material/Link';
 import Icon from '@mui/material/Icon';
@@ -28,10 +25,18 @@ import MDTypography from 'components/MDTypography';
 import { baseProperties } from 'assets/theme/base/typography';
 
 interface FooterProps {
-  company: { href: string; name: string };
-  links: { href: string; name: string }[];
+  company?: { href: string; name: string };
+  links?: { href: string; name: string }[];
 }
-function Footer({ company, links }: FooterProps) {
+function Footer({
+  company = { href: 'https://www.creative-tim.com/', name: 'Creative Tim' },
+  links = [
+    { href: 'https://www.creative-tim.com/', name: 'Creative Tim' },
+    { href: 'https://www.creative-tim.com/presentation', name: 'About Us' },
+    { href: 'https://www.creative-tim.com/blog', name: 'Blog' },
+    { href: 'https://www.creative-tim.com/license', name: 'License' },
+  ],
+}: FooterProps) {
   const { href, name } = company;
 
   const renderLinks = () =>
@@ -99,22 +104,5 @@ function Footer({ company, links }: FooterProps) {
     </MDBox>
   );
 }
-
-// Setting default values for the props of Footer
-Footer.defaultProps = {
-  company: { href: 'https://www.creative-tim.com/', name: 'Creative Tim' },
-  links: [
-    { href: 'https://www.creative-tim.com/', name: 'Creative Tim' },
-    { href: 'https://www.creative-tim.com/presentation', name: 'About Us' },
-    { href: 'https://www.creative-tim.com/blog', name: 'Blog' },
-    { href: 'https://www.creative-tim.com/license', name: 'License' },
-  ],
-};
-
-// Typechecking props for the Footer
-Footer.propTypes = {
-  company: PropTypes.objectOf(PropTypes.string),
-  links: PropTypes.arrayOf(PropTypes.object),
-};
 
 export default Footer;

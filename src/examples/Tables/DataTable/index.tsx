@@ -74,7 +74,7 @@ interface EntriesPerPage {
 }
 
 interface DataTableProps {
-  entriesPerPage: EntriesPerPage;
+  entriesPerPage?: EntriesPerPage;
   canSearch?: boolean;
   showTotalEntries?: boolean;
   table: TableProps; // Assuming table is an object with array values
@@ -97,12 +97,12 @@ type TableInstanceWithPlugins<T extends object> = TableInstance<T> &
   };
 
 function DataTable({
-  entriesPerPage,
+  entriesPerPage = { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
   canSearch,
   showTotalEntries,
   table,
-  pagination,
-  isSorted,
+  pagination = { variant: 'gradient', color: 'info' },
+  isSorted = true,
   noEndBorder,
 }: DataTableProps) {
   const defaultValue = entriesPerPage.defaultValue ? entriesPerPage.defaultValue : 10;
@@ -263,6 +263,7 @@ function DataTable({
                     width={column.width ? column.width : 'auto'}
                     align={column.align ? column.align : 'left'}
                     sorted={setSortedValue(column)}
+                    key={column.getHeaderProps().key}
                   >
                     {column.render('Header')}
                   </DataTableHeadCell>
@@ -282,6 +283,7 @@ function DataTable({
                       noBorder={noEndBorder && rows.length - 1 === key}
                       align={cell.column.align ? cell.column.align : 'left'}
                       {...cell.getCellProps()}
+                      key={cell.getCellProps().key}
                     >
                       {cell.render('Cell')}
                     </DataTableBodyCell>
@@ -339,44 +341,5 @@ function DataTable({
     </TableContainer>
   );
 }
-
-// Setting default values for the props of DataTable
-DataTable.defaultProps = {
-  entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
-  canSearch: false,
-  showTotalEntries: true,
-  pagination: { variant: 'gradient', color: 'info' },
-  isSorted: true,
-  noEndBorder: false,
-};
-
-// Typechecking props for the DataTable
-DataTable.propTypes = {
-  entriesPerPage: PropTypes.oneOfType([
-    PropTypes.shape({
-      defaultValue: PropTypes.number,
-      entries: PropTypes.arrayOf(PropTypes.number),
-    }),
-    PropTypes.bool,
-  ]),
-  canSearch: PropTypes.bool,
-  showTotalEntries: PropTypes.bool,
-  table: PropTypes.objectOf(PropTypes.array).isRequired,
-  pagination: PropTypes.shape({
-    variant: PropTypes.oneOf(['contained', 'gradient']),
-    color: PropTypes.oneOf([
-      'primary',
-      'secondary',
-      'info',
-      'success',
-      'warning',
-      'error',
-      'dark',
-      'light',
-    ]),
-  }),
-  isSorted: PropTypes.bool,
-  noEndBorder: PropTypes.bool,
-};
 
 export default DataTable;
