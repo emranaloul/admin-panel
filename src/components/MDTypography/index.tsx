@@ -13,18 +13,54 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { ReactNode, forwardRef } from 'react';
-
-// prop-types is a library for typechecking of props
-import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
 // Custom styles for MDTypography
 import MDTypographyRoot from 'components/MDTypography/MDTypographyRoot';
 
 // Material Dashboard 2 React contexts
 import { ControllerType, useMaterialUIController } from 'context';
+import { CssBaselineProps, Typography, TypographyProps, TypographyTypeMap } from '@mui/material';
+import { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
+import { Link } from 'react-router-dom';
 
-const MDTypography = forwardRef<HTMLSpanElement, any>(
+type OwnerState = Partial<CssBaselineProps> & {
+  color?:
+    | 'inherit'
+    | 'primary'
+    | 'secondary'
+    | 'info'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'light'
+    | 'dark'
+    | 'text'
+    | 'white';
+  fontWeight?: 'light' | 'regular' | 'medium' | 'bold';
+  textTransform?: 'none' | 'capitalize' | 'uppercase' | 'lowercase';
+  verticalAlign?:
+    | 'unset'
+    | 'baseline'
+    | 'sub'
+    | 'super'
+    | 'text-top'
+    | 'text-bottom'
+    | 'middle'
+    | 'top'
+    | 'bottom';
+  textGradient?: boolean;
+  opacity?: number;
+  display?: string;
+  darkMode?: boolean;
+};
+
+interface MDTypographyTypeMap extends TypographyTypeMap {
+  props: TypographyProps & OwnerState;
+  defaultComponent: 'span';
+}
+
+const MDTypography = forwardRef(
   (
     {
       color,
@@ -41,7 +77,6 @@ const MDTypography = forwardRef<HTMLSpanElement, any>(
   ) => {
     const [controller] = useMaterialUIController();
     const { darkMode } = controller as ControllerType;
-
     return (
       <MDTypographyRoot
         {...rest}
@@ -60,18 +95,6 @@ const MDTypography = forwardRef<HTMLSpanElement, any>(
       </MDTypographyRoot>
     );
   }
-);
-
-// Setting default values for the props of MDTypography
-MDTypography.defaultProps = {
-  color: 'dark',
-  fontWeight: '',
-  textTransform: 'none',
-  verticalAlign: 'unset',
-  textGradient: '',
-  opacity: 1,
-};
-
-// Typechecking props for the MDTypography
+) as OverridableComponent<MDTypographyTypeMap>;
 
 export default MDTypography;

@@ -13,57 +13,32 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { AnchorHTMLAttributes, ImgHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
-
-// prop-types is a library for typechecking of props
 
 // Custom styles for MDBox
 import MDBoxRoot from './MDBoxRoot';
 import { BoxProps } from '@mui/material';
 import { BoxOwnerState } from 'types';
-import { NavLink, NavLinkProps } from 'react-router-dom';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 type MDBoxBaseProps = BoxProps & BoxOwnerState;
 
-type MDBoxImgProps = MDBoxBaseProps &
-  ImgHTMLAttributes<HTMLImageElement> & {
-    component: 'img';
-  };
-type MDBoxAnchorProps = MDBoxBaseProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & {
-    component: 'a';
-  };
-type MDBoxFormProps = MDBoxBaseProps &
-  AnchorHTMLAttributes<HTMLFormElement> & {
-    component: 'form';
-  };
-type MDBoxNavLinkProps = MDBoxBaseProps &
-  NavLinkProps & {
-    component: typeof NavLink;
-  };
-
-type MDBoxOtherProps = MDBoxBaseProps;
-
-type MDBoxProps =
-  | MDBoxImgProps
-  | MDBoxOtherProps
-  | MDBoxAnchorProps
-  | MDBoxNavLinkProps
-  | MDBoxFormProps;
-
+export type MDButtonTypeMap = {
+  props: MDBoxBaseProps;
+  defaultComponent: 'div';
+};
 const MDBox = forwardRef(
   (
     {
-      variant,
+      variant = 'contained',
       bgColor = 'transparent',
-      color,
-      opacity,
-      borderRadius,
-      shadow,
-      coloredShadow,
+      color = 'dark',
+      opacity = 1,
+      borderRadius = 'none',
+      shadow = 'none',
+      coloredShadow = 'none',
       ...rest
-    }: MDBoxProps,
+    },
     ref
   ) => (
     <MDBoxRoot
@@ -72,17 +47,6 @@ const MDBox = forwardRef(
       ownerState={{ variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow }}
     />
   )
-);
-
-// Setting default values for the props of MDBox
-MDBox.defaultProps = {
-  variant: 'contained',
-  bgColor: 'transparent',
-  color: 'dark',
-  opacity: 1,
-  borderRadius: 'none',
-  shadow: 'none',
-  coloredShadow: 'none',
-};
+) as OverridableComponent<MDButtonTypeMap>;
 
 export default MDBox;

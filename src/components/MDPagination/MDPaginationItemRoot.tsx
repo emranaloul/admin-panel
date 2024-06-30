@@ -14,12 +14,13 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
+import { ButtonProps } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import { baseProperties } from 'assets/theme/base/typography';
 
 // Material Dashboard 2 React components
-import MDButton, { ButtonPropTypes } from 'components/MDButton';
+import MDButton from 'components/MDButton';
 import { VariantType, ColorType, SizeType } from 'types';
 
 interface MDPaginationProps {
@@ -31,7 +32,7 @@ interface MDPaginationProps {
   paginationSize?: SizeType | null;
 }
 
-export default styled(MDButton)<ButtonPropTypes & { ownerState: MDPaginationProps }>(
+export default styled(MDButton)<ButtonProps & { ownerState: MDPaginationProps }>(
   ({ theme, ownerState }) => {
     const { borders, functions, typography, palette } = theme;
     const { variant, paginationSize, active } = ownerState;

@@ -33,9 +33,10 @@ import { ReactNode } from 'react';
 import { Theme } from '@mui/material';
 import { baseProperties } from 'assets/theme/base/typography';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
+import { ColorType } from 'types';
 
 interface MDSnackbarProps extends SnackbarProps {
-  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark' | 'light';
+  color?: ColorType | 'light';
   icon?: ReactNode;
   title: string;
   dateTime?: string;
@@ -123,14 +124,14 @@ function MDSnackbar({
             <MDTypography
               variant='button'
               fontWeight='medium'
-              color={titleColor}
+              color={titleColor as ColorType}
               textGradient={bgWhite}
             >
               {title}
             </MDTypography>
           </MDBox>
           <MDBox display='flex' alignItems='center' lineHeight={0}>
-            <MDTypography variant='caption' color={dateTimeColor}>
+            <MDTypography variant='caption' color={dateTimeColor as ColorType}>
               {dateTime}
             </MDTypography>
             <Icon

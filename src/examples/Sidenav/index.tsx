@@ -48,7 +48,7 @@ import {
   ControllerType,
   DispatchFunction,
 } from 'context';
-import { AppRoute } from 'types';
+import { AppRoute, ColorType } from 'types';
 import { DrawerProps } from '@mui/material';
 
 // Define the interface for the Sidenav component props
@@ -131,7 +131,7 @@ function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
         returnValue = (
           <MDTypography
             key={key}
-            color={textColor}
+            color={textColor as ColorType}
             display='block'
             variant='caption'
             fontWeight='bold'
@@ -186,7 +186,12 @@ function Sidenav({ brand, brandName, routes, ...rest }: SidenavProps) {
             width={!brandName ? '100%' : ''}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
           >
-            <MDTypography component='h6' variant='button' fontWeight='medium' color={textColor}>
+            <MDTypography
+              component='h6'
+              variant='button'
+              fontWeight='medium'
+              color={textColor as ColorType}
+            >
               {brandName}
             </MDTypography>
           </MDBox>

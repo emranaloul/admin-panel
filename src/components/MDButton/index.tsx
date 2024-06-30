@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 // prop-types is a library for typechecking of props
 // Custom styles for MDButton
@@ -22,33 +22,26 @@ import MDButtonRoot from 'components/MDButton/MDButtonRoot';
 // Material Dashboard 2 React contexts
 import { ControllerType, useMaterialUIController } from 'context';
 import { ButtonProps } from '@mui/material';
-import { MDButtonProps, OwnerColorType, VariantType } from 'types';
-import { Link, NavLinkProps } from 'react-router-dom';
+import { OwnerColorType, VariantType } from 'types';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 // type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
 
 interface CustomButtonProps extends ButtonProps {
-  component?: 'a' | typeof Link;
   iconOnly?: boolean;
   circular?: boolean;
   ownerColor?: OwnerColorType;
   ownerVariant?: VariantType;
 }
 
-type ButtonLinkProps = ButtonProps &
-  NavLinkProps & {
-    component: typeof Link;
-  };
+export type MDButtonTypeMap = {
+  props: CustomButtonProps;
+  defaultComponent: 'button';
+};
 
-type ButtonAnchorProps = ButtonProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & {
-    component: 'a';
-  };
-
-export type ButtonPropTypes = CustomButtonProps | ButtonLinkProps | ButtonAnchorProps;
-const MDButton = forwardRef<HTMLButtonElement, ButtonPropTypes>(
+const MDButton = forwardRef(
   (
     {
-      ownerColor = 'inherit',
+      ownerColor,
       ownerVariant = 'contained',
       size = 'medium',
       variant,
@@ -57,9 +50,7 @@ const MDButton = forwardRef<HTMLButtonElement, ButtonPropTypes>(
       children,
       color,
       ...rest
-    }: ButtonHTMLAttributes<HTMLButtonElement> &
-      ButtonProps &
-      Omit<MDButtonProps, 'size' | 'color'>,
+    },
     ref
   ) => {
     const [controller] = useMaterialUIController();
@@ -90,7 +81,7 @@ const MDButton = forwardRef<HTMLButtonElement, ButtonPropTypes>(
       </MDButtonRoot>
     );
   }
-);
+) as OverridableComponent<MDButtonTypeMap>;
 
 // Setting default values for the props of MDButton
 export default MDButton;

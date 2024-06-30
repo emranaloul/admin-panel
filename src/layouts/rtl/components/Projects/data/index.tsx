@@ -114,7 +114,7 @@ export default function data() {
           </MDBox>
         ),
         ميزانية: (
-          <MDTypography variant='caption' ownerColor='text' fontWeight='medium'>
+          <MDTypography variant='caption' color='text' fontWeight='medium'>
             $3,000
           </MDTypography>
         ),
@@ -135,7 +135,7 @@ export default function data() {
           </MDBox>
         ),
         ميزانية: (
-          <MDTypography variant='caption' ownerColor='text' fontWeight='medium'>
+          <MDTypography variant='caption' color='text' fontWeight='medium'>
             غير مضبوط
           </MDTypography>
         ),
@@ -158,7 +158,7 @@ export default function data() {
           </MDBox>
         ),
         ميزانية: (
-          <MDTypography variant='caption' ownerColor='text' fontWeight='medium'>
+          <MDTypography variant='caption' color='text' fontWeight='medium'>
             $20,500
           </MDTypography>
         ),

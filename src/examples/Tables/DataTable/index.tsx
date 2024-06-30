@@ -310,7 +310,7 @@ function DataTable({
         {pageOptions.length > 1 && (
           <MDPagination
             variant={pagination?.variant !== 'gradient' ? pagination?.variant : 'contained'}
-            ownerColor={pagination?.color ? pagination?.color : 'info'}
+            color={pagination?.color && pagination.color !== 'dark' ? pagination?.color : 'info'}
           >
             {canPreviousPage && (
               <MDPagination item onClick={() => previousPage()}>

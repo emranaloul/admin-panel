@@ -23,7 +23,7 @@ import MDBox from 'components/MDBox';
 // Custom styles for MDPagination
 import MDPaginationItemRoot from 'components/MDPagination/MDPaginationItemRoot';
 import { ColorType, SizeType, VariantType } from 'types';
-import { ButtonPropTypes } from 'components/MDButton';
+import { ButtonProps } from '@mui/material';
 
 // The Pagination main context
 const Context = createContext<{ variant?: VariantType; color?: ColorType; size?: SizeType }>({
@@ -40,7 +40,7 @@ interface MDPaginationProps {
   active?: boolean;
 }
 
-const MDPagination = forwardRef<HTMLButtonElement, ButtonPropTypes & MDPaginationProps>(
+const MDPagination = forwardRef<HTMLButtonElement, ButtonProps & MDPaginationProps>(
   ({ item, variant, color, size, active, children, ...rest }, ref) => {
     const context = useContext(Context);
     const paginationSize = context ? context.size : null;
