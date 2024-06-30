@@ -4,7 +4,7 @@ import theme from 'assets/theme';
 import { ReactElement, ReactNode } from 'react';
 
 export type ComponentType<
-  ComponentName extends keyof ComponentsProps & keyof ComponentsOverrides<Theme>
+  ComponentName extends keyof ComponentsProps & keyof ComponentsOverrides<Theme>,
 > = {
   defaultProps?: ComponentsProps[ComponentName];
   styleOverrides?: ComponentsOverrides<Theme>[ComponentName];

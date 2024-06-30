@@ -21,7 +21,6 @@ import MDTypography from 'components/MDTypography';
 // Custom styles for MDProgress
 import MDProgressRoot from 'components/MDProgress/MDProgressRoot';
 import { LinearProgress, LinearProgressProps } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 interface MDProgressProps extends LinearProgressProps {
   ownerVariant?: 'contained' | 'gradient';

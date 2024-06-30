@@ -49,7 +49,7 @@ const options: _DeepPartialObject<
         padding: 10,
         font: {
           size: 14,
-          weight: '300', // Using a string for weight
+          weight: 300, // Using a string for weight
           family: 'Roboto',
           style: 'normal',
           lineHeight: 2,
@@ -72,7 +72,7 @@ const options: _DeepPartialObject<
         padding: 10,
         font: {
           size: 14,
-          weight: '300', // Using a string for weight
+          weight: 300, // Using a string for weight
           family: 'Roboto',
           style: 'normal',
           lineHeight: 2,

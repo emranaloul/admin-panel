@@ -20,9 +20,8 @@ import MDTypographyRoot from 'components/MDTypography/MDTypographyRoot';
 
 // Material Dashboard 2 React contexts
 import { ControllerType, useMaterialUIController } from 'context';
-import { CssBaselineProps, Typography, TypographyProps, TypographyTypeMap } from '@mui/material';
-import { OverridableComponent, OverrideProps } from '@mui/material/OverridableComponent';
-import { Link } from 'react-router-dom';
+import { CssBaselineProps, TypographyProps, TypographyTypeMap } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 type OwnerState = Partial<CssBaselineProps> & {
   color?:
@@ -70,7 +69,7 @@ const MDTypography = forwardRef(
       textGradient,
       opacity,
       children,
-      display,
+      // display,
       ...rest
     },
     ref
