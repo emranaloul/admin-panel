@@ -2,7 +2,7 @@
     /* color of choise */
     --clr: #05A8AA;
     /* loading time of choice */
-    --load-time: 2s;
+    --load-time: 1s;
     outline: 5px solid var(--clr);
     outline-offset: 5px;
     position: relative;

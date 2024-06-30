@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, MouseEvent } from 'react';
+import { useState, useEffect, MouseEvent, Children, useRef } from 'react';
 
 // react-router components
 import { useLocation, Link } from 'react-router-dom';
@@ -55,6 +55,8 @@ import {
   DispatchFunction,
 } from 'context';
 import { Theme } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 interface DashboardNavbarProps {
   absolute?: boolean;
@@ -69,8 +71,10 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } =
     controller as ControllerType;
   const [openMenu, setOpenMenu] = useState<Element>();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [openList, setOpenList] = useState<boolean>(false);
   const route = useLocation().pathname.split('/').slice(1);
-
+  const dropdownRef = useRef<HTMLDivElement>();
   useEffect(() => {
     // Setting the navbar type
     if (fixedNavbar) {
@@ -138,6 +142,23 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
       return colorValue;
     },
   });
+  const handleClickOutside = (event: globalThis.MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setOpenList(false);
+    }
+  };
+
+  useEffect(() => {
+    if (openList) {
+      document.addEventListener('click', handleClickOutside);
+    } else {
+      document.removeEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
     <AppBar
@@ -154,12 +175,34 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
             <MDBox pr={1}>
               <MDInput label='Search here' />
             </MDBox>
-            <MDBox color={light ? 'white' : 'inherit'}>
-              <Link to='/authentication/sign-in/basic'>
-                <IconButton sx={navbarIconButton} size='small' disableRipple>
+            <MDBox color={light ? 'white' : 'inherit'} display={'flex'}>
+              <MDBox boxSizing={'border-box'} position={'relative'} ref={dropdownRef}>
+                <IconButton
+                  sx={navbarIconButton}
+                  size='small'
+                  disableRipple
+                  onClick={() => setOpenList((currentState) => !currentState)}
+                >
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
-              </Link>
+                {openList && (
+                  <MDBox
+                    position={'absolute'}
+                    top={30}
+                    right={0}
+                    bgColor='white'
+                    width={'15rem'}
+                    borderRadius={'5px'}
+                    padding={1}
+                    // borderColor={'gray'}
+                    border={'2px solid #f0f2f5'}
+                  >
+                    hello {user?.email.split('@')[0]}
+                  </MDBox>
+                )}
+              </MDBox>
+              {/* <Link to='/authentication/sign-in/basic'>
+              </Link> */}
               <IconButton
                 size='small'
                 disableRipple

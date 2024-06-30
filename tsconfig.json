@@ -17,7 +17,7 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
-      "@public/*": ["../public/src/*"]  // Alias for public/src
+      "@public/*": ["../public/src/*"] // Alias for public/src
     }
   },
   "include": ["src"]
