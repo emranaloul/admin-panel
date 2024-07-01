@@ -18,9 +18,6 @@ import { ReactElement, useEffect } from 'react';
 // react-router-dom components
 import { useLocation, NavLink } from 'react-router-dom';
 
-// prop-types is a library for typechecking of props.
-import PropTypes from 'prop-types';
-
 // @mui material components
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -50,6 +47,8 @@ import {
 } from 'context';
 import { AppRoute, ColorType } from 'types';
 import { DrawerProps } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store';
 
 // Define the interface for the Sidenav component props
 interface SidenavProps extends DrawerProps {
@@ -60,6 +59,7 @@ interface SidenavProps extends DrawerProps {
 }
 function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavProps) {
   const [controller, dispatch] = useMaterialUIController();
+  const { loggedIn } = useSelector((state: RootState) => state.auth);
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } =
     controller as ControllerType;
   const location = useLocation();
@@ -72,7 +72,6 @@ function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavP
   } else if (whiteSidenav && darkMode) {
     textColor = 'inherit';
   }
-
   const closeSidenav = () => setMiniSidenav(dispatch as DispatchFunction, true);
 
   useEffect(() => {
@@ -103,9 +102,9 @@ function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavP
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes: (ReactElement | undefined)[] = routes.map(
-    ({ type, name, icon, title, key, href, route }) => {
+    ({ type, name, icon, title, key, href, route, auth }) => {
       let returnValue;
-
+      if (auth !== loggedIn) return;
       if (type === 'collapse') {
         returnValue = href ? (
           <Link

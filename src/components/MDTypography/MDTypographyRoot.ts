@@ -14,11 +14,11 @@ Coded by www.creative-tim.com
 */
 
 // @mui material components
-import { CSSObject, Color, CssBaselineProps, Palette, PaletteColor } from '@mui/material';
+import { CSSObject, CssBaselineProps, Palette, PaletteColor } from '@mui/material';
 import Typography, { TypographyProps } from '@mui/material/Typography';
-import { CSSInterpolation, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { TypographyOptions, Variant } from '@mui/material/styles/createTypography';
-import { CSSProperties, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 type OwnerState = Partial<CssBaselineProps> & {
   color?:
@@ -99,7 +99,7 @@ export default styled(Typography)<CustomTypographyProps>(({ theme, ownerState })
   let colorValue: string | undefined;
   if (darkMode) {
     if (color === 'inherit' || !palette[color as keyof Palette]) {
-      colorValue = 'inherit';
+      colorValue = 'white';
     } else if (color === 'dark') {
       colorValue = white.main;
     }
@@ -108,7 +108,11 @@ export default styled(Typography)<CustomTypographyProps>(({ theme, ownerState })
       ? (palette[color as keyof Palette] as PaletteColor).main
       : color;
   }
-
+  if (darkMode && !colorValue) {
+    colorValue = 'white';
+  } else if (!darkMode && !colorValue) {
+    colorValue = 'inherit';
+  }
   return {
     opacity,
     textTransform,
@@ -119,6 +123,6 @@ export default styled(Typography)<CustomTypographyProps>(({ theme, ownerState })
       fontWeights[fontWeight as keyof typeof fontWeights] &&
       fontWeights[fontWeight as keyof typeof fontWeights],
     ...(textGradient && gradientStyles()),
-    position: 'inherit',
+    position: 'static',
   };
 });

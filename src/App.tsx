@@ -88,7 +88,7 @@ export default function App() {
   } = controller as ControllerType;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
-  const { loggedIn } = useSelector((state: RootState) => state.auth);
+  const { loggedIn, isLoading } = useSelector((state: RootState) => state.auth);
   // Cache for the rtl
   const cacheRtl = useMemo(
     () =>
@@ -184,6 +184,10 @@ export default function App() {
       <Box position={'fixed'} />
     </MDBox>
   );
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return direction === 'rtl' ? (
     <CacheProvider value={cacheRtl}>

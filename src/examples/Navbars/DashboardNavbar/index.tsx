@@ -13,13 +13,10 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, MouseEvent, Children, useRef } from 'react';
+import { useState, useEffect, MouseEvent, useRef } from 'react';
 
 // react-router components
-import { useLocation, Link } from 'react-router-dom';
-
-// prop-types is a library for typechecking of props.
-import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 // @material-ui core components
 import AppBar from '@mui/material/AppBar';
@@ -54,9 +51,13 @@ import {
   ControllerType,
   DispatchFunction,
 } from 'context';
-import { Theme } from '@mui/material';
+import { Divider, Theme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import MDTypography from 'components/MDTypography';
+import { useDispatch } from 'react-redux';
+import { logout } from 'store/auth';
+import { AccountBalanceOutlined, AccountCircle } from '@mui/icons-material';
 
 interface DashboardNavbarProps {
   absolute?: boolean;
@@ -75,6 +76,7 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
   const [openList, setOpenList] = useState<boolean>(false);
   const route = useLocation().pathname.split('/').slice(1);
   const dropdownRef = useRef<HTMLDivElement>();
+  const appDispatch = useDispatch();
   useEffect(() => {
     // Setting the navbar type
     if (fixedNavbar) {
@@ -149,11 +151,7 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
   };
 
   useEffect(() => {
-    if (openList) {
-      document.addEventListener('click', handleClickOutside);
-    } else {
-      document.removeEventListener('click', handleClickOutside);
-    }
+    document.addEventListener('click', handleClickOutside);
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
@@ -190,14 +188,27 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
                     position={'absolute'}
                     top={30}
                     right={0}
-                    bgColor='white'
+                    bgColor={darkMode ? 'dark' : 'white'}
                     width={'15rem'}
                     borderRadius={'5px'}
                     padding={1}
-                    // borderColor={'gray'}
+                    className='h-fit overflow-y-auto flex flex-col items-start'
+                    // borderColor={'grey'}
                     border={'2px solid #f0f2f5'}
                   >
-                    hello {user?.email.split('@')[0]}
+                    <MDTypography className=' text-center px-1 capitalize'>
+                      <AccountCircle fontSize='large' />
+                      hello{' '}
+                      <MDTypography component={'strong'}>{user?.email.split('@')[0]}</MDTypography>
+                    </MDTypography>
+                    <Divider
+                      sx={{ bgcolor: !darkMode ? 'black' : 'white' }}
+                      className='w-full my-0 h-1'
+                    />
+                    <IconButton onClick={() => appDispatch(logout())} className='p-0 m-0'>
+                      <Icon sx={iconsStyle}>logout</Icon>
+                      logout
+                    </IconButton>
                   </MDBox>
                 )}
               </MDBox>

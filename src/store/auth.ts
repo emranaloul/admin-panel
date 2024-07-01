@@ -25,7 +25,12 @@ const initialState: {
 const auth = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: () => {
+      localStorage.clear();
+      return initialState;
+    },
+  },
   extraReducers(builder) {
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.loggedIn = true;
@@ -37,7 +42,7 @@ const auth = createSlice({
       state.isLoggingIn = false;
     });
     builder.addCase(login.pending, (state) => {
-      state.isLoading = true;
+      state.isLoggingIn = true;
     });
     builder.addCase(signup.fulfilled, (state, { payload }) => {
       state.loggedIn = true;
@@ -56,11 +61,11 @@ const auth = createSlice({
         state.user = payload;
         state.loggedIn = true;
       }
-      state.isLoggingIn = false;
+      state.isLoading = false;
     });
     builder.addCase(getUserData.rejected, (state) => {
       state.loggedIn = false;
-      state.isLoggingIn = false;
+      state.isLoading = false;
     });
     builder.addCase(getUserData.pending, (state) => {
       state.isLoading = true;
@@ -140,3 +145,4 @@ export const getUserData = createAsyncThunk<User | undefined, void>(
 );
 
 export default auth.reducer;
+export const { logout } = auth.actions;

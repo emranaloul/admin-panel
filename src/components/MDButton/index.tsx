@@ -24,6 +24,7 @@ import { ControllerType, useMaterialUIController } from 'context';
 import { ButtonProps } from '@mui/material';
 import { OwnerColorType, VariantType } from 'types';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
+import Spinner from 'components/Spinner';
 // type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
 
 interface CustomButtonProps extends ButtonProps {
@@ -31,6 +32,7 @@ interface CustomButtonProps extends ButtonProps {
   circular?: boolean;
   ownerColor?: OwnerColorType;
   ownerVariant?: VariantType;
+  isLoading?: boolean;
 }
 
 export type MDButtonTypeMap = {
@@ -49,6 +51,7 @@ const MDButton = forwardRef(
       iconOnly = false,
       children,
       color,
+      isLoading,
       ...rest
     },
     ref
@@ -77,7 +80,7 @@ const MDButton = forwardRef(
           darkMode,
         }}
       >
-        {children}
+        {isLoading ? <Spinner size={size} /> : children}
       </MDButtonRoot>
     );
   }

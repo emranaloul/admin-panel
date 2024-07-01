@@ -31,7 +31,11 @@ interface DefaultNavbarMobileProps {
 }
 
 function DefaultNavbarMobile({ open, close }: DefaultNavbarMobileProps) {
-  const { width } = (open as Element)?.getBoundingClientRect();
+  let width = 0;
+  if (open instanceof Element) {
+    const { width: _width } = open?.getBoundingClientRect();
+    width = _width;
+  }
 
   return (
     <Menu

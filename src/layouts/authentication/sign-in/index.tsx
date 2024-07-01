@@ -42,8 +42,10 @@ import BasicLayout from 'layouts/authentication/components/BasicLayout';
 import bgImage from 'assets/images/bg-sign-in-basic.jpeg';
 import { login } from 'store/auth';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from 'store';
+import { AppDispatch, RootState } from 'store';
 import { LoginDataType } from 'types';
+import { useSelector } from 'react-redux';
+import Spinner from 'components/Spinner';
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -51,6 +53,7 @@ function Basic() {
     email: '',
     password: '',
   });
+  const { isLoggingIn } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const handleLogin = async () => {
@@ -131,7 +134,14 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant='contained' color='info' fullWidth type='submit'>
+              <MDButton
+                variant='contained'
+                color='info'
+                fullWidth
+                type='submit'
+                isLoading={isLoggingIn}
+                disabled={isLoggingIn}
+              >
                 sign in
               </MDButton>
             </MDBox>
