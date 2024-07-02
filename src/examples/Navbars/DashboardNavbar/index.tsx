@@ -196,17 +196,21 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
                     // borderColor={'grey'}
                     border={'2px solid #f0f2f5'}
                   >
-                    <MDTypography className=' text-center px-1 capitalize'>
-                      <AccountCircle fontSize='large' />
+                    <MDTypography fontSize={'18px !important'} className=' capitalize'>
+                      <AccountCircle fontSize='large' className='mx-1' />
                       hello{' '}
-                      <MDTypography component={'strong'}>{user?.email.split('@')[0]}</MDTypography>
+                      <MDTypography component={'strong'} fontSize={'18px !important'}>
+                        {user?.email.split('@')[0]}
+                      </MDTypography>
                     </MDTypography>
                     <Divider
-                      sx={{ bgcolor: !darkMode ? 'black' : 'white' }}
-                      className='w-full my-0 h-1'
+                      sx={{ bgcolor: !darkMode ? 'black' : 'white', margin: '.5rem 0 !important' }}
+                      className='w-full '
                     />
                     <IconButton onClick={() => appDispatch(logout())} className='p-0 m-0'>
-                      <Icon sx={iconsStyle}>logout</Icon>
+                      <Icon sx={{ ...iconsStyle, fontSize: '18px !important' }} className='mx-1'>
+                        logout
+                      </Icon>
                       logout
                     </IconButton>
                   </MDBox>

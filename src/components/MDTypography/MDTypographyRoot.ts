@@ -101,7 +101,7 @@ export default styled(Typography)<CustomTypographyProps>(({ theme, ownerState })
     if (color === 'inherit' || !palette[color as keyof Palette]) {
       colorValue = 'white';
     } else if (color === 'dark') {
-      colorValue = white.main;
+      colorValue = white.focus;
     }
   } else {
     colorValue = palette[color as keyof Palette]
@@ -113,6 +113,7 @@ export default styled(Typography)<CustomTypographyProps>(({ theme, ownerState })
   } else if (!darkMode && !colorValue) {
     colorValue = 'inherit';
   }
+
   return {
     opacity,
     textTransform,

@@ -43,7 +43,7 @@ interface MDAlertProps extends AlertProps {
   children: React.ReactNode;
 }
 
-function MDAlert({ ownerColor, dismissible, children, ...rest }: MDAlertProps) {
+function MDAlert({ ownerColor = 'info', dismissible, children, ...rest }: MDAlertProps) {
   const [alertStatus, setAlertStatus] = useState('mount');
 
   const handleAlertStatus = () => setAlertStatus('fadeOut');
@@ -77,27 +77,5 @@ function MDAlert({ ownerColor, dismissible, children, ...rest }: MDAlertProps) {
 
   return null;
 }
-
-// Setting default values for the props of MDAlert
-MDAlert.defaultProps = {
-  color: 'info',
-  dismissible: false,
-};
-
-// Typechecking props of the MDAlert
-MDAlert.propTypes = {
-  color: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'info',
-    'success',
-    'warning',
-    'error',
-    'light',
-    'dark',
-  ]),
-  dismissible: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-};
 
 export default MDAlert;

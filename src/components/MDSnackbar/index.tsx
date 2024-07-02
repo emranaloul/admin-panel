@@ -74,7 +74,6 @@ function MDSnackbar({
     dateTimeColor = 'white';
     dividerColor = true;
   }
-
   return (
     <Snackbar
       TransitionComponent={Fade}
@@ -173,5 +172,4 @@ function MDSnackbar({
     </Snackbar>
   );
 }
-
 export default MDSnackbar;
