@@ -69,7 +69,6 @@ const MDTypography = forwardRef(
       textGradient,
       opacity = 1,
       children,
-      // display,
       ...rest
     },
     ref

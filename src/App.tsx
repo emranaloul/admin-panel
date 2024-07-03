@@ -89,6 +89,8 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
   const { loggedIn, isLoading } = useSelector((state: RootState) => state.auth);
+  // const { pathname } = useLocation();
+  console.log('🚀 ~ App ~ pathname:', pathname);
   // Cache for the rtl
   const cacheRtl = useMemo(
     () =>
@@ -153,7 +155,7 @@ export default function App() {
 
         return null;
       }),
-    [loggedIn]
+    [loggedIn, isLoading]
   );
 
   useEffect(() => {
@@ -214,7 +216,7 @@ export default function App() {
             path='/'
             element={<Navigate to={`${loggedIn ? '/dashboard' : '/authentication/sign-in'}`} />}
           />
-          {getRoutes(routes)}
+          {!isLoading && getRoutes(routes)}
           <Route path='/load' element={<Loader />} />
         </Routes>
       </ThemeProvider>
@@ -243,7 +245,7 @@ export default function App() {
           path='/'
           element={<Navigate to={`${loggedIn ? '/dashboard' : '/authentication/sign-in'}`} />}
         />
-        {getRoutes(routes)}
+        {!isLoading && getRoutes(routes)}
         <Route path='/load' element={<Loader />} />
       </Routes>
     </ThemeProvider>

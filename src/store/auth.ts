@@ -18,7 +18,7 @@ const initialState: {
 } = {
   loggedIn: false,
   user: undefined,
-  isLoading: false,
+  isLoading: true,
   isLoggingIn: false,
 };
 
@@ -28,7 +28,7 @@ const auth = createSlice({
   reducers: {
     logout: () => {
       localStorage.clear();
-      return initialState;
+      return { ...initialState, isLoading: false };
     },
   },
   extraReducers(builder) {
