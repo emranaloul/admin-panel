@@ -140,8 +140,8 @@ function DefaultNavbar({ transparent, light, action }: DefaultNavbarProps) {
               <MDButton
                 component={Link}
                 to={action.route}
-                ownerVariant='gradient'
-                ownerColor={action.color ? action.color : 'info'}
+                variant='gradient'
+                color={action.color ? action.color : 'info'}
                 size='small'
               >
                 {action.label}
@@ -154,8 +154,8 @@ function DefaultNavbar({ transparent, light, action }: DefaultNavbarProps) {
                 href={action.route}
                 target='_blank'
                 rel='noreferrer'
-                ownerVariant='gradient'
-                ownerColor={action.color ? action.color : 'info'}
+                variant='gradient'
+                color={action.color ? action.color : 'info'}
                 size='small'
                 sx={{ mt: -0.3 }}
               >

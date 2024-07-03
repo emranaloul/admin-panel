@@ -38,7 +38,7 @@ function Transaction({ color, icon, name, description, value }: TransactionProps
       <MDBox display='flex' justifyContent='space-between' alignItems='center'>
         <MDBox display='flex' alignItems='center'>
           <MDBox mr={2}>
-            <MDButton ownerVariant='outlined' ownerColor={color} iconOnly circular>
+            <MDButton variant='outlined' color={color} iconOnly circular>
               <Icon sx={{ fontWeight: 'bold' }}>{icon}</Icon>
             </MDButton>
           </MDBox>

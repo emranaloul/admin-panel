@@ -41,7 +41,7 @@ function PaymentMethod() {
         <MDTypography variant='h6' fontWeight='medium'>
           Payment Method
         </MDTypography>
-        <MDButton ownerVariant='gradient' ownerColor='dark'>
+        <MDButton variant='gradient' color='dark'>
           <Icon sx={{ fontWeight: 'bold' }}>add</Icon>
           &nbsp;add new card
         </MDButton>

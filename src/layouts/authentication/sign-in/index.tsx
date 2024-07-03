@@ -135,7 +135,7 @@ function Basic() {
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton
-                variant='contained'
+                variant='gradient'
                 color='info'
                 fullWidth
                 type='submit'

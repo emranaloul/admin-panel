@@ -287,7 +287,7 @@ const colors: Palette = {
   mode: 'light',
   contrastThreshold: 0,
   tonalOffset: 0,
-  divider: '',
+  divider: '#fff',
   action: {
     active: '#f8f9fa',
     hover: '#f8f9fa',

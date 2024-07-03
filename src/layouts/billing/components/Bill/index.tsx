@@ -67,7 +67,7 @@ function Bill({ name, company, email, vat, noGutter }: BillProps) {
                 <Icon>delete</Icon>&nbsp;delete
               </MDButton>
             </MDBox>
-            <MDButton variant='text' ownerColor={darkMode ? 'white' : 'dark'}>
+            <MDButton variant='text' color={darkMode ? 'white' : 'dark'}>
               <Icon>edit</Icon>&nbsp;edit
             </MDButton>
           </MDBox>

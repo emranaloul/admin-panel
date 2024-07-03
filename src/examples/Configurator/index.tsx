@@ -228,7 +228,7 @@ function Configurator() {
             }}
           >
             <MDButton
-              color='inherit'
+              color='dark'
               variant='contained'
               onClick={handleDarkSidenav}
               disabled={disabled}
@@ -243,7 +243,7 @@ function Configurator() {
             </MDButton>
             <MDBox sx={{ mx: 1, width: '8rem', minWidth: '8rem' }}>
               <MDButton
-                color='inherit'
+                color='dark'
                 variant='contained'
                 onClick={handleTransparentSidenav}
                 disabled={disabled}
@@ -258,7 +258,7 @@ function Configurator() {
               </MDButton>
             </MDBox>
             <MDButton
-              color='inherit'
+              color='dark'
               variant='contained'
               onClick={handleWhiteSidenav}
               disabled={disabled}
@@ -297,7 +297,7 @@ function Configurator() {
             href='https://www.creative-tim.com/learning-lab/react/quick-start/material-dashboard/'
             target='_blank'
             rel='noreferrer'
-            color='inherit'
+            color={darkMode ? 'light' : 'dark'}
             variant='outlined'
             fullWidth
           >

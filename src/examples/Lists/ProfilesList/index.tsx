@@ -63,7 +63,7 @@ function ProfilesList({ title, profiles, shadow }: ProfilesListProps) {
             target='_blank'
             rel='noreferrer'
             variant='text'
-            ownerColor={action.color}
+            color={action.color}
           >
             {action.label}
           </MDButton>

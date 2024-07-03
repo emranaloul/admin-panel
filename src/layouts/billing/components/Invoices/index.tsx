@@ -31,7 +31,7 @@ function Invoices() {
         <MDTypography variant='h6' fontWeight='medium'>
           Invoices
         </MDTypography>
-        <MDButton ownerVariant='outlined' color='info' size='small'>
+        <MDButton variant='outlined' color='info' size='small'>
           view all
         </MDButton>
       </MDBox>

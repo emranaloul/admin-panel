@@ -27,13 +27,13 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 import Spinner from 'components/Spinner';
 // type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
 
-interface CustomButtonProps extends ButtonProps {
+type CustomButtonProps = Omit<ButtonProps, 'color' | 'variant'> & {
   iconOnly?: boolean;
   circular?: boolean;
-  ownerColor?: OwnerColorType;
-  ownerVariant?: VariantType;
+  color?: OwnerColorType;
+  variant?: VariantType;
   isLoading?: boolean;
-}
+};
 
 export type MDButtonTypeMap = {
   props: CustomButtonProps;
@@ -43,14 +43,12 @@ export type MDButtonTypeMap = {
 const MDButton = forwardRef(
   (
     {
-      ownerColor,
-      ownerVariant = 'contained',
+      color = 'white' as const,
+      variant = 'contained',
       size = 'medium',
-      variant,
       circular = false,
       iconOnly = false,
       children,
-      color,
       isLoading,
       ...rest
     },
@@ -58,22 +56,20 @@ const MDButton = forwardRef(
   ) => {
     const [controller] = useMaterialUIController();
     const { darkMode } = controller as ControllerType;
-    if (color) {
-      ownerColor ??= color;
-    }
-    if (variant) {
-      ownerVariant ??= variant;
-    }
     return (
       <MDButtonRoot
         {...rest}
         ref={ref}
         color='primary'
-        variant={(variant as VariantType) === 'gradient' ? 'contained' : variant}
+        variant={
+          (variant as VariantType) === 'gradient'
+            ? 'contained'
+            : (variant as Exclude<VariantType, 'gradient'>)
+        }
         size={size}
         ownerState={{
-          ownerColor,
-          ownerVariant,
+          color,
+          variant,
           size,
           circular,
           iconOnly,

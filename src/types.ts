@@ -28,8 +28,7 @@ export interface BoxOwnerState {
     | 'error'
     | 'light'
     | 'dark'
-    | 'none'
-    | 'inherit';
+    | 'none';
 }
 
 export type VariantType = 'text' | 'contained' | 'outlined' | 'gradient';
@@ -47,8 +46,8 @@ export type OwnerColorType =
   | undefined;
 export interface MDButtonProps {
   size?: 'small' | 'medium' | 'large';
-  ownerVariant?: VariantType;
-  ownerColor?: OwnerColorType;
+  variant?: VariantType;
+  color?: OwnerColorType;
   circular?: boolean;
   iconOnly?: boolean;
 }
@@ -89,7 +88,7 @@ export type ActionType = {
   route: string;
   label: string;
   type: 'external' | 'internal';
-  color?: ColorType | 'dark';
+  color?: OwnerColorType;
 };
 
 export interface AuthPayload {

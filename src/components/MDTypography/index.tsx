@@ -62,12 +62,12 @@ interface MDTypographyTypeMap extends TypographyTypeMap {
 const MDTypography = forwardRef(
   (
     {
-      color,
+      color = 'dark',
       fontWeight,
-      textTransform,
-      verticalAlign,
+      textTransform = 'none',
+      verticalAlign = 'unset',
       textGradient,
-      opacity,
+      opacity = 1,
       children,
       // display,
       ...rest
