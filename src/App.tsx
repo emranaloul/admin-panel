@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, ReactNode } from 'react';
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
@@ -137,12 +137,12 @@ export default function App() {
   }, [pathname]);
 
   const getRoutes = useCallback(
-    (allRoutes: AppRoute[]) =>
+    (allRoutes: AppRoute[]): ReactNode =>
       allRoutes.map((route) => {
         const redirectComponent = <Navigate to={'/'} />;
-        // if (loggedIn !== route.auth) {
-        //   redirectComponent = <Navigate to={'/authentication/sign-in'} />;
-        // }
+        if (route.collapse) {
+          return getRoutes(route.collapse);
+        }
         if (route.route) {
           return (
             <Route
@@ -152,10 +152,9 @@ export default function App() {
             />
           );
         }
-
         return null;
       }),
-    [loggedIn, isLoading]
+    [loggedIn]
   );
 
   useEffect(() => {

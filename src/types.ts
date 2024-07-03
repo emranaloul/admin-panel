@@ -78,6 +78,7 @@ export type AppRoute = {
   route: string;
   component: ReactElement;
   auth: boolean;
+  collapse?: Omit<AppRoute, 'collapse'>[];
 };
 
 export type ColorType = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'dark';

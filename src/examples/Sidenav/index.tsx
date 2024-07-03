@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 // react-router-dom components
 import { useLocation, NavLink } from 'react-router-dom';
@@ -46,9 +46,10 @@ import {
   DispatchFunction,
 } from 'context';
 import { AppRoute, ColorType } from 'types';
-import { DrawerProps } from '@mui/material';
+import { Collapse, DrawerProps, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
+import { StarBorder } from '@mui/icons-material';
 
 // Define the interface for the Sidenav component props
 interface SidenavProps extends DrawerProps {
@@ -60,6 +61,8 @@ interface SidenavProps extends DrawerProps {
 function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavProps) {
   const [controller, dispatch] = useMaterialUIController();
   const { loggedIn } = useSelector((state: RootState) => state.auth);
+  const [open, setOpen] = useState<string>('');
+
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } =
     controller as ControllerType;
   const location = useLocation();
@@ -128,20 +131,34 @@ function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavP
         );
       } else if (type === 'title') {
         returnValue = (
-          <MDTypography
-            key={key}
-            color={textColor as ColorType}
-            display='block'
-            variant='caption'
-            fontWeight='bold'
-            textTransform='uppercase'
-            pl={3}
-            mt={2}
-            mb={1}
-            ml={1}
-          >
-            {title}
-          </MDTypography>
+          <>
+            <ListItemButton onClick={() => setOpen(title!)}>
+              <MDTypography
+                key={key}
+                color={textColor as ColorType}
+                display='block'
+                variant='caption'
+                fontWeight='bold'
+                textTransform='uppercase'
+                pl={3}
+                mt={2}
+                mb={1}
+                ml={1}
+              >
+                {title}
+              </MDTypography>
+            </ListItemButton>
+            <Collapse in={open === title} timeout='auto' unmountOnExit>
+              <List component='div' disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <ListItemIcon>
+                    <StarBorder color={whiteSidenav ? 'inherit' : 'secondary'} />
+                  </ListItemIcon>
+                  <MDTypography color={textColor as ColorType}>{title}</MDTypography>
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </>
         );
       } else if (type === 'divider') {
         returnValue = (

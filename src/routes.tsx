@@ -53,13 +53,15 @@ const SignUp = lazy(() => import('layouts/authentication/sign-up'));
 
 const routes: AppRoute[] = [
   {
-    type: 'collapse',
+    type: 'title',
     name: 'Dashboard',
     key: 'dashboard',
     icon: <Icon fontSize='small'>dashboard</Icon>,
     route: '/dashboard',
     component: <Dashboard />,
     auth: true,
+    title: 'dashboard',
+    href: '/dashboard',
   },
   {
     type: 'collapse',
