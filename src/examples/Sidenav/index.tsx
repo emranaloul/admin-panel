@@ -49,7 +49,7 @@ import { AppRoute, ColorType } from 'types';
 import { Collapse, DrawerProps, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { StarBorder } from '@mui/icons-material';
+import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
 
 // Define the interface for the Sidenav component props
 interface SidenavProps extends DrawerProps {
@@ -105,60 +105,81 @@ function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavP
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
   const renderRoutes: (ReactElement | undefined)[] = routes.map(
-    ({ type, name, icon, title, key, href, route, auth }) => {
+    ({ type, name, icon, title, key, href, route, auth, collapse }) => {
       let returnValue;
       if (auth !== loggedIn) return;
       if (type === 'collapse') {
-        returnValue = href ? (
-          <Link
-            href={href}
-            key={key}
-            target='_blank'
-            rel='noreferrer'
-            sx={{ textDecoration: 'none' }}
-          >
-            <SidenavCollapse
-              name={name}
-              icon={icon}
-              active={key === collapseName}
-              // noCollapse={noCollapse}
-            />
-          </Link>
-        ) : (
-          <NavLink key={key} to={route}>
-            <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
-          </NavLink>
-        );
+        if (href) {
+          returnValue = (
+            <Link
+              href={href}
+              key={key}
+              target='_blank'
+              rel='noreferrer'
+              sx={{ textDecoration: 'none' }}
+            >
+              <SidenavCollapse
+                name={name}
+                icon={icon}
+                active={key === collapseName}
+                // noCollapse={noCollapse}
+              />
+            </Link>
+          );
+        } else if (collapse) {
+          returnValue = (
+            <>
+              <MDBox
+                onClick={() => setOpen((prevState) => (!!prevState ? '' : name))}
+                sx={{ cursor: 'pointer' }}
+              >
+                <SidenavCollapse
+                  name={name}
+                  icon={icon}
+                  active={false}
+                  collapsed={!open}
+                  expandable
+                />
+              </MDBox>
+              <Collapse in={open === name} timeout='auto' unmountOnExit>
+                <List component='div' disablePadding>
+                  {collapse.map((item) => (
+                    <NavLink key={item.key} to={item.route}>
+                      <SidenavCollapse
+                        name={item.name}
+                        icon={item.icon}
+                        active={item.route.replace('/', '') === collapseName}
+                        collapse='item'
+                      />
+                    </NavLink>
+                  ))}
+                </List>
+              </Collapse>
+            </>
+          );
+        } else {
+          returnValue = (
+            <NavLink key={key} to={route}>
+              <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+            </NavLink>
+          );
+        }
       } else if (type === 'title') {
         returnValue = (
-          <>
-            <ListItemButton onClick={() => setOpen(title!)}>
-              <MDTypography
-                key={key}
-                color={textColor as ColorType}
-                display='block'
-                variant='caption'
-                fontWeight='bold'
-                textTransform='uppercase'
-                pl={3}
-                mt={2}
-                mb={1}
-                ml={1}
-              >
-                {title}
-              </MDTypography>
-            </ListItemButton>
-            <Collapse in={open === title} timeout='auto' unmountOnExit>
-              <List component='div' disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <StarBorder color={whiteSidenav ? 'inherit' : 'secondary'} />
-                  </ListItemIcon>
-                  <MDTypography color={textColor as ColorType}>{title}</MDTypography>
-                </ListItemButton>
-              </List>
-            </Collapse>
-          </>
+          <MDTypography
+            key={key}
+            color={textColor as ColorType}
+            display='block'
+            variant='caption'
+            fontWeight='bold'
+            textTransform='uppercase'
+            pl={3}
+            mt={2}
+            mb={1}
+            ml={1}
+          >
+            {title}
+          </MDTypography>
         );
       } else if (type === 'divider') {
         returnValue = (

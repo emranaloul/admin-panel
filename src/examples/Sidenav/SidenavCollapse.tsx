@@ -35,14 +35,26 @@ import { ControllerType, useMaterialUIController } from 'context';
 import { ThemeType } from 'types';
 import { ReactNode } from 'react';
 import { Theme } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 type PropTypes = {
   name: string;
   icon: string | ReactNode;
   active: boolean;
+  collapse?: 'item' | 'container';
+  collapsed?: boolean;
+  expandable?: boolean;
 };
 
-function SidenavCollapse({ icon, name, active, ...rest }: PropTypes) {
+function SidenavCollapse({
+  icon,
+  name,
+  active,
+  collapse = 'container',
+  collapsed,
+  expandable,
+  ...rest
+}: PropTypes) {
   const [controller] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } =
     controller as ControllerType;
@@ -58,8 +70,11 @@ function SidenavCollapse({ icon, name, active, ...rest }: PropTypes) {
             whiteSidenav,
             darkMode,
             sidenavColor,
+            collapseItem: collapse === 'item',
+            expanded: !collapsed,
           })
         }
+        className={collapse === 'item' ? ' ltr:pl-10 rtl:pr:10' : ''}
       >
         <ListItemIcon
           sx={(theme) =>
@@ -67,7 +82,12 @@ function SidenavCollapse({ icon, name, active, ...rest }: PropTypes) {
           }
         >
           {typeof icon === 'string' ? (
-            <Icon sx={(theme: Theme) => collapseIcon(theme, { active })}>{icon}</Icon>
+            <Icon
+              sx={(theme: Theme) => collapseIcon(theme, { active })}
+              fontSize={collapse === 'item' ? 'small' : 'medium'}
+            >
+              {icon}
+            </Icon>
           ) : (
             icon
           )}
@@ -84,6 +104,7 @@ function SidenavCollapse({ icon, name, active, ...rest }: PropTypes) {
             })
           }
         />
+        {expandable && <>{!collapsed ? <ExpandLess /> : <ExpandMore />}</>}
       </MDBox>
     </ListItem>
   );

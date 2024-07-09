@@ -19,9 +19,17 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-function collapseItem(theme: ThemeType, ownerState: Partial<ControllerType> & { active: boolean }) {
+function collapseItem(
+  theme: ThemeType,
+  ownerState: Partial<ControllerType> & {
+    active: boolean;
+    collapseItem: boolean;
+    expanded: boolean;
+  }
+) {
   const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
-  const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = ownerState;
+  const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor, collapseItem, expanded } =
+    ownerState;
 
   const { white, transparent, dark, grey, gradients } = palette;
   const { md } = boxShadows;
@@ -42,7 +50,7 @@ function collapseItem(theme: ThemeType, ownerState: Partial<ControllerType> & { 
     display: 'flex',
     alignItems: 'center',
     width: '100%',
-    padding: `${pxToRem(8)} ${pxToRem(10)}`,
+    padding: `${pxToRem(collapseItem ? 5 : 8)} ${pxToRem(collapseItem ? 20 : 10)}`,
     margin: `${pxToRem(1.5)} ${pxToRem(16)}`,
     borderRadius: borderRadius.md,
     cursor: 'pointer',
