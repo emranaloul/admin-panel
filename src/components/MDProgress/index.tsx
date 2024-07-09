@@ -22,22 +22,14 @@ import MDTypography from 'components/MDTypography';
 import MDProgressRoot from 'components/MDProgress/MDProgressRoot';
 import { LinearProgress, LinearProgressProps } from '@mui/material';
 
-interface MDProgressProps extends LinearProgressProps {
-  ownerVariant?: 'contained' | 'gradient';
-  ownerColor?:
-    | 'primary'
-    | 'secondary'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'light'
-    | 'dark';
+interface MDProgressProps extends Omit<LinearProgressProps, 'color' | 'variant'> {
+  variant?: 'contained' | 'gradient';
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'light' | 'dark';
   value?: number;
   label?: boolean;
 }
 const MDProgress = forwardRef<typeof LinearProgress, MDProgressProps>(
-  ({ ownerVariant = 'contained', ownerColor = 'info', value = 0, label, ...rest }, ref) => (
+  ({ variant = 'contained', color = 'info', value = 0, label, ...rest }, ref) => (
     <>
       {label && (
         <MDTypography variant='button' fontWeight='medium' color='text'>
@@ -49,7 +41,7 @@ const MDProgress = forwardRef<typeof LinearProgress, MDProgressProps>(
         ref={ref}
         variant='determinate'
         value={value}
-        ownerState={{ color: ownerColor, value, variant: ownerVariant }}
+        ownerState={{ color, value, variant }}
       />
     </>
   )

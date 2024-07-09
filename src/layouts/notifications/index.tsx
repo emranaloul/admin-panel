@@ -123,10 +123,10 @@ function Notifications() {
                 <MDTypography variant='h5'>Alerts</MDTypography>
               </MDBox>
               <MDBox pt={2} px={2}>
-                <MDAlert ownerColor='primary' dismissible>
+                <MDAlert color='primary' dismissible>
                   {alertContent('primary')}
                 </MDAlert>
-                <MDAlert ownerColor='secondary' dismissible>
+                <MDAlert color='secondary' dismissible>
                   {alertContent('secondary')}
                 </MDAlert>
                 <MDAlert color='success' dismissible>
@@ -141,10 +141,10 @@ function Notifications() {
                 <MDAlert color='info' dismissible>
                   {alertContent('info')}
                 </MDAlert>
-                <MDAlert ownerColor='light' dismissible>
+                <MDAlert color='light' dismissible>
                   {alertContent('light')}
                 </MDAlert>
-                <MDAlert ownerColor='dark' dismissible>
+                <MDAlert color='dark' dismissible>
                   {alertContent('dark')}
                 </MDAlert>
               </MDBox>

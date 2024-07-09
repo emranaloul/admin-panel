@@ -49,7 +49,7 @@ export default function data() {
         {value}%
       </MDTypography>
       <MDBox ml={0.5} width='9rem'>
-        <MDProgress ownerVariant='gradient' ownerColor={color} value={value} />
+        <MDProgress variant='gradient' color={color} value={value} />
       </MDBox>
     </MDBox>
   );

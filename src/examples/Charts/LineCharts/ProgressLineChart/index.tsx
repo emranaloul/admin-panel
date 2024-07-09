@@ -114,7 +114,7 @@ function ProgressLineChart({
             {progress}%
           </MDTypography>
           <MDBox mt={0.25}>
-            <MDProgress ownerVariant='gradient' ownerColor={color} value={progress} />
+            <MDProgress variant='gradient' color={color} value={progress} />
           </MDBox>
         </MDBox>
       </MDBox>

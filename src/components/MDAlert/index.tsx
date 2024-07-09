@@ -29,21 +29,13 @@ import MDAlertRoot from 'components/MDAlert/MDAlertRoot';
 import MDAlertCloseIcon from 'components/MDAlert/MDAlertCloseIcon';
 import { AlertProps } from '@mui/material';
 
-interface MDAlertProps extends AlertProps {
-  ownerColor?:
-    | 'primary'
-    | 'secondary'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'light'
-    | 'dark';
+interface MDAlertProps extends Omit<AlertProps, 'color'> {
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'light' | 'dark';
   dismissible?: boolean;
   children: React.ReactNode;
 }
 
-function MDAlert({ ownerColor = 'info', dismissible, children, ...rest }: MDAlertProps) {
+function MDAlert({ color = 'info', dismissible, children, ...rest }: MDAlertProps) {
   const [alertStatus, setAlertStatus] = useState('mount');
 
   const handleAlertStatus = () => setAlertStatus('fadeOut');
@@ -51,7 +43,7 @@ function MDAlert({ ownerColor = 'info', dismissible, children, ...rest }: MDAler
   // The base template for the alert
   const alertTemplate = (mount = true) => (
     <Fade in={mount} timeout={300}>
-      <MDAlertRoot ownerState={{ color: ownerColor }} {...rest}>
+      <MDAlertRoot ownerState={{ color }} {...rest}>
         <MDBox display='flex' alignItems='center' color='white'>
           {children}
         </MDBox>
