@@ -38,7 +38,17 @@ import {
   Divider,
 } from '@mui/material';
 
-export default function data() {
+export default function data(
+  data: {
+    image: string;
+    name: string;
+    email: string;
+    title: string;
+    description: string;
+    status: 'online' | 'offline' | string;
+    employed: Date;
+  }[]
+) {
   const Author = ({ image, name, email }: { image: string; name: string; email: string }) => (
     <MDBox display='flex' alignItems='center' lineHeight={1}>
       <MDAvatar src={image} name={name} size='sm' />
@@ -112,7 +122,7 @@ export default function data() {
       { Header: 'action', accessor: 'action', align: 'center' },
     ],
 
-    rows: _.times(10)
+    rows: data
       .map(() => ({
         image: faker.image.avatar(),
         name: faker.internet.displayName(),

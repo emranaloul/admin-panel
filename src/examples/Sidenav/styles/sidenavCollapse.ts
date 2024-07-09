@@ -28,8 +28,15 @@ function collapseItem(
   }
 ) {
   const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
-  const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor, collapseItem, expanded } =
-    ownerState;
+  const {
+    active,
+    transparentSidenav,
+    whiteSidenav,
+    darkMode,
+    sidenavColor,
+    collapseItem,
+    expanded,
+  } = ownerState;
 
   const { white, transparent, dark, grey, gradients } = palette;
   const { md } = boxShadows;

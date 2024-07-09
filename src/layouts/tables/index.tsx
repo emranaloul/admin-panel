@@ -30,9 +30,21 @@ import DataTable from 'examples/Tables/DataTable';
 // Data
 import authorsTableData from 'layouts/tables/data/authorsTableData';
 import projectsTableData from 'layouts/tables/data/projectsTableData';
+import { faker } from '@faker-js/faker';
+import _ from 'lodash';
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
+  const { columns, rows } = authorsTableData(
+    _.times(10).map(() => ({
+      image: faker.image.avatar(),
+      name: faker.internet.displayName(),
+      email: faker.internet.email(),
+      title: faker.person.jobTitle(),
+      description: faker.person.jobDescriptor(),
+      status: faker.helpers.arrayElement(['online', 'offline']),
+      employed: faker.date.past(),
+    }))
+  );
   const { columns: pColumns, rows: pRows } = projectsTableData();
 
   return (
