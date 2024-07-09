@@ -18,11 +18,10 @@ import { forwardRef } from 'react';
 // Custom styles for the MDBadge
 import MDBadgeRoot from 'components/MDBadge/MDBadgeRoot';
 import { BadgeProps } from '@mui/material';
-import { ColorType } from 'types';
 
-interface MDBadgeProps extends BadgeProps {
-  ownerColor?: ColorType | 'dark';
-  ownerVariant: 'gradient' | 'contained';
+interface MDBadgeProps extends Omit<BadgeProps, 'color' | 'variant'> {
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'light' | 'dark';
+  variant: 'gradient' | 'contained';
   size?: 'xs' | 'sm' | 'md' | 'lg';
   circular?: boolean;
   indicator?: boolean;
@@ -40,22 +39,18 @@ const MDBadge = forwardRef<HTMLSpanElement, MDBadgeProps>(
       border,
       container,
       children,
-      ownerVariant = 'gradient',
-      ownerColor,
+      variant = 'gradient',
       ...rest
     },
     ref
   ) => {
-    if (color && color !== 'default') {
-      ownerColor ??= color;
-    }
     return (
       <MDBadgeRoot
-        color={color}
+        color='default'
         {...rest}
         ownerState={{
-          color: ownerColor,
-          variant: ownerVariant,
+          color,
+          variant,
           size,
           circular,
           indicator,

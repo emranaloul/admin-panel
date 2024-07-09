@@ -25,6 +25,18 @@ import MDBadge from 'components/MDBadge';
 import team2 from 'assets/images/team-2.jpg';
 import team3 from 'assets/images/team-3.jpg';
 import team4 from 'assets/images/team-4.jpg';
+import MDButton from 'components/MDButton';
+import _ from 'lodash';
+import { faker } from '@faker-js/faker';
+import React from 'react';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+} from '@mui/material';
 
 export default function data() {
   const Author = ({ image, name, email }: { image: string; name: string; email: string }) => (
@@ -48,6 +60,49 @@ export default function data() {
     </MDBox>
   );
 
+  const EditDialog = ({
+    image,
+    name,
+    email,
+    title,
+    description,
+    status,
+    employed,
+  }: {
+    image: string;
+    name: string;
+    email: string;
+    title: string;
+    description: string;
+    status: 'online' | 'offline' | string;
+    employed: Date;
+  }) => {
+    const [open, setOpen] = React.useState(false);
+    return (
+      <>
+        <MDButton variant='contained' color='secondary' onClick={() => setOpen(true)}>
+          Edit
+        </MDButton>
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogTitle>Edit</DialogTitle>
+          <Divider
+            sx={(theme) => ({
+              color: theme.palette.dark.main,
+              margin: 0,
+            })}
+          />
+          <DialogContent className=' flex justify-center items-center gap-4'>
+            <MDAvatar src={image} className=' m-auto' />
+            <DialogContentText>{`hello ${name} and your email ${email}`}</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <MDButton onClick={() => setOpen(false)}>Close</MDButton>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  };
+
   return {
     columns: [
       { Header: 'author', accessor: 'author', width: '45%', align: 'left' },
@@ -57,121 +112,35 @@ export default function data() {
       { Header: 'action', accessor: 'action', align: 'center' },
     ],
 
-    rows: [
-      {
-        author: <Author image={team2} name='John Michael' email='john@creative-tim.com' />,
-        function: <Job title='Manager' description='Organization' />,
+    rows: _.times(10)
+      .map(() => ({
+        image: faker.image.avatar(),
+        name: faker.internet.displayName(),
+        email: faker.internet.email(),
+        title: faker.person.jobTitle(),
+        description: faker.person.jobDescriptor(),
+        status: faker.helpers.arrayElement(['online', 'offline']),
+        employed: faker.date.past(),
+      }))
+      .map((employee) => ({
+        author: <Author image={employee.image} name={employee.name} email={employee.email} />,
+        function: <Job title={employee.title} description={employee.description} />,
         status: (
           <MDBox ml={-1}>
-            <MDBadge badgeContent='online' color='success' ownerVariant='gradient' size='sm' />
+            <MDBadge
+              badgeContent={employee.status}
+              color={employee.status === 'online' ? 'success' : 'dark'}
+              variant='gradient'
+              size='sm'
+            />
           </MDBox>
         ),
         employed: (
           <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            23/04/18
+            {new Date(employee.employed).toLocaleDateString()}
           </MDTypography>
         ),
-        action: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        author: <Author image={team3} name='Alexa Liras' email='alexa@creative-tim.com' />,
-        function: <Job title='Programator' description='Developer' />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent='offline' ownerColor='dark' ownerVariant='gradient' size='sm' />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            11/01/19
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        author: <Author image={team4} name='Laurent Perrier' email='laurent@creative-tim.com' />,
-        function: <Job title='Executive' description='Projects' />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent='online' color='success' ownerVariant='gradient' size='sm' />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            19/09/17
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        author: <Author image={team3} name='Michael Levi' email='michael@creative-tim.com' />,
-        function: <Job title='Programator' description='Developer' />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent='online' color='success' ownerVariant='gradient' size='sm' />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            24/12/08
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        author: <Author image={team3} name='Richard Gran' email='richard@creative-tim.com' />,
-        function: <Job title='Manager' description='Executive' />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent='offline' ownerColor='dark' ownerVariant='gradient' size='sm' />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            04/10/21
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        author: <Author image={team4} name='Miriam Eric' email='miriam@creative-tim.com' />,
-        function: <Job title='Programator' description='Developer' />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent='offline' ownerColor='dark' ownerVariant='gradient' size='sm' />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            14/09/20
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            Edit
-          </MDTypography>
-        ),
-      },
-    ],
+        action: <EditDialog {...employee} />,
+      })),
   };
 }

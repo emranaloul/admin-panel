@@ -19,10 +19,10 @@ import Badge, { BadgeProps } from '@mui/material/Badge';
 import { CSSObject, styled } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import { baseProperties } from 'assets/theme/base/typography';
-import { ColorType, SizeType } from 'types';
+import { SizeType } from 'types';
 
 interface MDBadgeProps {
-  color?: ColorType | 'dark';
+  color?: 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error' | 'light' | 'dark';
   variant?: 'gradient' | 'contained';
   size?: 'xs' | 'sm' | 'md' | 'lg' | SizeType;
   circular?: boolean;
