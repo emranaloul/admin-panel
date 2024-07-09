@@ -126,20 +126,22 @@ export default styled(Box)<CustomBoxProps>(({ theme, ownerState }): CSSObject =>
 
   // borderRadius value
   let borderRadiusValue = borderRadius;
-  if (borderRadius && typeof borderRadius === 'number') {
+  if (borderRadius) {
     if (validBorderRadius.find((el) => el === borderRadius)) {
-      borderRadiusValue = radius[borderRadius];
+      borderRadiusValue = radius[borderRadius as keyof typeof radius];
     }
   }
 
   // boxShadow value
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let boxShadowValue: any = 'none';
-  if (shadow && coloredShadow && typeof coloredShadow === 'number') {
+  if (shadow && coloredShadow) {
     if (validBoxShadows.find((el) => el === shadow)) {
       boxShadowValue = boxShadows[shadow as keyof typeof boxShadows];
     } else if (coloredShadow) {
-      boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : 'none';
+      boxShadowValue = colored[coloredShadow as keyof typeof colored]
+        ? colored[coloredShadow as keyof typeof colored]
+        : 'none';
     }
   }
   return {

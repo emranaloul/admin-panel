@@ -327,7 +327,7 @@ function Configurator() {
                 href='//twitter.com/intent/tweet?text=Check%20Material%20Dashboard%20React%20made%20by%20%40CreativeTim%20%23webdesign%20%23dashboard%20%23react%20%mui&url=https%3A%2F%2Fwww.creative-tim.com%2Fproduct%2Fmaterial-dashboard-react'
                 target='_blank'
                 rel='noreferrer'
-                color='inherit'
+                color='dark'
               >
                 <TwitterIcon />
                 &nbsp; Tweet
@@ -338,7 +338,7 @@ function Configurator() {
               href='https://www.facebook.com/sharer/sharer.php?u=https://www.creative-tim.com/product/material-dashboard-react'
               target='_blank'
               rel='noreferrer'
-              color='inherit'
+              color='dark'
             >
               <FacebookIcon />
               &nbsp; Share

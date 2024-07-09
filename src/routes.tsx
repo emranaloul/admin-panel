@@ -61,35 +61,6 @@ const routes: AppRoute[] = [
     component: <Dashboard />,
     auth: true,
     title: 'dashboard',
-    collapse: [
-      {
-        type: 'collapse',
-        name: 'Dashboard2',
-        key: 'dashboard2',
-        icon: <Icon fontSize='small'>dashboard</Icon>,
-        route: '/dashboard2',
-        component: <Dashboard />,
-        auth: true,
-      },
-      {
-        type: 'collapse',
-        name: 'Dashboard3',
-        key: 'dashboard3',
-        icon: <Icon fontSize='small'>dashboard</Icon>,
-        route: '/dashboard3',
-        component: <Dashboard />,
-        auth: true,
-      },
-      {
-        type: 'collapse',
-        name: 'Dashboard4',
-        key: 'dashboard4',
-        icon: <Icon fontSize='small'>dashboard</Icon>,
-        route: '/dashboard4',
-        component: <Dashboard />,
-        auth: true,
-      },
-    ],
   },
   {
     type: 'collapse',
@@ -99,6 +70,17 @@ const routes: AppRoute[] = [
     route: '/tables',
     component: <Tables />,
     auth: true,
+    collapse: [
+      {
+        type: 'collapse',
+        name: 'Tables2',
+        key: 'tables',
+        icon: <Icon fontSize='small'>table_view</Icon>,
+        route: '/tables',
+        component: <Tables />,
+        auth: true,
+      },
+    ],
   },
   {
     type: 'collapse',
