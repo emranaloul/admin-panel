@@ -149,3 +149,27 @@ export interface GetAccountInfoResponse {
   kind: string;
   users: User[];
 }
+
+export type PostEmployeePayload = {
+  image: string;
+  name: string;
+  email: string;
+  title: string;
+  description: string;
+  status: 'online' | 'offline';
+  employed: Date;
+};
+
+export interface Employee extends PostEmployeePayload {
+  id: string;
+}
+
+export interface AuthResponse {
+  access_token: string;
+  expires_in: string;
+  token_type: string;
+  refresh_token: string;
+  id_token: string;
+  user_id: string;
+  project_id: string;
+}

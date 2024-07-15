@@ -1,18 +1,21 @@
-import { AuthPayload, GetAccountInfoResponse } from 'types';
+import { AuthPayload, AuthResponse, GetAccountInfoResponse } from 'types';
 import { ApiService } from './APIService';
 
 class AuthService extends ApiService {
   private path: string;
+  private refreshInterval: NodeJS.Timeout;
   constructor() {
-    super();
+    super(true);
     this.path = 'auth';
+    this.refreshToken = this.refreshToken.bind(this);
+    this.refreshInterval = setInterval(this.refreshToken, 1000);
   }
   async login(email: string, password: string) {
     try {
       const response = await this.post<AuthPayload>(`accounts:signInWithPassword`, {
         email,
         password,
-        // role: 1,
+        returnSecureToken: true,
       });
       this.saveTokens(response);
       return response;
@@ -25,7 +28,7 @@ class AuthService extends ApiService {
       const response = await this.post<AuthPayload>(`accounts:signUp`, {
         email,
         password,
-        // role: 1,
+        returnSecureToken: true,
       });
       this.saveTokens(response);
       return response;
@@ -51,9 +54,39 @@ class AuthService extends ApiService {
   getToken() {
     return localStorage.getItem('idToken');
   }
-  saveTokens(payload: AuthPayload) {
+  saveTokens(payload: Omit<AuthPayload, 'displayName' | 'registered' | 'localId' | 'email'>) {
     localStorage.setItem('idToken', payload.idToken);
     localStorage.setItem('refreshToken', payload.refreshToken);
+    localStorage.setItem('expiresIn', payload.expiresIn);
+  }
+  private async refreshToken() {
+    try {
+      let expiresIn: string | number | null = localStorage.getItem('expiresIn');
+      if (!expiresIn) {
+        return;
+      }
+      expiresIn = +expiresIn;
+      if (expiresIn > 0) {
+        localStorage.setItem('expiresIn', (expiresIn - 1).toString());
+      } else {
+        const refreshToken = localStorage.getItem('refreshToken');
+        const response = await this.post<AuthResponse>(
+          'https://securetoken.googleapis.com/v1/token',
+          {
+            grant_type: 'refresh_token',
+            refresh_token: refreshToken,
+          }
+        );
+        const payload = {
+          idToken: response.id_token,
+          refreshToken: response.refresh_token,
+          expiresIn: response.expires_in,
+        };
+        this.saveTokens(payload);
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 }
 

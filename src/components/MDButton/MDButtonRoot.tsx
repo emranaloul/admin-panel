@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Button from '@mui/material/Button';
-import { Palette, PaletteColor, TypeAction, darken, styled } from '@mui/material/styles';
+import { Palette, PaletteColor, TypeAction, styled } from '@mui/material/styles';
 import { MDButtonProps } from 'types';
 
 interface CustomButtonProps {

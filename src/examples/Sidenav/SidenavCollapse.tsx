@@ -42,7 +42,7 @@ type PropTypes = {
   icon: string | ReactNode;
   active: boolean;
   collapse?: 'item' | 'container';
-  collapsed?: boolean;
+  expanded?: boolean;
   expandable?: boolean;
 };
 
@@ -51,7 +51,7 @@ function SidenavCollapse({
   name,
   active,
   collapse = 'container',
-  collapsed,
+  expanded,
   expandable,
   ...rest
 }: PropTypes) {
@@ -71,7 +71,7 @@ function SidenavCollapse({
             darkMode,
             sidenavColor,
             collapseItem: collapse === 'item',
-            expanded: !collapsed,
+            expanded: !!expanded,
           })
         }
         className={collapse === 'item' ? ' ltr:pl-10 rtl:pr:10' : ''}
@@ -104,7 +104,7 @@ function SidenavCollapse({
             })
           }
         />
-        {expandable && <>{!collapsed ? <ExpandLess /> : <ExpandMore />}</>}
+        {expandable && <>{expanded ? <ExpandLess /> : <ExpandMore />}</>}
       </MDBox>
     </ListItem>
   );

@@ -70,8 +70,7 @@ import { AppDispatch, RootState } from 'store';
 import { getUserData } from 'store/auth';
 import { useDispatch } from 'react-redux';
 import Loader from 'components/Loader';
-// import MDBox from "./components/MDBox";
-// import MDBox from "components/MDBox";
+import { getEmployees } from 'store/employees';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -89,9 +88,7 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
   const { loggedIn, isLoading } = useSelector((state: RootState) => state.auth);
-  // const { pathname } = useLocation();
-  console.log('🚀 ~ App ~ pathname:', pathname);
-  // Cache for the rtl
+
   const cacheRtl = useMemo(
     () =>
       createCache({
@@ -159,6 +156,7 @@ export default function App() {
 
   useEffect(() => {
     dispatchApp(getUserData());
+    dispatchApp(getEmployees());
   }, []);
 
   const configsButton = (

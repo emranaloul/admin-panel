@@ -31,7 +31,7 @@ interface MasterCardProps {
   holder: string;
   expires: string;
 }
-function MasterCard({ color, number, holder, expires }: MasterCardProps) {
+function MasterCard({ color = 'dark', number, holder, expires }: MasterCardProps) {
   const stringNumber = number.toString();
   const numbers = stringNumber.split('');
 
@@ -110,10 +110,5 @@ function MasterCard({ color, number, holder, expires }: MasterCardProps) {
     </Card>
   );
 }
-
-// Setting default values for the props of MasterCard
-MasterCard.defaultProps = {
-  color: 'dark',
-};
 
 export default MasterCard;

@@ -39,11 +39,13 @@ Coded by www.creative-tim.com
 
 // @mui icons
 import Icon from '@mui/material/Icon';
+import AuthorsTable from 'layouts/tables/AuthorsTable';
+import ProjectsTable from 'layouts/tables/ProjectsTable';
 import { lazy } from 'react';
 import { AppRoute } from 'types';
 
 const Dashboard = lazy(() => import('layouts/dashboard'));
-const Tables = lazy(() => import('layouts/tables'));
+// const Tables = lazy(() => import('layouts/tables'));
 const Billing = lazy(() => import('layouts/billing'));
 const RTL = lazy(() => import('layouts/rtl'));
 const Notifications = lazy(() => import('layouts/notifications'));
@@ -68,16 +70,25 @@ const routes: AppRoute[] = [
     key: 'tables',
     icon: <Icon fontSize='small'>table_view</Icon>,
     route: '/tables',
-    component: <Tables />,
+    component: <></>,
     auth: true,
     collapse: [
       {
         type: 'collapse',
-        name: 'Tables2',
-        key: 'tables',
-        icon: <Icon fontSize='small'>table_view</Icon>,
-        route: '/tables',
-        component: <Tables />,
+        name: 'Authors Table',
+        key: 'authorTables',
+        icon: <Icon fontSize='small'>auto_stories</Icon>,
+        route: '/tables/authors',
+        component: <AuthorsTable />,
+        auth: true,
+      },
+      {
+        type: 'collapse',
+        name: 'Projects Table',
+        key: 'projectsTables',
+        icon: <Icon fontSize='small'>view_list</Icon>,
+        route: '/tables/projects',
+        component: <ProjectsTable />,
         auth: true,
       },
     ],

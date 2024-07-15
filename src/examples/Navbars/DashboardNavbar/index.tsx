@@ -196,10 +196,10 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
                     className='h-fit overflow-y-auto flex flex-col items-start'
                     border={'2px solid #f0f2f5'}
                   >
-                    <MDTypography fontSize={'18px !important'} className=' capitalize'>
+                    <MDTypography fontSize={'14px !important'} className=' capitalize'>
                       <AccountCircle fontSize='large' className='mx-1' />
                       hello{' '}
-                      <MDTypography component={'strong'} fontSize={'18px !important'}>
+                      <MDTypography component={'strong'} fontSize={'14px !important'}>
                         {user?.email.split('@')[0]}
                       </MDTypography>
                     </MDTypography>

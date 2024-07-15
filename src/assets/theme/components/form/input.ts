@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React Base Styles
 import colors from 'assets/theme/base/colors';
-import typography, { baseDisplayProperties, baseProperties } from 'assets/theme/base/typography';
+import { baseProperties } from 'assets/theme/base/typography';
 import borders from 'assets/theme/base/borders';
 
 const { info, inputBorderColor, dark } = colors;

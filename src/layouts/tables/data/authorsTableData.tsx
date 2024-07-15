@@ -37,18 +37,12 @@ import {
   DialogTitle,
   Divider,
 } from '@mui/material';
+import { Employee } from 'types';
+import { Delete, Edit } from '@mui/icons-material';
+import { useAppDispatch } from 'store/hooks';
+import { deleteEmployee } from 'store/employees';
 
-export default function data(
-  data: {
-    image: string;
-    name: string;
-    email: string;
-    title: string;
-    description: string;
-    status: 'online' | 'offline' | string;
-    employed: Date;
-  }[]
-) {
+export default function data(data: Employee[]) {
   const Author = ({ image, name, email }: { image: string; name: string; email: string }) => (
     <MDBox display='flex' alignItems='center' lineHeight={1}>
       <MDAvatar src={image} name={name} size='sm' />
@@ -90,8 +84,8 @@ export default function data(
     const [open, setOpen] = React.useState(false);
     return (
       <>
-        <MDButton variant='contained' color='secondary' onClick={() => setOpen(true)}>
-          Edit
+        <MDButton iconOnly variant='contained' color='secondary' onClick={() => setOpen(true)}>
+          <Edit />
         </MDButton>
         <Dialog open={open} onClose={() => setOpen(false)}>
           <DialogTitle>Edit</DialogTitle>
@@ -113,6 +107,38 @@ export default function data(
     );
   };
 
+  const DeleteDialog = ({ id }: Employee) => {
+    const [open, setOpen] = React.useState(false);
+    const dispatch = useAppDispatch();
+    return (
+      <>
+        <MDButton iconOnly variant='contained' color='error' onClick={() => setOpen(true)}>
+          <Delete />
+        </MDButton>
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <DialogTitle>Delete</DialogTitle>
+          <Divider
+            sx={(theme) => ({
+              color: theme.palette.dark.main,
+              margin: 0,
+            })}
+          />
+          <DialogContent className=' flex justify-center items-center gap-4'>
+            <DialogContentText>Are you sure you want to delete this employee?</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <MDButton color='secondary' onClick={() => setOpen(false)}>
+              Close
+            </MDButton>
+            <MDButton color='error' onClick={() => dispatch(deleteEmployee(id))}>
+              Delete
+            </MDButton>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  };
+
   return {
     columns: [
       { Header: 'author', accessor: 'author', width: '45%', align: 'left' },
@@ -122,35 +148,29 @@ export default function data(
       { Header: 'action', accessor: 'action', align: 'center' },
     ],
 
-    rows: data
-      .map(() => ({
-        image: faker.image.avatar(),
-        name: faker.internet.displayName(),
-        email: faker.internet.email(),
-        title: faker.person.jobTitle(),
-        description: faker.person.jobDescriptor(),
-        status: faker.helpers.arrayElement(['online', 'offline']),
-        employed: faker.date.past(),
-      }))
-      .map((employee) => ({
-        author: <Author image={employee.image} name={employee.name} email={employee.email} />,
-        function: <Job title={employee.title} description={employee.description} />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge
-              badgeContent={employee.status}
-              color={employee.status === 'online' ? 'success' : 'dark'}
-              variant='gradient'
-              size='sm'
-            />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-            {new Date(employee.employed).toLocaleDateString()}
-          </MDTypography>
-        ),
-        action: <EditDialog {...employee} />,
-      })),
+    rows: data.map((employee) => ({
+      author: <Author image={employee.image} name={employee.name} email={employee.email} />,
+      function: <Job title={employee.title} description={employee.description} />,
+      status: (
+        <MDBox ml={-1}>
+          <MDBadge
+            badgeContent={employee.status}
+            color={employee.status === 'online' ? 'success' : 'dark'}
+            variant='gradient'
+            size='sm'
+          />
+        </MDBox>
+      ),
+      employed: (
+        <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
+          {new Date(employee.employed).toLocaleDateString()}
+        </MDTypography>
+      ),
+      action: (
+        <>
+          <EditDialog {...employee} /> <DeleteDialog {...employee} />
+        </>
+      ),
+    })),
   };
 }

@@ -13,9 +13,6 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-// prop-types is library for typechecking of props
-import PropTypes from 'prop-types';
-
 // @mui material components
 import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
@@ -35,7 +32,13 @@ interface DefaultInfoCardProps {
   value?: string | number;
 }
 
-function DefaultInfoCard({ color, icon, title, description, value }: DefaultInfoCardProps) {
+function DefaultInfoCard({
+  color = 'info',
+  icon,
+  title,
+  description,
+  value,
+}: DefaultInfoCardProps) {
   return (
     <Card>
       <MDBox p={2} mx={3} display='flex' justifyContent='center'>
@@ -73,12 +76,5 @@ function DefaultInfoCard({ color, icon, title, description, value }: DefaultInfo
     </Card>
   );
 }
-
-// Setting default values for the props of DefaultInfoCard
-DefaultInfoCard.defaultProps = {
-  color: 'info',
-  value: '',
-  description: '',
-};
 
 export default DefaultInfoCard;

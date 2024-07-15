@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { ReactElement, useEffect, useState } from 'react';
+import { Children, ReactElement, useEffect, useMemo, useState } from 'react';
 
 // react-router-dom components
 import { useLocation, NavLink } from 'react-router-dom';
@@ -46,10 +46,9 @@ import {
   DispatchFunction,
 } from 'context';
 import { AppRoute, ColorType } from 'types';
-import { Collapse, DrawerProps, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Collapse, DrawerProps } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store';
-import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
 
 // Define the interface for the Sidenav component props
 interface SidenavProps extends DrawerProps {
@@ -118,15 +117,13 @@ function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavP
               rel='noreferrer'
               sx={{ textDecoration: 'none' }}
             >
-              <SidenavCollapse
-                name={name}
-                icon={icon}
-                active={key === collapseName}
-                // noCollapse={noCollapse}
-              />
+              <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
             </Link>
           );
         } else if (collapse) {
+          const expanded =
+            name === open ||
+            !!collapse.find((item) => item.route.replace('/', '') === collapseName);
           returnValue = (
             <>
               <MDBox
@@ -137,22 +134,24 @@ function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavP
                   name={name}
                   icon={icon}
                   active={false}
-                  collapsed={!open}
+                  expanded={expanded}
                   expandable
                 />
               </MDBox>
-              <Collapse in={open === name} timeout='auto' unmountOnExit>
+              <Collapse in={expanded} timeout='auto' unmountOnExit>
                 <List component='div' disablePadding>
-                  {collapse.map((item) => (
-                    <NavLink key={item.key} to={item.route}>
-                      <SidenavCollapse
-                        name={item.name}
-                        icon={item.icon}
-                        active={item.route.replace('/', '') === collapseName}
-                        collapse='item'
-                      />
-                    </NavLink>
-                  ))}
+                  {Children.toArray(
+                    collapse.map((item) => (
+                      <NavLink key={item.key} to={item.route}>
+                        <SidenavCollapse
+                          name={item.name}
+                          icon={item.icon}
+                          active={item.route.replace('/', '') === collapseName}
+                          collapse='item'
+                        />
+                      </NavLink>
+                    ))
+                  )}
                 </List>
               </Collapse>
             </>
@@ -241,7 +240,7 @@ function Sidenav({ brand, brandName, routes, color = 'info', ...rest }: SidenavP
           (darkMode && !transparentSidenav && whiteSidenav)
         }
       />
-      <List>{renderRoutes}</List>
+      <List>{Children.toArray(renderRoutes)}</List>
       <MDBox p={2} mt='auto'>
         <MDButton
           component='a'
