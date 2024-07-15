@@ -58,6 +58,7 @@ import MDTypography from 'components/MDTypography';
 import { useDispatch } from 'react-redux';
 import { logout } from 'store/auth';
 import { AccountBalanceOutlined, AccountCircle } from '@mui/icons-material';
+import MDButton from 'components/MDButton';
 
 interface DashboardNavbarProps {
   absolute?: boolean;
@@ -193,7 +194,6 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
                     borderRadius={'5px'}
                     padding={1}
                     className='h-fit overflow-y-auto flex flex-col items-start'
-                    // borderColor={'grey'}
                     border={'2px solid #f0f2f5'}
                   >
                     <MDTypography fontSize={'18px !important'} className=' capitalize'>
@@ -207,12 +207,12 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
                       sx={{ bgcolor: !darkMode ? 'black' : 'white', margin: '.5rem 0 !important' }}
                       className='w-full '
                     />
-                    <IconButton onClick={() => appDispatch(logout())} className='p-0 m-0'>
+                    <MDButton onClick={() => appDispatch(logout())} className='p-0 m-0'>
                       <Icon sx={{ ...iconsStyle, fontSize: '18px !important' }} className='mx-1'>
                         logout
                       </Icon>
                       logout
-                    </IconButton>
+                    </MDButton>
                   </MDBox>
                 )}
               </MDBox>
