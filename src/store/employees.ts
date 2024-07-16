@@ -17,9 +17,7 @@ const employees = createSlice({
     });
     builder.addCase(getEmployees.fulfilled, (state, action) => {
       state.loading = false;
-      if (action.payload) {
-        state.employees = action.payload;
-      }
+      state.employees = action.payload ?? [];
     });
     builder.addCase(getEmployees.rejected, (state) => {
       state.loading = false;
@@ -61,8 +59,14 @@ export const deleteEmployee = createAsyncThunk<void, string>(
       await employeesService.deleteEmployee(payload);
       dispatch(getEmployees());
       dispatch(setSnackbar({ title: 'Employee deleted successfully', color: 'success' }));
-    } catch (error) {
-      dispatch(setSnackbar({ title: 'something went wrong', color: 'error' }));
+    } catch (error: any) {
+      dispatch(
+        setSnackbar({
+          title: 'something went wrong',
+          content: error.error as string,
+          color: 'error',
+        })
+      );
       return rejectWithValue(error);
     }
   }

@@ -48,7 +48,7 @@ import { AddCircle } from '@mui/icons-material';
 import { Children, FormEvent, useReducer, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import MDInput from 'components/MDInput';
-import { PostEmployeePayload } from 'types';
+import { Employee, PostEmployeePayload } from 'types';
 import { addEmployee } from 'store/employees';
 ``;
 type ActionType =
@@ -57,10 +57,12 @@ type ActionType =
       payload: string | Date;
     }
   | { key: 'status'; payload: 'online' | 'offline' }
-  | { key: 'employed'; payload: Date };
+  | { key: 'employed'; payload: Date }
+  | { key: 'reset'; payload: PostEmployeePayload };
 
 const reducer = (state: PostEmployeePayload, action: ActionType) => {
   const { key, payload } = action;
+  if (key === 'reset') return payload;
   return {
     ...state,
     [key]: payload,
@@ -70,8 +72,12 @@ const reducer = (state: PostEmployeePayload, action: ActionType) => {
 function AuthorsTable() {
   const [open, setOpen] = useState(false);
   const { employees } = useAppSelector((state) => state.employees);
-  const { columns, rows } = authorsTableData(employees);
-  const [employee, dispatch] = useReducer(reducer, {
+  const editCallback = (employee: Employee) => {
+    setOpen(true);
+    dispatch({ key: 'reset', payload: employee });
+  };
+  const { columns, rows } = authorsTableData({ data: employees, editCallback });
+  const initialState: PostEmployeePayload = {
     image: '',
     title: '',
     name: '',
@@ -79,11 +85,19 @@ function AuthorsTable() {
     email: '',
     status: 'online',
     employed: new Date(),
-  });
+  };
+  const [employee, dispatch] = useReducer(reducer, initialState);
   const appDispatch = useAppDispatch();
   function submitHandler(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    appDispatch(addEmployee(employee));
+
+    try {
+      appDispatch(addEmployee(employee));
+      setOpen(false);
+      dispatch({ key: 'reset', payload: initialState });
+    } catch (error) {
+      throw error;
+    }
   }
 
   return (

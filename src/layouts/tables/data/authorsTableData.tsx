@@ -42,7 +42,12 @@ import { Delete, Edit } from '@mui/icons-material';
 import { useAppDispatch } from 'store/hooks';
 import { deleteEmployee } from 'store/employees';
 
-export default function data(data: Employee[]) {
+export default function data({
+  data,
+}: {
+  data: Employee[];
+  editCallback?: (employee: Employee) => void;
+}) {
   const Author = ({ image, name, email }: { image: string; name: string; email: string }) => (
     <MDBox display='flex' alignItems='center' lineHeight={1}>
       <MDAvatar src={image} name={name} size='sm' />
