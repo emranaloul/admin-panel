@@ -37,6 +37,13 @@ class Employees extends ApiService {
       throw error;
     }
   }
+  public async updateEmployee(employee: Employee) {
+    try {
+      await this.put(this.dynamicPath(employee.id), employee);
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 const employeesService = new Employees();

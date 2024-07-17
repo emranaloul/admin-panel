@@ -159,17 +159,21 @@ function MDSnackbar({
             </Icon>
           </MDBox>
         </MDBox>
-        <Divider sx={{ margin: 0 }} light={dividerColor} />
-        <MDBox p={1.5}>
-          <MDTypography
-            sx={{
-              fontSize: baseProperties.fontSizeSM,
-              color: ({ palette: { white } }) => white.main,
-            }}
-          >
-            {content}
-          </MDTypography>
-        </MDBox>
+        {!!content && (
+          <>
+            <Divider sx={{ margin: 0 }} light={dividerColor} />
+            <MDBox p={1.5}>
+              <MDTypography
+                sx={{
+                  fontSize: baseProperties.fontSizeSM,
+                  color: ({ palette: { white } }) => white.main,
+                }}
+              >
+                {content}
+              </MDTypography>
+            </MDBox>
+          </>
+        )}
       </MDBox>
     </Snackbar>
   );

@@ -4,11 +4,13 @@ import { ApiService } from './APIService';
 class AuthService extends ApiService {
   private path: string;
   private refreshInterval: NodeJS.Timeout;
+  private firstLand: boolean;
   constructor() {
     super(true);
     this.path = 'auth';
     this.refreshToken = this.refreshToken.bind(this);
     this.refreshInterval = setInterval(this.refreshToken, 1000);
+    this.firstLand = true;
   }
   async login(email: string, password: string) {
     try {
@@ -61,15 +63,15 @@ class AuthService extends ApiService {
   }
   private async refreshToken() {
     try {
+      const refreshToken = localStorage.getItem('refreshToken');
       let expiresIn: string | number | null = localStorage.getItem('expiresIn');
       if (!expiresIn) {
         return;
       }
       expiresIn = +expiresIn;
-      if (expiresIn > 0) {
+      if (expiresIn > 0 && !this.firstLand) {
         localStorage.setItem('expiresIn', (expiresIn - 1).toString());
       } else {
-        const refreshToken = localStorage.getItem('refreshToken');
         const response = await this.post<AuthResponse>(
           'https://securetoken.googleapis.com/v1/token',
           {
@@ -83,6 +85,7 @@ class AuthService extends ApiService {
           expiresIn: response.expires_in,
         };
         this.saveTokens(payload);
+        this.firstLand = false;
       }
     } catch (error) {
       throw error;

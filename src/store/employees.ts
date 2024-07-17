@@ -51,6 +51,19 @@ export const addEmployee = createAsyncThunk<void, PostEmployeePayload>(
     }
   }
 );
+export const editEmployee = createAsyncThunk<void, Employee>(
+  'employees/edit',
+  async (payload, { dispatch, rejectWithValue }) => {
+    try {
+      await employeesService.updateEmployee(payload);
+      dispatch(getEmployees());
+      dispatch(setSnackbar({ title: 'Employee updated successfully', color: 'success' }));
+    } catch (error) {
+      dispatch(setSnackbar({ title: 'something went wrong', color: 'error' }));
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const deleteEmployee = createAsyncThunk<void, string>(
   'employees/delete',

@@ -49,7 +49,8 @@ import { Children, FormEvent, useReducer, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import MDInput from 'components/MDInput';
 import { Employee, PostEmployeePayload } from 'types';
-import { addEmployee } from 'store/employees';
+import { addEmployee, editEmployee } from 'store/employees';
+import { ActionsEnum } from 'enums';
 ``;
 type ActionType =
   | {
@@ -71,13 +72,15 @@ const reducer = (state: PostEmployeePayload, action: ActionType) => {
 
 function AuthorsTable() {
   const [open, setOpen] = useState(false);
+  const [actionMode, setActionMode] = useState<ActionsEnum>(ActionsEnum.ADD);
   const { employees } = useAppSelector((state) => state.employees);
   const editCallback = (employee: Employee) => {
     setOpen(true);
     dispatch({ key: 'reset', payload: employee });
+    setActionMode(ActionsEnum.EDIT);
   };
   const { columns, rows } = authorsTableData({ data: employees, editCallback });
-  const initialState: PostEmployeePayload = {
+  const initialState: PostEmployeePayload | Employee = {
     image: '',
     title: '',
     name: '',
@@ -92,7 +95,11 @@ function AuthorsTable() {
     event.preventDefault();
 
     try {
-      appDispatch(addEmployee(employee));
+      if (actionMode === ActionsEnum.ADD) {
+        appDispatch(addEmployee(employee));
+      } else {
+        appDispatch(editEmployee(employee as Employee));
+      }
       setOpen(false);
       dispatch({ key: 'reset', payload: initialState });
     } catch (error) {
@@ -123,7 +130,14 @@ function AuthorsTable() {
               </MDBox>
               <MDBox className=' flex justify-end px-10 pt-5'>
                 <Tooltip title='add employee'>
-                  <MDButton iconOnly color='secondary' onClick={() => setOpen(true)}>
+                  <MDButton
+                    iconOnly
+                    color='secondary'
+                    onClick={() => {
+                      setOpen(true);
+                      setActionMode(ActionsEnum.ADD);
+                    }}
+                  >
                     <AddCircle fontSize='large' />
                   </MDButton>
                 </Tooltip>
@@ -138,7 +152,9 @@ function AuthorsTable() {
       <Footer />
       <Dialog open={open}>
         <form onSubmit={submitHandler}>
-          <DialogTitle>Add Employee</DialogTitle>
+          <DialogTitle>
+            {actionMode === ActionsEnum.ADD ? 'Add Employee' : 'Edit Employee'}
+          </DialogTitle>
           <DialogContent>
             <Grid container gap={3} justifyContent={'center'} alignItems={'stretch'}>
               <Grid item xs={4} justifyContent={'center'}>

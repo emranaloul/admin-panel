@@ -44,6 +44,7 @@ import { deleteEmployee } from 'store/employees';
 
 export default function data({
   data,
+  editCallback,
 }: {
   data: Employee[];
   editCallback?: (employee: Employee) => void;
@@ -68,49 +69,6 @@ export default function data({
       <MDTypography variant='caption'>{description}</MDTypography>
     </MDBox>
   );
-
-  const EditDialog = ({
-    image,
-    name,
-    email,
-    title,
-    description,
-    status,
-    employed,
-  }: {
-    image: string;
-    name: string;
-    email: string;
-    title: string;
-    description: string;
-    status: 'online' | 'offline' | string;
-    employed: Date;
-  }) => {
-    const [open, setOpen] = React.useState(false);
-    return (
-      <>
-        <MDButton iconOnly variant='contained' color='secondary' onClick={() => setOpen(true)}>
-          <Edit />
-        </MDButton>
-        <Dialog open={open} onClose={() => setOpen(false)}>
-          <DialogTitle>Edit</DialogTitle>
-          <Divider
-            sx={(theme) => ({
-              color: theme.palette.dark.main,
-              margin: 0,
-            })}
-          />
-          <DialogContent className=' flex justify-center items-center gap-4'>
-            <MDAvatar src={image} className=' m-auto' />
-            <DialogContentText>{`hello ${name} and your email ${email}`}</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <MDButton onClick={() => setOpen(false)}>Close</MDButton>
-          </DialogActions>
-        </Dialog>
-      </>
-    );
-  };
 
   const DeleteDialog = ({ id }: Employee) => {
     const [open, setOpen] = React.useState(false);
@@ -172,9 +130,17 @@ export default function data({
         </MDTypography>
       ),
       action: (
-        <>
-          <EditDialog {...employee} /> <DeleteDialog {...employee} />
-        </>
+        <MDBox className=' flex gap-2'>
+          <MDButton
+            iconOnly
+            variant='contained'
+            color='secondary'
+            onClick={() => editCallback?.(employee)}
+          >
+            <Edit />
+          </MDButton>
+          <DeleteDialog {...employee} />
+        </MDBox>
       ),
     })),
   };
