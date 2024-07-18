@@ -155,9 +155,12 @@ export default function App() {
   );
 
   useEffect(() => {
-    dispatchApp(getUserData());
-    dispatchApp(getEmployees());
-  }, []);
+    if (loggedIn) {
+      dispatchApp(getEmployees());
+    } else {
+      dispatchApp(getUserData());
+    }
+  }, [loggedIn]);
 
   const configsButton = (
     <MDBox
