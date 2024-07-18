@@ -25,3 +25,7 @@ package-lock.json
 yarn.lock
 
 commit.sh
+
+# Local Netlify folder
+.netlify
+.env

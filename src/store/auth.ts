@@ -127,18 +127,11 @@ export const signup = createAsyncThunk<AuthPayload | undefined, LoginDataType>(
 
 export const getUserData = createAsyncThunk<User | undefined, void>(
   'auth/getUser',
-  async (_payload, { dispatch, rejectWithValue }) => {
+  async (_payload, { rejectWithValue }) => {
     try {
       const response = await authService.getUserData();
       return response;
     } catch (error) {
-      dispatch(
-        setSnackbar({
-          color: 'error',
-          title: 'login error',
-          content: (error as ApiResponse).error.message,
-        })
-      );
       return rejectWithValue((error as ApiResponse).error.message);
     }
   }
