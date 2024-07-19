@@ -36,15 +36,16 @@ import { LoginDataType } from 'types';
 import { useDispatch } from 'react-redux';
 import { signup } from 'store/auth';
 import { AppDispatch } from 'store';
+import { useAppSelector } from 'store/hooks';
 
 function Cover() {
   const dispatch = useDispatch<AppDispatch>();
+  const { isLoggingIn } = useAppSelector((state) => state.auth);
   const [signUpData, setSignUpData] = useState<LoginDataType>({
     email: '',
     password: '',
   });
   function submitHandler(event: FormEvent<HTMLFormElement | HTMLDivElement>): void {
-    console.log('🚀 ~ submitHandler ~ event:', event);
     event.preventDefault();
     dispatch(signup(signUpData));
   }
@@ -72,9 +73,6 @@ function Cover() {
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component='form' role='form' onSubmit={submitHandler}>
-            {/* <MDBox mb={2}>
-              <MDInput type='text' label='Name' variant='standard' fullWidth />
-            </MDBox> */}
             <MDBox mb={2}>
               <MDInput
                 type='email'
@@ -117,7 +115,14 @@ function Cover() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant='contained' color='info' fullWidth type='submit'>
+              <MDButton
+                variant='contained'
+                color='info'
+                fullWidth
+                type='submit'
+                isLoading={isLoggingIn}
+                disabled={isLoggingIn}
+              >
                 sign up
               </MDButton>
             </MDBox>
