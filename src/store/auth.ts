@@ -54,7 +54,7 @@ const auth = createSlice({
       state.isLoggingIn = false;
     });
     builder.addCase(signup.pending, (state) => {
-      state.isLoading = true;
+      state.isLoggingIn = true;
     });
     builder.addCase(getUserData.fulfilled, (state, { payload }) => {
       if (payload) {
