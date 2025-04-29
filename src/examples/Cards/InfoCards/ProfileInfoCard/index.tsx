@@ -32,6 +32,7 @@ import MDTypography from 'components/MDTypography';
 // Material Dashboard 2 React base styles
 import colors from 'assets/theme/base/colors';
 import { baseProperties } from 'assets/theme/base/typography';
+import { ReactNode } from 'react';
 
 interface Action {
   route: string;
@@ -43,7 +44,7 @@ interface ProfileInfoCardProps {
   title: string;
   description: string;
   info: Record<string, string>; // Equivalent to PropTypes.objectOf(PropTypes.string)
-  social: Array<{ color: string; icon: JSX.Element; link: string }>; // Equivalent to PropTypes.arrayOf(PropTypes.object)
+  social: Array<{ color: string; icon: ReactNode; link: string }>; // Equivalent to PropTypes.arrayOf(PropTypes.object)
   action: Action;
   shadow?: boolean; // Optional prop
 }

@@ -48,20 +48,20 @@ import { AddCircle } from '@mui/icons-material';
 import { Children, FormEvent, useReducer, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import MDInput from 'components/MDInput';
-import { Employee, PostEmployeePayload } from 'types';
+import { Employee, PostEmployeePayload, User } from 'types';
 import { addEmployee, editEmployee } from 'store/employees';
 import { ActionsEnum } from 'enums';
 ``;
 type ActionType =
   | {
-      key: keyof Omit<PostEmployeePayload, 'status' | 'employed'>;
+      key: keyof User;
       payload: string | Date;
     }
   | { key: 'status'; payload: 'online' | 'offline' }
-  | { key: 'employed'; payload: Date }
-  | { key: 'reset'; payload: PostEmployeePayload };
+  // | { key: 'employed'; payload: Date }
+  | { key: 'reset'; payload: User };
 
-const reducer = (state: PostEmployeePayload, action: ActionType) => {
+const reducer = (state: User, action: ActionType) => {
   const { key, payload } = action;
   if (key === 'reset') return payload;
   return {
@@ -73,21 +73,26 @@ const reducer = (state: PostEmployeePayload, action: ActionType) => {
 function AuthorsTable() {
   const [open, setOpen] = useState(false);
   const [actionMode, setActionMode] = useState<ActionsEnum>(ActionsEnum.ADD);
-  const { employees } = useAppSelector((state) => state.employees);
-  const editCallback = (employee: Employee) => {
+  const { data } = useAppSelector((state) => state.users);
+  const editCallback = (user: User) => {
     setOpen(true);
-    dispatch({ key: 'reset', payload: employee });
+    dispatch({ key: 'reset', payload: user });
     setActionMode(ActionsEnum.EDIT);
   };
-  const { columns, rows } = authorsTableData({ data: employees, editCallback });
-  const initialState: PostEmployeePayload | Employee = {
-    image: '',
-    title: '',
+  const { columns, rows } = authorsTableData({ data, editCallback });
+  const initialState: User = {
+    avatar: '',
     name: '',
-    description: '',
     email: '',
-    status: 'online',
-    employed: new Date(),
+    status: 'active',
+    createdAt: new Date().toDateString(),
+    id: '',
+    lastLogin: '',
+    phone: null,
+    role: '',
+    gender: '',
+    dateOfBirth: '',
+    updatedAt: '',
   };
   const [employee, dispatch] = useReducer(reducer, initialState);
   const appDispatch = useAppDispatch();
@@ -98,7 +103,7 @@ function AuthorsTable() {
       if (actionMode === ActionsEnum.ADD) {
         appDispatch(addEmployee(employee));
       } else {
-        appDispatch(editEmployee(employee as Employee));
+        appDispatch(editEmployee(employee as User));
       }
       setOpen(false);
       dispatch({ key: 'reset', payload: initialState });

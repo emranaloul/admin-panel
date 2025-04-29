@@ -70,7 +70,6 @@ import { AppDispatch, RootState } from 'store';
 import { getUserData } from 'store/auth';
 import { useDispatch } from 'react-redux';
 import Loader from 'components/Loader';
-import { getEmployees } from 'store/employees';
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -156,7 +155,7 @@ export default function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      dispatchApp(getEmployees());
+      // dispatchApp(getEmployees());
     } else {
       dispatchApp(getUserData());
     }

@@ -1,25 +1,35 @@
-import { AuthPayload, AuthResponse, GetAccountInfoResponse } from 'types';
+import {
+  AuthPayload,
+  AuthResponse,
+  GetAccountInfoResponse,
+  LoginResponse,
+  SignupResponse,
+} from 'types';
 import { ApiService } from './APIService';
+import { AxiosRequestConfig } from 'axios';
 
 class AuthService extends ApiService {
   private path: string;
-  private refreshInterval: NodeJS.Timeout;
-  private firstLand: boolean;
+  // private refreshInterval: NodeJS.Timeout;
+  // private firstLand: boolean;
   constructor() {
-    super(true);
-    this.path = 'auth';
-    this.refreshToken = this.refreshToken.bind(this);
-    this.refreshInterval = setInterval(this.refreshToken, 1000);
-    this.firstLand = true;
+    super();
+    this.path = '/auth';
+    // this.refreshToken = this.refreshToken.bind(this);
+    // this.refreshInterval = setInterval(this.refreshToken, 1000);
+    // this.firstLand = true;
   }
   async login(email: string, password: string) {
     try {
-      const response = await this.post<AuthPayload>(`accounts:signInWithPassword`, {
-        email,
-        password,
-        returnSecureToken: true,
+      const basic = btoa(`${email}:${password}`);
+      const headers: AxiosRequestConfig['headers'] = {
+        Authorization: `Basic ${basic}`,
+        'Content-Type': 'application/json',
+      };
+      const response = await this.post<LoginResponse>(`${this.path}/signin`, undefined, {
+        headers,
       });
-      this.saveTokens(response);
+      this.saveTokens(response.token);
       return response;
     } catch (error: any | Error) {
       throw error;
@@ -27,69 +37,30 @@ class AuthService extends ApiService {
   }
   async signup(email: string, password: string) {
     try {
-      const response = await this.post<AuthPayload>(`accounts:signUp`, {
+      const response = await this.post<SignupResponse>(`${this.path}/sign-up`, {
         email,
         password,
-        returnSecureToken: true,
       });
-      this.saveTokens(response);
+      this.saveTokens(response.token);
       return response;
     } catch (error: any | Error) {
       throw error;
     }
   }
   async getUserData() {
-    try {
-      const token = this.getToken();
-      if (token) {
-        const response = await this.post<GetAccountInfoResponse>(`accounts:lookup`, {
-          idToken: this.getToken(),
-        });
-        return response.users[0];
-      } else {
-        return;
-      }
-    } catch (err) {
-      throw err;
-    }
+    const response = await this.get<GetAccountInfoResponse>(`${this.path}/my-profile`);
+    return response.data;
+  }
+
+  async logout() {
+    await this.post(`${this.path}/logout`);
+    localStorage.removeItem('token');
   }
   getToken() {
-    return localStorage.getItem('idToken');
+    return localStorage.getItem('token');
   }
-  saveTokens(payload: Omit<AuthPayload, 'displayName' | 'registered' | 'localId' | 'email'>) {
-    localStorage.setItem('idToken', payload.idToken);
-    localStorage.setItem('refreshToken', payload.refreshToken);
-    localStorage.setItem('expiresIn', payload.expiresIn);
-  }
-  private async refreshToken() {
-    try {
-      const refreshToken = localStorage.getItem('refreshToken');
-      let expiresIn: string | number | null = localStorage.getItem('expiresIn');
-      if (!expiresIn) {
-        return;
-      }
-      expiresIn = +expiresIn;
-      if (expiresIn > 0 && !this.firstLand) {
-        localStorage.setItem('expiresIn', (expiresIn - 1).toString());
-      } else {
-        const response = await this.post<AuthResponse>(
-          'https://securetoken.googleapis.com/v1/token',
-          {
-            grant_type: 'refresh_token',
-            refresh_token: refreshToken,
-          }
-        );
-        const payload = {
-          idToken: response.id_token,
-          refreshToken: response.refresh_token,
-          expiresIn: response.expires_in,
-        };
-        this.saveTokens(payload);
-        this.firstLand = false;
-      }
-    } catch (error) {
-      throw error;
-    }
+  saveTokens(token: string) {
+    localStorage.setItem('token', token);
   }
 }
 

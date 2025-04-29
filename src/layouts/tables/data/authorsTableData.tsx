@@ -22,12 +22,8 @@ import MDAvatar from 'components/MDAvatar';
 import MDBadge from 'components/MDBadge';
 
 // Images
-import team2 from 'assets/images/team-2.jpg';
-import team3 from 'assets/images/team-3.jpg';
-import team4 from 'assets/images/team-4.jpg';
 import MDButton from 'components/MDButton';
 import _ from 'lodash';
-import { faker } from '@faker-js/faker';
 import React from 'react';
 import {
   Dialog,
@@ -37,7 +33,7 @@ import {
   DialogTitle,
   Divider,
 } from '@mui/material';
-import { Employee } from 'types';
+import { User } from 'types';
 import { Delete, Edit } from '@mui/icons-material';
 import { useAppDispatch } from 'store/hooks';
 import { deleteEmployee } from 'store/employees';
@@ -46,12 +42,12 @@ export default function data({
   data,
   editCallback,
 }: {
-  data: Employee[];
-  editCallback?: (employee: Employee) => void;
+  data: User[];
+  editCallback?: (user: User) => void;
 }) {
-  const Author = ({ image, name, email }: { image: string; name: string; email: string }) => (
+  const Author = ({ image, name, email }: { image?: string; name: string; email: string }) => (
     <MDBox display='flex' alignItems='center' lineHeight={1}>
-      <MDAvatar src={image} name={name} size='sm' />
+      {image && <MDAvatar src={image} name={name} size='sm' />}
       <MDBox ml={2} lineHeight={1}>
         <MDTypography display='block' variant='button' fontWeight='medium'>
           {name}
@@ -70,7 +66,7 @@ export default function data({
     </MDBox>
   );
 
-  const DeleteDialog = ({ id }: Employee) => {
+  const DeleteDialog = ({ id }: User) => {
     const [open, setOpen] = React.useState(false);
     const dispatch = useAppDispatch();
     return (
@@ -111,14 +107,14 @@ export default function data({
       { Header: 'action', accessor: 'action', align: 'center' },
     ],
 
-    rows: data.map((employee) => ({
-      author: <Author image={employee.image} name={employee.name} email={employee.email} />,
-      function: <Job title={employee.title} description={employee.description} />,
+    rows: data.map((user) => ({
+      author: <Author image={user.avatar} name={user.name} email={user.email} />,
+      // function: <Job title={user.title} description={user.description} />,
       status: (
         <MDBox ml={-1}>
           <MDBadge
-            badgeContent={employee.status}
-            color={employee.status === 'online' ? 'success' : 'dark'}
+            badgeContent={user.status}
+            color={user.status === 'online' ? 'success' : 'dark'}
             variant='gradient'
             size='sm'
           />
@@ -126,7 +122,7 @@ export default function data({
       ),
       employed: (
         <MDTypography component='a' href='#' variant='caption' color='text' fontWeight='medium'>
-          {new Date(employee.employed).toLocaleDateString()}
+          {new Date(user.createdAt).toLocaleDateString()}
         </MDTypography>
       ),
       action: (
@@ -135,11 +131,11 @@ export default function data({
             iconOnly
             variant='contained'
             color='secondary'
-            onClick={() => editCallback?.(employee)}
+            onClick={() => editCallback?.(user)}
           >
             <Edit />
           </MDButton>
-          <DeleteDialog {...employee} />
+          <DeleteDialog {...user} />
         </MDBox>
       ),
     })),

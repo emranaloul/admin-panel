@@ -1,35 +1,37 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import employeesService from 'services/Employees';
-import { Employee, PostEmployeePayload } from 'types';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import employeesService from 'services/Users';
+import { Employee, ListItem, PostEmployeePayload, User } from 'types';
 import { setSnackbar } from './snackbar';
 
-const initialState: { employees: Employee[]; loading: boolean } = {
-  employees: [],
+const initialState: ListItem<User> & { loading: boolean } = {
+  data: [],
+  totalCount: 0,
   loading: false,
 };
-const employees = createSlice({
-  name: 'employees',
+const users = createSlice({
+  name: 'users',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getEmployees.pending, (state) => {
+    builder.addCase(getUsers.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(getEmployees.fulfilled, (state, action) => {
+    builder.addCase(getUsers.fulfilled, (state, action: PayloadAction<ListItem<User>>) => {
       state.loading = false;
-      state.employees = action.payload ?? [];
+      state.data = action.payload.data ?? [];
+      state.totalCount = action.payload.totalCount ?? 0;
     });
-    builder.addCase(getEmployees.rejected, (state) => {
+    builder.addCase(getUsers.rejected, (state) => {
       state.loading = false;
     });
   },
 });
 
-export const getEmployees = createAsyncThunk<Employee[] | undefined, void>(
-  'employees/get',
+export const getUsers = createAsyncThunk<ListItem<User>, void>(
+  'users/get',
   async (_payload, { dispatch, rejectWithValue }) => {
     try {
-      const result = await employeesService.getEmployees();
+      const result = await employeesService.getUsers();
       return result;
     } catch (error) {
       dispatch(setSnackbar({ title: 'something went wrong', color: 'error' }));
@@ -38,12 +40,12 @@ export const getEmployees = createAsyncThunk<Employee[] | undefined, void>(
   }
 );
 
-export const addEmployee = createAsyncThunk<void, PostEmployeePayload>(
-  'employees/add',
+export const addEmployee = createAsyncThunk<void, User>(
+  'users/add',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       await employeesService.addEmployee(payload);
-      dispatch(getEmployees());
+      dispatch(getUsers());
       dispatch(setSnackbar({ title: 'Employee added successfully', color: 'success' }));
     } catch (error) {
       dispatch(setSnackbar({ title: 'something went wrong', color: 'error' }));
@@ -52,11 +54,11 @@ export const addEmployee = createAsyncThunk<void, PostEmployeePayload>(
   }
 );
 export const editEmployee = createAsyncThunk<void, Employee>(
-  'employees/edit',
+  'users/edit',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       await employeesService.updateEmployee(payload);
-      dispatch(getEmployees());
+      dispatch(getUsers());
       dispatch(setSnackbar({ title: 'Employee updated successfully', color: 'success' }));
     } catch (error) {
       dispatch(setSnackbar({ title: 'something went wrong', color: 'error' }));
@@ -66,11 +68,11 @@ export const editEmployee = createAsyncThunk<void, Employee>(
 );
 
 export const deleteEmployee = createAsyncThunk<void, string>(
-  'employees/delete',
+  'users/delete',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       await employeesService.deleteEmployee(payload);
-      dispatch(getEmployees());
+      dispatch(getUsers());
       dispatch(setSnackbar({ title: 'Employee deleted successfully', color: 'success' }));
     } catch (error: any) {
       dispatch(
@@ -85,4 +87,4 @@ export const deleteEmployee = createAsyncThunk<void, string>(
   }
 );
 
-export default employees.reducer;
+export default users.reducer;

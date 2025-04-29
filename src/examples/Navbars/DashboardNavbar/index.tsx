@@ -53,11 +53,11 @@ import {
 } from 'context';
 import { Divider, Theme } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { RootState } from 'store';
+import { AppDispatch, RootState } from 'store';
 import MDTypography from 'components/MDTypography';
 import { useDispatch } from 'react-redux';
-import { logout } from 'store/auth';
-import { AccountBalanceOutlined, AccountCircle } from '@mui/icons-material';
+import { logout, logoutHandler } from 'store/auth';
+import { AccountCircle } from '@mui/icons-material';
 import MDButton from 'components/MDButton';
 
 interface DashboardNavbarProps {
@@ -76,8 +76,8 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
   const { user } = useSelector((state: RootState) => state.auth);
   const [openList, setOpenList] = useState<boolean>(false);
   const route = useLocation().pathname.split('/').slice(1);
-  const dropdownRef = useRef<HTMLDivElement>();
-  const appDispatch = useDispatch();
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const appDispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     // Setting the navbar type
     if (fixedNavbar) {
@@ -207,7 +207,7 @@ function DashboardNavbar({ absolute, light, isMini }: DashboardNavbarProps) {
                       sx={{ bgcolor: !darkMode ? 'black' : 'white', margin: '.5rem 0 !important' }}
                       className='w-full '
                     />
-                    <MDButton onClick={() => appDispatch(logout())} className='p-0 m-0'>
+                    <MDButton onClick={() => appDispatch(logoutHandler())} className='p-0 m-0'>
                       <Icon sx={{ ...iconsStyle, fontSize: '18px !important' }} className='mx-1'>
                         logout
                       </Icon>

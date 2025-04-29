@@ -6,13 +6,14 @@ import {
   AuthPayload,
   ErrorResponse,
   LoginDataType,
+  LoginResponse,
   User,
 } from 'types';
 import { setSnackbar } from './snackbar';
 
 const initialState: {
   loggedIn: boolean;
-  user?: AuthPayload | User;
+  user?: User;
   isLoading: boolean;
   isLoggingIn: boolean;
 } = {
@@ -70,6 +71,19 @@ const auth = createSlice({
     builder.addCase(getUserData.pending, (state) => {
       state.isLoading = true;
     });
+    builder.addCase(logoutHandler.fulfilled, (state) => {
+      state.loggedIn = false;
+      state.user = undefined;
+      state.isLoading = false;
+    });
+    builder.addCase(logoutHandler.rejected, (state) => {
+      state.loggedIn = false;
+      state.user = undefined;
+      state.isLoading = false;
+    });
+    builder.addCase(logoutHandler.pending, (state) => {
+      state.isLoading = true;
+    });
   },
 });
 
@@ -86,12 +100,12 @@ function getAuthErrorMessage(response: ErrorResponse): string {
   }
 }
 
-export const login = createAsyncThunk<AuthPayload | undefined, LoginDataType>(
+export const login = createAsyncThunk<User | undefined, LoginDataType>(
   'auth/login',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       const response = await authService.login(payload.email, payload.password);
-      return response;
+      return response.user;
     } catch (err) {
       const { error } = err as unknown as ApiResponse;
       const message = getAuthErrorMessage(error);
@@ -106,12 +120,12 @@ export const login = createAsyncThunk<AuthPayload | undefined, LoginDataType>(
     }
   }
 );
-export const signup = createAsyncThunk<AuthPayload | undefined, LoginDataType>(
+export const signup = createAsyncThunk<User | undefined, LoginDataType>(
   'auth/signup',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       const response = await authService.signup(payload.email, payload.password);
-      return response;
+      return response.data;
     } catch (error) {
       dispatch(
         setSnackbar({
@@ -133,6 +147,24 @@ export const getUserData = createAsyncThunk<User | undefined, void>(
       return response;
     } catch (error) {
       return rejectWithValue((error as ApiResponse).error.message);
+    }
+  }
+);
+
+export const logoutHandler = createAsyncThunk<void, void>(
+  'auth/logout',
+  async (_payload, { dispatch }) => {
+    try {
+      await authService.logout();
+      dispatch(auth.actions.logout());
+    } catch (error) {
+      dispatch(
+        setSnackbar({
+          color: 'error',
+          title: 'logout error',
+          content: (error as ApiResponse).error.message,
+        })
+      );
     }
   }
 );

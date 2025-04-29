@@ -1,26 +1,17 @@
-import { Employee, PostEmployeePayload } from 'types';
+import { Employee, ListItem, PostEmployeePayload, User } from 'types';
 import { ApiService } from './APIService';
 
 class Employees extends ApiService {
   private path: string;
   constructor() {
     super();
-    this.path = 'employees.json';
+    this.path = '/auth';
   }
   private dynamicPath(internal: string) {
     return `employees/${internal}.json`;
   }
-  public async getEmployees(): Promise<Employee[] | undefined> {
-    try {
-      const result = await this.get<Record<string, PostEmployeePayload>>(this.path);
-      if (result) {
-        return Object.entries(result).map(([id, value]) => ({ id, ...value }));
-      } else {
-        return;
-      }
-    } catch (error) {
-      throw error;
-    }
+  public async getUsers() {
+    return await this.get<ListItem<User>>(`${this.path}/usersForAdmin`);
   }
   public async addEmployee(data: PostEmployeePayload): Promise<any> {
     try {

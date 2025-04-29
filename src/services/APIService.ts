@@ -8,33 +8,23 @@ export interface ApiServiceConfig {
 }
 
 const API_URL = `${process.env.REACT_APP_API_URL}`;
-const API_KEY = `${process.env.REACT_APP_API_KEY}`;
 const DATABASE_URL = process.env.REACT_APP_DATABASE_URL;
 export class ApiService {
   protected api: AxiosInstance;
 
-  constructor(isAuthApi?: boolean) {
+  constructor() {
     this.api = axios.create({
-      baseURL: isAuthApi ? API_URL : DATABASE_URL,
+      baseURL: API_URL,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
-        // ...(config.headers || {}),
       },
     });
     this.api.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage with key 'token'
-        const idToken = localStorage.getItem('idToken');
-        if (token) {
+        if (token && !config.headers.Authorization) {
           config.headers.Authorization = `Bearer ${token}`;
-        }
-        if (API_KEY) {
-          config.params = {};
-          config.params.key = API_KEY;
-          if (idToken) {
-            config.params.auth = idToken;
-          }
         }
         return config;
       },
@@ -57,7 +47,7 @@ export class ApiService {
     }
   }
 
-  protected async post<T>(url: string, data: any, config?: AxiosRequestConfig): Promise<T> {
+  protected async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
     try {
       const response = await this.api.post<T>(url, data, config);
       return this.handleResponse(response);

@@ -92,6 +92,18 @@ export type ActionType = {
   color?: OwnerColorType;
 };
 
+export interface LoginResponse {
+  message: string;
+  user: User;
+  token: string;
+  status: number;
+}
+export interface SignupResponse {
+  message: string;
+  data: User;
+  token: string;
+}
+
 export interface AuthPayload {
   localId: string;
   email: string;
@@ -133,21 +145,22 @@ export interface ProviderUserInfo {
 }
 
 export interface User {
-  localId: string;
+  id: string;
+  name: string;
   email: string;
-  passwordHash: string;
-  emailVerified: boolean;
-  passwordUpdatedAt: number;
-  providerUserInfo: ProviderUserInfo[];
-  validSince: string;
-  lastLoginAt: string;
+  lastLogin: string;
+  phone: string | null;
+  status: string;
+  role: string;
   createdAt: string;
-  lastRefreshAt: string;
+  gender: string;
+  dateOfBirth: string;
+  updatedAt: string;
+  avatar?: string;
 }
 
 export interface GetAccountInfoResponse {
-  kind: string;
-  users: User[];
+  data: User;
 }
 
 export type PostEmployeePayload = {
@@ -172,4 +185,9 @@ export interface AuthResponse {
   id_token: string;
   user_id: string;
   project_id: string;
+}
+
+export interface ListItem<T> {
+  data: T[];
+  totalCount: number;
 }
