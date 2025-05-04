@@ -76,6 +76,7 @@ export type AppRoute = {
   key: number | string;
   href?: string;
   route: string;
+  index?: boolean;
   component: ReactElement;
   auth: boolean;
   collapse?: Omit<AppRoute, 'collapse'>[];
