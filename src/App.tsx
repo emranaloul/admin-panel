@@ -91,6 +91,9 @@ export default function App() {
     dispatchApp(getUserData());
   }, []);
 
+  if (isLoading) {
+    return <Loader active />;
+  }
   return direction === 'rtl' ? (
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
